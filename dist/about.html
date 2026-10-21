@@ -113,7 +113,7 @@ section{padding-block:clamp(4.5rem,9vw,7.5rem)}
 .trio .slot{aspect-ratio:3/4;min-height:300px}
 .trio .slot:nth-child(2){aspect-ratio:4/5;min-height:380px}
 .trio .slot:nth-child(1),.trio .slot:nth-child(3){margin-bottom:8%}
-@media (max-width:700px){.trio{grid-template-columns:1fr 1fr}.trio .slot:nth-child(2){grid-column:1/3;aspect-ratio:16/10}.trio .slot:nth-child(1),.trio .slot:nth-child(3){margin-bottom:0}}
+@media (max-width:700px){.trio{grid-template-columns:1fr 1fr;grid-auto-flow:dense}.trio .slot:nth-child(2){grid-column:1/3;aspect-ratio:16/10}.trio .slot:nth-child(1),.trio .slot:nth-child(3){margin-bottom:0}}
 .banner::after{content:"";position:absolute;left:0;right:0;bottom:0;height:38%;background:var(--white);z-index:0}
 .banner .wrap{position:relative;z-index:1}
 
@@ -587,8 +587,8 @@ body{padding-bottom:4.5rem}
 .occasions > div .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(38,43,40,.78),rgba(38,43,40,.35))}
 .occasions > div:hover .bg,.occasions > div:focus-within .bg{opacity:1;transform:none}
 .occasions > div:hover,.occasions > div:focus-within{color:#fff}
-.occasions > div:hover h3,.occasions > div:hover p,.occasions > div:hover .kicker{color:#fff}
-.occasions > div:hover .kicker{color:#e9d5c8}
+.occasions > div:is(:hover,:focus-within) :is(h3,p,.kicker){color:#fff}
+.occasions > div:is(:hover,:focus-within) .kicker{color:#e9d5c8}
 .occasions > div h3,.occasions > div p,.occasions > div .kicker{transition:color .4s}
 .occasions > div{min-height:230px}
 
@@ -603,7 +603,7 @@ body{padding-bottom:4.5rem}
 <button class="menu-btn" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
 <ul><li><a href="index.html">Home</a></li><li><a href="about.html" aria-current=page>About</a></li><li><a href="weddings.html">Weddings</a></li><li><a href="milestones.html">Milestones</a></li><li><a href="corporate.html">Corporate</a></li><li><a href="contact.html">Contact</a></li></ul></div></nav><main><header class="banner"><div class="wrap">
 <div class="copy"><p class="kicker">Our story</p><h1 class="h-display">We grew up at these celebrations</h1><div class="rule"></div><p class="lede">Anvaya is a wedding and event planning studio based in Miami and working across Florida, founded by people who learned this work in their own families' kitchens and ballrooms. This is who we are and what we believe.</p></div>
-<div class="trio"><figure class="slot "><img src="img/about/kitchen.jpg" alt="Wedding morning, garlands on the kitchen floor" loading="lazy"><figcaption>Wedding morning, garlands on the kitchen floor</figcaption></figure><figure class="slot "><img src="img/studio/team.jpg" alt="The Anvaya team" loading="lazy"><figcaption>The Anvaya team</figcaption></figure><figure class="slot "><img src="img/about/evening.jpg" alt="Last guests leaving, lanterns still lit" loading="lazy"><figcaption>Last guests leaving, lanterns still lit</figcaption></figure></div>
+<div class="trio"><figure class="slot "><img src="img/about/kitchen.jpg" alt="Wedding morning, garlands on the kitchen floor"><figcaption>Wedding morning, garlands on the kitchen floor</figcaption></figure><figure class="slot "><img src="img/studio/team.jpg" alt="The Anvaya team"><figcaption>The Anvaya team</figcaption></figure><figure class="slot "><img src="img/about/evening.jpg" alt="Last guests leaving, lanterns still lit"><figcaption>Last guests leaving, lanterns still lit</figcaption></figure></div>
 </div></header>
 <section><div class="wrap">
 <div class="head reveal"><p class="kicker">The Story of Anvaya</p><h2 class="h-display">A Name Rooted in Connection</h2><div class="rule"></div></div>
@@ -692,7 +692,7 @@ body{padding-bottom:4.5rem}
 
 <div class="bk" hidden>
 <div class="summary"></div>
-<form id="bkform" novalidate>
+<form id="bkform">
 <div class="row2"><label for="bk-name">Your name<input id="bk-name" type="text" autocomplete="name" required></label><label for="bk-phone">Phone<input id="bk-phone" type="tel" autocomplete="tel" required></label></div>
 <label for="bk-email">Email<input id="bk-email" type="email" autocomplete="email" required></label>
 <label for="bk-note">Anything we should know before we call?<textarea id="bk-note" style="min-height:80px" placeholder="Rough date, guest count, traditions, anything already booked"></textarea></label>
