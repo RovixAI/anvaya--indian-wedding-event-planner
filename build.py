@@ -230,12 +230,6 @@ home = f'''<header class="hero" data-carousel><div class="wrap">
 {slot("gallery/1.jpg","Wedding Ceremony","tall")}{slot("gallery/2.jpg","Elegant Tablescapes","wide")}{slot("gallery/3.jpg","Sangeet Celebration")}{slot("gallery/4.jpg","Mehndi Details","tall")}{slot("gallery/5.jpg","Inspired Dining")}{slot("gallery/6.jpg","Waterfront Weddings","wide")}
 </div></div></section>
 
-''' + mapsection("Wedding &amp; Event Planning Across Florida",
-  "Based in South Florida, Anvaya plans weddings, milestones and corporate celebrations in Miami, Fort Lauderdale, Boca Raton, Palm Beach and beyond.",
-  ["From city hotels to waterfront venues, we plan occasions across Miami-Dade, Broward and Palm Beach counties.",
-   "Destination wedding weekends, family celebrations and corporate programs planned with local venue and vendor coordination.",
-   "Thoughtful planning for coastal celebrations, estate gatherings and intimate occasions on Florida’s Gulf Coast.",
-   "Have a meaningful destination in mind? Tell us where; we can discuss the logistics and planning scope."]) + '''
 <section><div class="wrap">
 <div class="head reveal"><p class="kicker">Kind Words</p><h2 class="h-display">Stories Shared by Our Clients</h2><div class="rule"></div></div>
 <div class="words stagger">
@@ -326,7 +320,7 @@ WED_FAQ = [  # rendered on the page and in the FAQPage schema
  ("Can you coordinate a wedding across multiple venues and days?","Yes. We can connect event schedules, vendor arrivals, ceremony timing, guest transportation and venue transitions across a multi-day wedding weekend. The result is one coordinated plan rather than separate events competing for attention."),
 ]
 WED_CTA = cta("Begin Here","Your Wedding Should Feel Like Your Family","Tell us about the traditions you treasure, the celebrations you imagine and the people coming together. We’ll help connect every moment.", "Plan Your Wedding Weekend")  # also closes every blog post
-weddings = banner("Indian &amp; South Asian wedding planners · Miami &amp; Florida","Your wedding, celebrated the way your family remembers it","At Anvaya, we plan Indian and South Asian weddings across Florida, with our home in Miami, Fort Lauderdale and Palm Beach. From a single ceremony to a four-event weekend, we plan around both families, your traditions and your budget, then hold every day of it from dawn until the last dance.", W) + f'''
+weddings = banner("Indian &amp; South Asian wedding planners · Miami &amp; Florida","Your wedding, celebrated the way your family remembers it","At Anvaya, we plan Indian and South Asian weddings across Miami, Fort Lauderdale and Palm Beach, from a single ceremony to a four-event weekend.", W) + f'''
 <section><div class="wrap"><div class="letter reveal">
 <div class="collage">{slot("weddings/ceremony.jpg","Pheras, ghee on the fire")}{slot("gallery/4.jpg","Mehndi hands")}{slot("gallery/3.jpg","The DJ at the sangeet")}{slot("gallery/5.jpg","Live dosa counter")}<div class="plate">Weddings</div></div>
 <div>
