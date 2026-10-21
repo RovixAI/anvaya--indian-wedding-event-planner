@@ -110,7 +110,7 @@ def story(frames, chapters):
     c = "".join(f'<div class="chapter"><span class="script">{sc}</span><h3>{h}</h3><p>{p}</p></div>' for sc,h,p in chapters)
     return f'<div class="story"><div class="frame">{f}</div><div class="chapters">{c}</div></div>'
 
-FLMAP = '''<svg class="flmap" viewBox="0 0 420 540" role="img" aria-label="Map of Florida showing where Anvaya plans celebrations, with South Florida at its heart">
+FLMAP = '''<svg class="flmap" viewBox="0 0 530 540" role="img" aria-label="Map of Florida showing where Anvaya plans celebrations, with South Florida at its heart">
 <path class="land" d="M19.2 89.6 L23.8 52.4 L138.8 52.4 L143.4 71.0 L276.8 77.2 L304.4 71.0 L309.0 114.4 L322.8 164.0 L341.2 213.6 L355.0 269.4 L368.8 312.8 L364.2 362.4 L359.6 399.6 L350.4 412.0 L327.4 415.1 L313.6 381.0 L290.6 362.4 L276.8 331.4 L263.0 300.4 L244.6 250.8 L244.6 213.6 L235.4 176.4 L212.4 145.4 L184.8 108.2 L166.4 117.5 L125.0 133.0 L102.0 102.0 L69.8 89.6 L37.6 95.8 Z"/>
 <path class="land" d="M348.1 415.1 L336.6 427.5 L322.8 439.9 L304.4 446.1 L286.0 452.3" fill="none" stroke-width="5" stroke-linecap="round" style="fill:none;stroke:var(--ivory-2)"/>
 <circle class="home-ring" cx="355.0" cy="337.6" r="78"/>

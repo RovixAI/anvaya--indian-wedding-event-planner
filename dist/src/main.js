@@ -113,7 +113,7 @@
     var panes = modal.querySelectorAll('.bk'), stepsUI = modal.querySelectorAll('.bk-steps span');
     var state = {type:'Wedding or Wedding Weekend', date:null, time:null, cur:0};
     var now = new Date(), view = new Date(now.getFullYear(), now.getMonth(), 1);
-    function go(n){ state.cur=n; panes.forEach(function(p,i){ p.hidden = i!==n; }); stepsUI.forEach(function(s,i){ s.classList.toggle('on', i<=n); }); }
+    function go(n){ state.cur=n; panes.forEach(function(p,i){ p.hidden = i!==n; }); stepsUI.forEach(function(s,i){ s.classList.toggle('on', i<=n); }); modal.querySelector('.card').scrollTop = 0; }
     function open(){ modal.classList.add('open'); document.body.style.overflow='hidden'; go(0); renderCal(); modal.querySelector('.close').focus(); }
     function close(){ modal.classList.remove('open'); document.body.style.overflow=''; }
     fabBtn.addEventListener('click', open);
