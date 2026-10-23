@@ -151,3 +151,37 @@ A wedding website, mobile-friendly itinerary or shared contact can reduce repeat
 Great guest care makes room for the moments couples remember—the reunion in the lobby, the dance with grandparents, the warm welcome after a long flight. **Anvaya helps connect these practical details across South Florida wedding weekends.**
 
 **Related pages:** Weddings · Contact
+
+## Blog 6 — Dhoti, Half-Saree and Naming Ceremonies in South Florida: A Family Planning Guide
+**Suggested slug:** /blog/dhoti-half-saree-naming-ceremony-planning-south-florida  
+**Primary keyword:** dhoti ceremony planner Florida  
+**SEO title:** Dhoti, Half-Saree & Naming Ceremonies in South Florida: A Planning Guide  
+**Meta description:** Planning a dhoti, half-saree or naming ceremony in Miami, Fort Lauderdale or Palm Beach? A practical guide to timing, setting, food, guests and the day itself.  
+**Editorial note:** Draft written to the V4 brief (no copy was supplied). Review ceremony wording with the client before publishing.
+
+Family ceremonies such as a dhoti ceremony, a half-saree ceremony or a naming celebration are often smaller than a wedding, but they carry just as much meaning. Customs differ between regions, communities and individual families, so the best plan starts with your family's own traditions rather than a fixed template.
+
+### Start with your family's customs
+Before choosing a date or a venue, talk with the elders and your priest or officiant about the rituals involved, the order they follow and who takes part. Ask which elements are essential, which are flexible and whether anything needs a particular time of day. Write these down; they become the brief for every decision that follows.
+
+### Settle the date and timing with your officiant
+Many families plan around an auspicious date or time chosen with their priest. Confirm it early, then build the rest of the day around it: setup, family arrival, the ceremony, blessings, photographs and the meal.
+
+### Choose between home and venue
+Celebrating at home feels personal, but check seating, parking, kitchen access and how guests will move between the ceremony space and the meal. A clubhouse, hall or event space can offer more room; ask about lamp or ceremonial fire restrictions, setup and cleanup times, outside catering and sound.
+
+### Prepare the ceremony space and supplies
+Agree on the layout with your officiant: where the ritual takes place, where family members sit and where guests can see comfortably. List the supplies the ceremony needs and decide who brings each item. A backdrop, floral accents and thoughtful seating can make the space feel special without crowding the ritual.
+
+### Plan food and hospitality
+Menus are often vegetarian or follow regional and family preferences. Confirm dietary needs early, plan how food will be served if the ceremony runs long, and think about guests of every age: water, shade, comfortable seating and a quiet corner for older relatives.
+
+### Help every guest feel included
+Not every guest will know the ceremony. A short note with the invitation, or a few words from the family, can explain what is happening and any attire guidance. Brief your photographer on the key moments so they can capture them without interrupting.
+
+### Keep the day calm
+A simple run-of-show helps: vendor arrival times, who greets guests, when the ritual begins and who looks after the officiant. When one person coordinates the details, the family can stay present for the moments that matter.
+
+Whether the celebration is at home or in a venue, thoughtful planning lets the meaning of the occasion lead. **Anvaya plans dhoti, half-saree, naming and other traditional ceremonies across South Florida, working with your family and officiant to bring the right details together.**
+
+**Related pages:** Traditions · Contact
