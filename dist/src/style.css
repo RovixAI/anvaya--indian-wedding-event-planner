@@ -110,7 +110,11 @@ section{padding-block:clamp(4.5rem,9vw,7.5rem)}
 .banner{position:relative;background:var(--ivory);padding-block:clamp(2.5rem,5vw,4rem) 0}
 .banner .copy{display:grid;gap:.9rem;justify-items:center;text-align:center;margin-bottom:clamp(1.8rem,3.5vw,2.6rem);max-width:720px;margin-inline:auto}
 .banner .lede{font-size:1rem}
-.banner .copy .lede{text-align:center}
+.banner .copy .lede{text-align:center;text-wrap:balance} /* centred copy: even line lengths, no stranded last words */
+@media (max-width:560px){.banner .copy .lede{text-wrap:pretty}} /* phones run past the six lines balance handles; pretty still keeps a short last line from being stranded */
+/* two-paragraph banners (About): one shared measure, and the first paragraph set as a serif lead-in above the body copy */
+.banner .copy:has(.lede + .lede) .lede{max-width:34rem}
+.banner .copy .rule + .lede:has(+ .lede){max-width:32rem;font-family:var(--display);font-size:clamp(1.15rem,1rem + .5vw,1.38rem);line-height:1.55;color:var(--ink);text-wrap:balance}
 .trio{display:grid;grid-template-columns:1fr 1.5fr 1fr;gap:14px;align-items:end}
 .trio .slot{aspect-ratio:3/4;min-height:300px}
 .trio .slot:nth-child(2){aspect-ratio:4/5;min-height:380px}
@@ -123,6 +127,10 @@ section{padding-block:clamp(4.5rem,9vw,7.5rem)}
 .letter{display:grid;grid-template-columns:1fr 1.5fr;gap:clamp(2rem,6vw,6rem);align-items:start}
 .letter .text{display:grid;gap:1.2rem;color:var(--ink-2);font-size:1.03rem}
 .letter .text p:first-child::first-letter{font-family:var(--display);font-size:3.4em;float:left;line-height:.8;margin:.08em .12em 0 0;color:var(--accent)}
+.letter .text p{text-wrap:pretty} /* no single word left alone on a last line */
+@supports (initial-letter:2) or (-webkit-initial-letter:2){ /* a true two-line drop cap: sized and set on the text's own baselines by the browser */
+  .letter .text p:first-child::first-letter{float:none;font-size:inherit;line-height:inherit;margin:0 .25rem 0 0;-webkit-initial-letter:2;initial-letter:2}
+}
 .article{max-width:46rem;display:grid;gap:1.2rem;color:var(--ink-2);font-size:1.03rem;line-height:1.85}
 .article h1{color:var(--ink);margin-bottom:.4rem}
 .article h2{font-family:var(--display);font-size:1.6rem;line-height:1.25;color:var(--ink);margin-top:1.4rem}
@@ -206,7 +214,10 @@ section{padding-block:clamp(4.5rem,9vw,7.5rem)}
    sets the track height, the stage's top and --pic-h */
 .tl-pin.pinned .tl-stage{position:sticky;top:var(--pin-top,80px)}
 .tl-pin.pinned .step .pic .slot{height:var(--pic-h,auto)}
+.tl-pin.pinned.trim .step .pic .slot{aspect-ratio:auto} /* a trimmed photo keeps the card's full width and crops, rather than narrowing */
 .tl-pin.pinned + .tl-nav{display:none}
+.tl-pin.tight .step .num{margin-bottom:.9rem}.tl-pin.tight .step .pic{margin-bottom:1rem}.tl-pin.tight .step h3{margin-bottom:.55rem}.tl-pin.tight .step p{margin-bottom:.9rem;line-height:1.65}.tl-pin.tight .step .falls{margin-bottom:0;padding-top:.75rem;gap:.35rem .9rem} /* set by main.js when the row only just misses the screen */
+.tl-pin.tight .step .falls li{font-size:.66rem;letter-spacing:.1em}.tl-pin.tight .step .state{display:none} /* compact: tags set closer, and the repeated "Confirmed" tick gives up its line */
 @media (max-width:1180px){.tl-pin.pinned .timeline{scroll-snap-type:none;overflow:hidden}} /* the scroll, not a swipe, moves the pinned rail */
 .timeline-note{margin-top:clamp(2.5rem,5vw,4rem);text-align:center}
 .timeline-note::before{content:"";display:block;width:140px;height:10px;margin:0 auto 1.4rem;background:var(--accent);-webkit-mask:var(--orn) center/contain no-repeat;mask:var(--orn) center/contain no-repeat;--orn:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 10'%3E%3Cpath d='M0 5h60M80 5h60M70 1.5l3.5 3.5-3.5 3.5-3.5-3.5z' fill='none' stroke='%23000'/%3E%3C/svg%3E")}

@@ -53,18 +53,23 @@
     function fit(){
       if (innerWidth === fitW) return; // mobile toolbars resize the height mid-scroll; only a real width change re-fits
       fitW = innerWidth; pinned = false;
-      pin.classList.remove('pinned'); pin.style.height = ''; stage.style.removeProperty('--pic-h');
+      pin.classList.remove('pinned', 'tight', 'trim'); pin.style.height = ''; stage.style.removeProperty('--pic-h');
       if (reduce) return;
       var fab = document.querySelector('.fab'), fabH = fab ? Math.max(0, innerHeight - fab.getBoundingClientRect().top) : 0; // keep the row clear of the floating contact bar
-      var navH = navBar ? navBar.offsetHeight : 0, room = innerHeight - navH - fabH - 24, slot = tl.querySelector('.pic .slot');
-      var over = tl.offsetHeight - room, picH = slot ? slot.offsetHeight - Math.max(0, over) : 0;
-      if (over > 0 && picH < 130) return; // trimming the photos would gut them: leave the row in the page flow
-      if (over > 0) stage.style.setProperty('--pic-h', picH + 'px');
+      var navH = navBar ? navBar.offsetHeight : 0, space = innerHeight - navH - fabH, slot = tl.querySelector('.pic .slot'), over = 0, picH = 0;
+      function trial(air){ // does the row fit with this much air around it, trimming the photos to no less than 130px?
+        pin.classList.remove('tight'); over = tl.offsetHeight - (space - air);
+        if (over > 0 && slot && slot.offsetHeight - over < 130){ pin.classList.add('tight'); over = tl.offsetHeight - (space - air); } // nearly fits (a long tag list makes every card taller): tighten the card spacing and measure again
+        picH = slot ? slot.offsetHeight - Math.max(0, over) : 0;
+        return !(over > 0 && picH < 130);
+      }
+      if (!trial(64) && !trial(24)){ pin.classList.remove('tight'); return; } // room to breathe first, a snug fit second; failing both, leave the row in the page flow
+      if (over > 0){ stage.style.setProperty('--pic-h', picH + 'px'); pin.classList.add('trim'); }
       pin.classList.add('pinned'); pinned = true;
       var h = stage.offsetHeight;
       pinTop = navH + Math.max(12, (innerHeight - navH - fabH - h) / 2);
       stage.style.setProperty('--pin-top', pinTop + 'px');
-      pin.style.height = (h + innerHeight * (0.3 * steps.length + 0.25)) + 'px'; // about a third of a screen of scroll per step
+      pin.style.height = (h + innerHeight * (0.55 * steps.length + 0.25)) + 'px'; // just over half a screen of scroll per step
     }
     function measure(){
       var y = scrollY;
@@ -74,13 +79,15 @@
       M.cw = steps[0].offsetWidth + parseFloat(getComputedStyle(tl).columnGap);
       M.max = tl.scrollWidth - tl.clientWidth;
       M.rail = M.max > 1; M.vh = innerHeight;
+      // in the page flow, the steps play out across the whole read (row entering, to its photos passing under the menu) rather than half a screen
+      M.span = Math.max(M.vh * 0.5, M.vh * 0.85 - (navBar ? navBar.offsetHeight : 0) + tl.offsetHeight * 0.25);
     }
     function aim(){ // where the scroll says the line and each step should be
       var y = scrollY, vh = M.vh, top = (pinned ? M.pin : M.tl) - y, p;
       var enter = clamp((vh * 0.92 - top) / (vh * 0.45)); // the first step arrives as the row comes into view
       if (pinned) p = (pinTop - top) / M.range / 0.85; // the last stretch holds the finished row
       else if (M.rail) p = enter ? (tl.scrollLeft + tl.clientWidth) / tl.scrollWidth : 0;
-      else p = (vh * 0.8 - top) / (vh * 0.5);
+      else p = (vh * 0.85 - top) / M.span;
       goal.p = clamp(p);
       var swiped = M.rail && !pinned, edge = swiped ? tl.getBoundingClientRect().right : 0;
       steps.forEach(function(s, i){
@@ -89,7 +96,7 @@
       });
     }
     function frame(ts){ // ease toward the goal at the same pace on 60 and 120 Hz screens, then rest
-      var dt = last ? Math.min(64, ts - last) : 16.7, k = 1 - Math.pow(0.9, dt / 16.7), busy = false; raf = 0;
+      var dt = last ? Math.min(64, ts - last) : 16.7, k = 1 - Math.pow(0.92, dt / 16.7), busy = false; raf = 0;
       now.p += (goal.p - now.p) * k;
       if (Math.abs(goal.p - now.p) < 0.0005) now.p = goal.p; else busy = true;
       tl.style.setProperty('--p', now.p.toFixed(4));

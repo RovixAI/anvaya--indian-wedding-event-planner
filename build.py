@@ -90,8 +90,9 @@ def cta(kicker, h, p, label="Book a Conversation", label2="Contact Us"):
 <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center"><a class="btn on-sage" href="#0" data-book>{label} {ARROW}</a><a class="btn on-sage" href="contact.html" style="border-color:rgba(244,241,234,.45)">{label2}</a></div></div></section>'''
 
 def banner(kicker, h, lede, trio):
+    ledes = "".join(f'<p class="lede">{p}</p>' for p in (lede if isinstance(lede, (list, tuple)) else [lede]))  # one paragraph, or several
     return f'''<header class="banner"><div class="wrap">
-<div class="copy"><p class="kicker">{kicker}</p><h1 class="h-display">{h}</h1><div class="rule"></div><p class="lede">{lede}</p></div>
+<div class="copy"><p class="kicker">{kicker}</p><h1 class="h-display">{h}</h1><div class="rule"></div>{ledes}</div>
 <div class="trio">{"".join(slot(s,b,lazy=False) for s,b in trio)}</div>
 </div></header>'''
 
@@ -179,7 +180,7 @@ TR_PLAN = [{"label": "Three Months", "note": "Time to settle the date with your 
 home = f'''<header class="hero" data-carousel><div class="wrap">
 <div class="copy">
 <div class="cap on"><p class="kicker">Indian &amp; South Asian Wedding &amp; Event Planning · South Florida</p><h1 class="h-display">Seamless Planning. Timeless Celebrations.</h1><div class="rule left"></div><p class="lede">Eight years of team experience. Cultural understanding. Trusted vendor relationships. One thoughtful plan—so you can enjoy every moment.</p><div class="actions"><a class="btn fill" href="#0" data-book>Plan Your Celebration {ARROW}</a><a class="btn" href="#unfolds">How We Plan</a></div></div>
-<div class="cap"><p class="kicker">Indian &amp; South Asian Weddings</p><h2 class="h-display">One Wedding Weekend. Every Moment Connected.</h2><div class="rule left"></div><p class="lede">Indian, Pakistani, Sikh, South Indian and multicultural celebrations—every ritual and wedding event connected through one clear plan.</p><div class="actions"><a class="btn fill" href="weddings.html">Explore Wedding Planning {ARROW}</a></div></div>
+<div class="cap"><p class="kicker">Indian &amp; South Asian Weddings</p><h2 class="h-display">Every Tradition Honored. Every Detail Thoughtfully Planned.</h2><div class="rule left"></div><p class="lede">Indian, Pakistani, Sikh, South Indian and multicultural celebrations—every ritual and wedding event connected through one clear plan.</p><div class="actions"><a class="btn fill" href="weddings.html">Explore Wedding Planning {ARROW}</a></div></div>
 <div class="cap"><p class="kicker">Milestones · Traditions · Corporate</p><h2 class="h-display">Meaningful Moments. Beautifully Brought Together.</h2><div class="rule left"></div><p class="lede">From meaningful traditions and milestone celebrations to company gatherings, we handle the details so you can enjoy the occasion.</p><div class="actions"><a class="btn fill" href="traditions.html">Explore Traditions {ARROW}</a><a class="btn" href="#services">View All Services</a></div></div>
 <div class="dots" role="tablist" aria-label="Celebrations"><button role="tab" aria-selected="true">Anvaya</button><button role="tab" aria-selected="false">Weddings</button><button role="tab" aria-selected="false">Milestones, Traditions &amp; Corporate</button></div>
 </div>
@@ -189,11 +190,11 @@ home = f'''<header class="hero" data-carousel><div class="wrap">
 <section><div class="wrap"><div class="letter reveal">
 <div class="photo">{slot("about/kitchen.jpg","Garlands on the kitchen floor, wedding morning")}<span class="plate">Est. Miami</span></div>
 <div>
-<p class="kicker">The Meaning Behind Anvaya</p><h2 class="h-serif" style="margin:.6rem 0 1.4rem">Experienced Planning. Celebrations That Feel Like Yours.</h2>
+<p class="kicker">About Anvaya</p><h2 class="h-serif" style="margin:.6rem 0 1.4rem"><span style="display:inline-block">Your Celebration.</span> <span style="display:inline-block">Every Detail Taken Care Of.</span></h2>
 <div class="text">
-<p>At Anvaya, every celebration starts with your story—your family, your traditions and the moments you want to share. We bring those details together through thoughtful, full-service planning.</p>
-<p>Our team brings eight years of event experience developed through JRN Events, including work across hundreds of weddings and celebrations. We combine that hands-on understanding with South Florida knowledge and an extensive network of event professionals.</p>
-<p>From venue selection and vendor negotiations to timelines and on-site coordination, we give you meaningful choices and one clear plan. You enjoy the celebration; we take care of what brings it to life.</p>
+<p>At Anvaya, every celebration begins with your story, your family, and your traditions. We bring everything together through thoughtful planning, ensuring every detail is considered and every tradition is&nbsp;honored.</p>
+<p>Our team brings eight years of experience through JRN Events, having worked on hundreds of weddings and celebrations across different cultures. With deep South Florida knowledge and strong vendor relationships, we help you find quality services at competitive&nbsp;prices.</p>
+<p>From venue selection and vendor negotiations to timelines and on-site coordination, we take care of the details so you and your family can be fully present and enjoy every&nbsp;moment.</p>
 <p class="sign">Anvaya</p>
 </div></div></div></div></section>
 
@@ -271,7 +272,9 @@ home = f'''<header class="hero" data-carousel><div class="wrap">
 ''' + cta("Begin Here","Your Celebration Starts with a Conversation","Tell us what you are planning, which traditions matter and where you imagine bringing everyone together. We’ll explore how to make it beautifully yours.", label2="Contact Anvaya")
 
 # ------------------------------------------------------------------ ABOUT
-about = banner("Our story","We grew up at these celebrations","Anvaya is a wedding and event planning studio based in Miami and working across Florida, founded by people who learned this work in their own families' kitchens and ballrooms. This is who we are and what we believe.",
+about = banner("Our Story","Eight Years of Experience. Hundreds of Celebrations.",
+ ["Anvaya brings together eight years of event experience developed through JRN Events, including hundreds of weddings and celebrations across different cultures and traditions.",
+  "We understand what makes each celebration meaningful, from honoring family traditions to coordinating every detail. With trusted vendor relationships, thoughtful planning, and a commitment to quality and value, we take care of everything so you can enjoy the moments that matter most."],
  [("about/kitchen.jpg","Wedding morning, garlands on the kitchen floor"),("studio/team.jpg","The Anvaya team"),("about/evening.jpg","Last guests leaving, lanterns still lit")]) + f'''
 <section><div class="wrap">
 <div class="head reveal"><p class="kicker">The Story of Anvaya</p><h2 class="h-display">Our Experience. Your Celebration. One Clear Plan.</h2><div class="rule"></div></div>
@@ -356,11 +359,11 @@ weddings = banner("Weddings","Your wedding, celebrated the way your family remem
 <section><div class="wrap"><div class="letter reveal">
 <div class="photo">{slot("weddings/ceremony.jpg","Pheras, ghee on the fire")}<span class="plate">Weddings</span></div>
 <div>
-<p class="kicker">What We Plan</p><h2 class="h-serif" style="margin:.6rem 0 1.4rem">One Wedding Weekend. Every Tradition Considered.</h2>
+<p class="kicker">What We Plan</p><h2 class="h-serif" style="margin:.6rem 0 1.4rem">Every Tradition Honored. Every Detail Considered.</h2>
 <div class="text">
-<p>A wedding weekend has many beautiful chapters: mehndi, haldi or pithi, sangeet or garba, baraat, ceremony, reception and the moments in between. Each deserves its own character. All deserve one thoughtful plan.</p>
-<p>Anvaya coordinates venues, budgets, vendor options, family needs and guest movement across each celebration. From the first welcome to the last farewell, we make the whole weekend work together.</p>
-<p>We plan Indian, Pakistani, Bangladeshi, Sikh, South Indian, Muslim, Hindu, Christian and interfaith weddings across South Florida. From a nikah and walima to an Anand Karaj or South Indian muhurtham, we work with your family and officiants to respect the traditions that define your celebration.</p>
+<p>Every wedding is a beautiful combination of traditions, family, and unforgettable moments. From mehndi, haldi, and sangeet to the ceremony and reception, we ensure every celebration receives the attention it&nbsp;deserves.</p>
+<p>Anvaya brings together venues, trusted vendors, budgets, and family needs through one thoughtful plan. Our strong vendor relationships help us secure competitive pricing without compromising on quality or service, while we coordinate every detail so you can enjoy your celebration.</p>
+<p>We plan Indian, Pakistani, Bangladeshi, Sikh, South Indian, Muslim, Hindu, Christian, and interfaith weddings across South Florida, honoring the traditions that make your celebration uniquely yours.</p>
 <p><a class="textlink" href="traditions.html">Explore Traditional Ceremonies</a></p>
 </div></div></div></div></section>
 
