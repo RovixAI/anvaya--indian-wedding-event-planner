@@ -110,7 +110,11 @@ section{padding-block:clamp(4.5rem,9vw,7.5rem)}
 .banner{position:relative;background:var(--ivory);padding-block:clamp(2.5rem,5vw,4rem) 0}
 .banner .copy{display:grid;gap:.9rem;justify-items:center;text-align:center;margin-bottom:clamp(1.8rem,3.5vw,2.6rem);max-width:720px;margin-inline:auto}
 .banner .lede{font-size:1rem}
-.banner .copy .lede{text-align:center}
+.banner .copy .lede{text-align:center;text-wrap:balance} /* centred copy: even line lengths, no stranded last words */
+@media (max-width:560px){.banner .copy .lede{text-wrap:pretty}} /* phones run past the six lines balance handles; pretty still keeps a short last line from being stranded */
+/* two-paragraph banners (About): one shared measure, and the first paragraph set as a serif lead-in above the body copy */
+.banner .copy:has(.lede + .lede) .lede{max-width:34rem}
+.banner .copy .rule + .lede:has(+ .lede){max-width:32rem;font-family:var(--display);font-size:clamp(1.15rem,1rem + .5vw,1.38rem);line-height:1.55;color:var(--ink);text-wrap:balance}
 .trio{display:grid;grid-template-columns:1fr 1.5fr 1fr;gap:14px;align-items:end}
 .trio .slot{aspect-ratio:3/4;min-height:300px}
 .trio .slot:nth-child(2){aspect-ratio:4/5;min-height:380px}
@@ -123,6 +127,10 @@ section{padding-block:clamp(4.5rem,9vw,7.5rem)}
 .letter{display:grid;grid-template-columns:1fr 1.5fr;gap:clamp(2rem,6vw,6rem);align-items:start}
 .letter .text{display:grid;gap:1.2rem;color:var(--ink-2);font-size:1.03rem}
 .letter .text p:first-child::first-letter{font-family:var(--display);font-size:3.4em;float:left;line-height:.8;margin:.08em .12em 0 0;color:var(--accent)}
+.letter .text p{text-wrap:pretty} /* no single word left alone on a last line */
+@supports (initial-letter:2) or (-webkit-initial-letter:2){ /* a true two-line drop cap: sized and set on the text's own baselines by the browser */
+  .letter .text p:first-child::first-letter{float:none;font-size:inherit;line-height:inherit;margin:0 .25rem 0 0;-webkit-initial-letter:2;initial-letter:2}
+}
 .article{max-width:46rem;display:grid;gap:1.2rem;color:var(--ink-2);font-size:1.03rem;line-height:1.85}
 .article h1{color:var(--ink);margin-bottom:.4rem}
 .article h2{font-family:var(--display);font-size:1.6rem;line-height:1.25;color:var(--ink);margin-top:1.4rem}
@@ -206,7 +214,10 @@ section{padding-block:clamp(4.5rem,9vw,7.5rem)}
    sets the track height, the stage's top and --pic-h */
 .tl-pin.pinned .tl-stage{position:sticky;top:var(--pin-top,80px)}
 .tl-pin.pinned .step .pic .slot{height:var(--pic-h,auto)}
+.tl-pin.pinned.trim .step .pic .slot{aspect-ratio:auto} /* a trimmed photo keeps the card's full width and crops, rather than narrowing */
 .tl-pin.pinned + .tl-nav{display:none}
+.tl-pin.tight .step .num{margin-bottom:.9rem}.tl-pin.tight .step .pic{margin-bottom:1rem}.tl-pin.tight .step h3{margin-bottom:.55rem}.tl-pin.tight .step p{margin-bottom:.9rem;line-height:1.65}.tl-pin.tight .step .falls{margin-bottom:0;padding-top:.75rem;gap:.35rem .9rem} /* set by main.js when the row only just misses the screen */
+.tl-pin.tight .step .falls li{font-size:.66rem;letter-spacing:.1em}.tl-pin.tight .step .state{display:none} /* compact: tags set closer, and the repeated "Confirmed" tick gives up its line */
 @media (max-width:1180px){.tl-pin.pinned .timeline{scroll-snap-type:none;overflow:hidden}} /* the scroll, not a swipe, moves the pinned rail */
 .timeline-note{margin-top:clamp(2.5rem,5vw,4rem);text-align:center}
 .timeline-note::before{content:"";display:block;width:140px;height:10px;margin:0 auto 1.4rem;background:var(--accent);-webkit-mask:var(--orn) center/contain no-repeat;mask:var(--orn) center/contain no-repeat;--orn:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 10'%3E%3Cpath d='M0 5h60M80 5h60M70 1.5l3.5 3.5-3.5 3.5-3.5-3.5z' fill='none' stroke='%23000'/%3E%3C/svg%3E")}
@@ -794,18 +805,23 @@ body{padding-bottom:4.5rem}
     function fit(){
       if (innerWidth === fitW) return; // mobile toolbars resize the height mid-scroll; only a real width change re-fits
       fitW = innerWidth; pinned = false;
-      pin.classList.remove('pinned'); pin.style.height = ''; stage.style.removeProperty('--pic-h');
+      pin.classList.remove('pinned', 'tight', 'trim'); pin.style.height = ''; stage.style.removeProperty('--pic-h');
       if (reduce) return;
       var fab = document.querySelector('.fab'), fabH = fab ? Math.max(0, innerHeight - fab.getBoundingClientRect().top) : 0; // keep the row clear of the floating contact bar
-      var navH = navBar ? navBar.offsetHeight : 0, room = innerHeight - navH - fabH - 24, slot = tl.querySelector('.pic .slot');
-      var over = tl.offsetHeight - room, picH = slot ? slot.offsetHeight - Math.max(0, over) : 0;
-      if (over > 0 && picH < 130) return; // trimming the photos would gut them: leave the row in the page flow
-      if (over > 0) stage.style.setProperty('--pic-h', picH + 'px');
+      var navH = navBar ? navBar.offsetHeight : 0, space = innerHeight - navH - fabH, slot = tl.querySelector('.pic .slot'), over = 0, picH = 0;
+      function trial(air){ // does the row fit with this much air around it, trimming the photos to no less than 130px?
+        pin.classList.remove('tight'); over = tl.offsetHeight - (space - air);
+        if (over > 0 && slot && slot.offsetHeight - over < 130){ pin.classList.add('tight'); over = tl.offsetHeight - (space - air); } // nearly fits (a long tag list makes every card taller): tighten the card spacing and measure again
+        picH = slot ? slot.offsetHeight - Math.max(0, over) : 0;
+        return !(over > 0 && picH < 130);
+      }
+      if (!trial(64) && !trial(24)){ pin.classList.remove('tight'); return; } // room to breathe first, a snug fit second; failing both, leave the row in the page flow
+      if (over > 0){ stage.style.setProperty('--pic-h', picH + 'px'); pin.classList.add('trim'); }
       pin.classList.add('pinned'); pinned = true;
       var h = stage.offsetHeight;
       pinTop = navH + Math.max(12, (innerHeight - navH - fabH - h) / 2);
       stage.style.setProperty('--pin-top', pinTop + 'px');
-      pin.style.height = (h + innerHeight * (0.3 * steps.length + 0.25)) + 'px'; // about a third of a screen of scroll per step
+      pin.style.height = (h + innerHeight * (0.55 * steps.length + 0.25)) + 'px'; // just over half a screen of scroll per step
     }
     function measure(){
       var y = scrollY;
@@ -815,13 +831,15 @@ body{padding-bottom:4.5rem}
       M.cw = steps[0].offsetWidth + parseFloat(getComputedStyle(tl).columnGap);
       M.max = tl.scrollWidth - tl.clientWidth;
       M.rail = M.max > 1; M.vh = innerHeight;
+      // in the page flow, the steps play out across the whole read (row entering, to its photos passing under the menu) rather than half a screen
+      M.span = Math.max(M.vh * 0.5, M.vh * 0.85 - (navBar ? navBar.offsetHeight : 0) + tl.offsetHeight * 0.25);
     }
     function aim(){ // where the scroll says the line and each step should be
       var y = scrollY, vh = M.vh, top = (pinned ? M.pin : M.tl) - y, p;
       var enter = clamp((vh * 0.92 - top) / (vh * 0.45)); // the first step arrives as the row comes into view
       if (pinned) p = (pinTop - top) / M.range / 0.85; // the last stretch holds the finished row
       else if (M.rail) p = enter ? (tl.scrollLeft + tl.clientWidth) / tl.scrollWidth : 0;
-      else p = (vh * 0.8 - top) / (vh * 0.5);
+      else p = (vh * 0.85 - top) / M.span;
       goal.p = clamp(p);
       var swiped = M.rail && !pinned, edge = swiped ? tl.getBoundingClientRect().right : 0;
       steps.forEach(function(s, i){
@@ -830,7 +848,7 @@ body{padding-bottom:4.5rem}
       });
     }
     function frame(ts){ // ease toward the goal at the same pace on 60 and 120 Hz screens, then rest
-      var dt = last ? Math.min(64, ts - last) : 16.7, k = 1 - Math.pow(0.9, dt / 16.7), busy = false; raf = 0;
+      var dt = last ? Math.min(64, ts - last) : 16.7, k = 1 - Math.pow(0.92, dt / 16.7), busy = false; raf = 0;
       now.p += (goal.p - now.p) * k;
       if (Math.abs(goal.p - now.p) < 0.0005) now.p = goal.p; else busy = true;
       tl.style.setProperty('--p', now.p.toFixed(4));
