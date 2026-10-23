@@ -15,7 +15,7 @@ SITE = "https://anvaya-events.vercel.app"
 PHONE_TEL = "+1XXXXXXXXXX"      # fill in: digits only after +1
 WHATSAPP = "1XXXXXXXXXX"        # fill in: country code + number, digits only
 
-PAGES = [("index","Home"),("about","About"),("weddings","Weddings"),("milestones","Milestones"),("corporate","Corporate"),("contact","Contact")]
+PAGES = [("index","Home"),("about","About"),("weddings","Weddings"),("milestones","Milestones"),("traditions","Traditions"),("corporate","Corporate"),("contact","Contact")]
 
 def slot(src, brief, cls="", lazy=True):
     load = ' loading="lazy"' if lazy else ''  # first-screen photos load straight away
@@ -44,6 +44,7 @@ FAB = f'''<div class="fab" aria-label="Quick contact">
 <div class="chooser" style="justify-content:center">
 <label><input type="radio" name="bktype" value="Wedding or Wedding Weekend" id="bk-w" checked><span>Wedding or Wedding Weekend</span></label>
 <label><input type="radio" name="bktype" value="Milestone Celebration" id="bk-m"><span>Milestone Celebration</span></label>
+<label><input type="radio" name="bktype" value="Traditional Ceremony" id="bk-t"><span>Traditional Ceremony</span></label>
 <label><input type="radio" name="bktype" value="Corporate Event" id="bk-c"><span>Corporate Event</span></label>
 <label><input type="radio" name="bktype" value="Something Else" id="bk-o"><span>Something Else</span></label>
 </div>
@@ -75,8 +76,8 @@ FAB = f'''<div class="fab" aria-label="Quick contact">
 
 FOOTER = f'''<footer><div class="wrap">
 <div class="top">
-<div style="display:grid;gap:1rem"><a class="brand" href="index.html"><img src="{IMG}/logo-dark.webp" alt="Anvaya" onerror="this.closest('.brand').classList.add('nologo')"><span class="wordmark">Anvaya</span></a><p>Anvaya plans Indian and South Asian weddings, milestone celebrations and corporate events across Miami, Fort Lauderdale, Palm Beach and Florida—connecting meaningful moments through thoughtful planning.</p></div>
-<div><h4>Celebrations</h4><ul><li><a href="weddings.html">Indian &amp; South Asian Weddings</a></li><li><a href="milestones.html">Milestone Celebrations</a></li><li><a href="corporate.html">Corporate Events</a></li></ul></div>
+<div style="display:grid;gap:1rem"><a class="brand" href="index.html"><img src="{IMG}/logo-dark.webp" alt="Anvaya" onerror="this.closest('.brand').classList.add('nologo')"><span class="wordmark">Anvaya</span></a><p>Anvaya plans weddings, traditional ceremonies, milestones and corporate events across South Florida and beyond. Eight years of team experience, culturally informed planning and considered vendor choices. Seamless Planning. Timeless Celebrations.</p></div>
+<div><h4>Celebrations</h4><ul><li><a href="weddings.html">Weddings</a></li><li><a href="milestones.html">Milestones</a></li><li><a href="traditions.html">Traditions</a></li><li><a href="corporate.html">Corporate</a></li></ul></div>
 <div><h4>Anvaya</h4><ul><li><a href="about.html">Our Story</a></li><li><a href="index.html#unfolds">How We Work</a></li><li><a href="blog/index.html">Blog</a></li><li><a href="contact.html">Contact Us</a></li><li><a href="#0" data-book>Book a Conversation</a></li></ul></div>
 <div><h4>Find Us</h4><ul><li><span class="placeholder">[Phone]</span></li><li><span class="placeholder">[Email]</span></li><li>Miami · Fort Lauderdale · Palm Beach</li><li><a href="#0">Instagram</a></li></ul></div>
 </div>
@@ -98,9 +99,10 @@ def timeline(steps, note):
     """steps: (title, text, [falls], (img, brief) or None)"""
     out = []
     for k,(t,x,falls,pic) in enumerate(steps):
-        p = f'<div class="pic">{slot(pic[0],pic[1])}</div>' if pic else ''
-        out.append(f'<div class="step"><span class="tick"></span><div class="body"><span class="num">{"0"+str(k+1)}</span><h3>{t}</h3><p>{x}</p><ul class="falls">{"".join(f"<li>{f}</li>" for f in falls)}</ul><span class="state">Confirmed</span></div>{p}</div>')
-    return f'<div class="timeline">{"".join(out)}</div><div class="timeline-note reveal"><p>{note}</p></div>'
+        p = f'<div class="pic" style="--src:url({IMG}/{pic[0]})">{slot(pic[0],pic[1])}</div>' if pic else ''  # --src: the black-and-white preview copy
+        out.append(f'<li class="step" style="--i:{k}"><span class="num">{k+1:02}</span>{p}<div class="body"><h3>{t}</h3><p>{x}</p><ul class="falls">{"".join(f"<li>{f}</li>" for f in falls)}</ul><span class="state"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 4.5"/></svg>Confirmed</span></div></li>')
+    nav = f'<div class="tl-nav"><button type="button" class="prev" aria-label="Previous step">{ARROW}</button><span class="tl-count" aria-hidden="true"><b>01</b><i></i>{len(steps):02}</span><button type="button" class="next" aria-label="Next step">{ARROW}</button></div>'
+    return f'<div class="tl-pin"><div class="tl-stage"><ol class="timeline" style="--n:{len(steps)-1}">{"".join(out)}</ol></div></div>{nav}<div class="timeline-note reveal"><p>{note}</p></div>'
 
 def faq(items):
     return '<div class="faq reveal">' + "".join(f'<details><summary>{q}</summary><p>{a}</p></details>' for q,a in items) + '</div>'
@@ -137,14 +139,27 @@ def ledger(items):
     views = "".join(f'<figure class="slot{" on" if k==0 else ""}"><img src="{IMG}/{pic[0]}" alt="{pic[1]}" loading="lazy"><figcaption>{pic[1]}</figcaption></figure>' for k,(t,x,pic) in enumerate(items))
     return f'<div class="ledger reveal"><ol>{li}</ol><div class="view">{views}<span class="cap"></span></div></div>'
 
-def planner(data, kicker, h, lede, imgs, band="ivory"):
-    tabs = "".join(f'<button type="button" role="tab" aria-selected="{"true" if k==0 else "false"}">{d["label"]}</button>' for k,d in enumerate(data))
+def pace_id(label):  # "Nine Months" -> "nine-months": the anchor each preview links to
+    return label.lower().replace(" ", "-")
+
+def planner(data, imgs, band="white"):
+    tabs = "".join(f'<button type="button" role="tab" id="{pace_id(d["label"])}" aria-selected="{"true" if k==0 else "false"}">{d["label"]}</button>' for k,d in enumerate(data))
     return f'''<section class="{band}"><div class="wrap">
-<div class="head reveal"><p class="kicker">{kicker}</p><h2 class="h-display">{h}</h2><div class="rule"></div><p class="lede">{lede}</p></div>
 <div class="planner" data-plan='{json.dumps(data).replace("'", "&#39;")}' data-imgs='{json.dumps([[f"{IMG}/{a}",b] for a,b in imgs]).replace("'", "&#39;")}'>
 <div class="horizons" role="tablist">{tabs}</div>
 <p class="plan-note"></p>
 <div class="deck"></div>
+</div></div></section>'''
+
+CAL_PAGE = {"weddings":"blog/indian-wedding-planning-timeline/index","milestones":"milestone-planning-calendar","traditions":"traditions-planning-calendar","corporate":"corporate-planning-calendar"}  # each calendar has its own page; the wedding one is a blog resource
+
+def plan_link(sid, data, kicker, h, lede, band="ivory"):
+    """the calendar lives on its own page; this preview lists each pace and links straight to it"""
+    url = CAL_PAGE[sid] + ".html"
+    paces = "".join(f'<li><a href="{url}#{pace_id(d["label"])}"><span class="label">{d["label"]}</span><span class="note">{d["note"]}</span>{ARROW}</a></li>' for d in data)
+    return f'''<section class="{band}"><div class="wrap"><div class="plan-link reveal">
+<div class="copy"><p class="kicker">{kicker}</p><h2 class="h-serif">{h}</h2><p class="lede">{lede}</p><a class="btn fill" href="{url}">View the Full Calendar {ARROW}</a></div>
+<ol class="paces">{paces}</ol>
 </div></div></section>'''
 
 # image shorthands
@@ -155,49 +170,58 @@ def mosaic_set(trio, on):
     return f'<div class="set{" on" if on else ""}">{"".join(slot(s,b,lazy=not on) for s,b in trio)}</div>'
 
 WED_PLAN = [{"label": "Fourteen Months", "note": "The unhurried version. Plenty of time to visit venues twice, taste menus slowly and let both families weigh in.", "rows": [{"when": "14", "unit": "months out", "title": "We sit down together", "text": "The first conversation, both families if you wish. Every event goes on the list with a guest count and a budget.", "items": ["Event list", "Budget", "Guest estimate", "Priest or officiant's dates"]}, {"when": "13", "unit": "months out", "title": "Your venues are held", "text": "Ceremony, reception and the hotel block, walked and contracted before anything else.", "items": ["Ceremony venue", "Reception venue", "Hotel block", "Save-the-dates"]}, {"when": "11", "unit": "months out", "title": "Your vendor family", "text": "Caterer, d\u00e9cor, photo and film, music and hair and makeup, each chosen from two or three we trust.", "items": ["Caterer", "D\u00e9cor &amp; florals", "Photographer", "Videographer", "DJ &amp; dhol", "Hair &amp; makeup"]}, {"when": "8", "unit": "months out", "title": "Design and stationery", "text": "Mandap, linens, lighting and the invitation suite, tasted and proofed.", "items": ["Design story", "Menu tasting", "Invitations", "Outfits calendar"]}, {"when": "4", "unit": "months out", "title": "Guests and logistics", "text": "Invitations out, replies tracked, transport and the baraat route agreed with the venue.", "items": ["Invitations sent", "Transport", "Baraat route", "Welcome bags"]}, {"when": "6", "unit": "weeks out", "title": "The timeline", "text": "Minute by minute for each day, shared with every vendor. Seating, final counts, weather plan.", "items": ["Day timelines", "Seating", "Final counts", "Weather plan"]}, {"when": "The", "unit": "weekend", "title": "You are guests", "text": "We are there before the first florist and after the last car.", "items": ["On-site team", "Vendor care", "Send-off"]}]}, {"label": "Nine Months", "note": "Comfortable. Venues go first within the first fortnight, then the rest follows at a steady pace.", "rows": [{"when": "9", "unit": "months out", "title": "We sit down, venues held", "text": "The first conversation and the venue walkthroughs happen in the same fortnight.", "items": ["Event list", "Budget", "Ceremony venue", "Reception venue", "Hotel block"]}, {"when": "8", "unit": "months out", "title": "Your vendor family", "text": "The full team booked within a month of the venues.", "items": ["Caterer", "D\u00e9cor &amp; florals", "Photo &amp; film", "Music", "Hair &amp; makeup", "Officiant"]}, {"when": "6", "unit": "months out", "title": "Design and stationery", "text": "Tasting, design board and invitations in one stretch.", "items": ["Design story", "Tasting", "Invitations"]}, {"when": "3", "unit": "months out", "title": "Guests and logistics", "text": "Replies tracked, transport and welcome bags arranged.", "items": ["Invitations sent", "Transport", "Welcome bags"]}, {"when": "5", "unit": "weeks out", "title": "The timeline", "text": "Every day written down, every vendor briefed.", "items": ["Day timelines", "Seating", "Final counts"]}, {"when": "The", "unit": "weekend", "title": "You are guests", "text": "We hold it. You live it.", "items": ["On-site team", "Send-off"]}]}, {"label": "Six Months", "note": "Yes, it can be done beautifully. We move fast in the first three weeks, and the order never changes: venues first, always.", "rows": [{"when": "6", "unit": "months out", "title": "Week one: we meet, venues held", "text": "We talk on day one and walk venues the same week. Contracts signed before the month is out.", "items": ["Event list", "Budget", "Ceremony venue", "Reception venue"]}, {"when": "5", "unit": "months out", "title": "The team, booked together", "text": "Caterer, d\u00e9cor, photo, music, hair and makeup and officiant confirmed in a single push.", "items": ["Caterer", "D\u00e9cor", "Photo &amp; film", "Music", "Hair &amp; makeup", "Officiant", "Hotel block"]}, {"when": "4", "unit": "months out", "title": "Design, tasting, invitations", "text": "Decisions made in one sitting where possible. Digital invitations if print timelines are tight.", "items": ["Design story", "Tasting", "Invitations out"]}, {"when": "2", "unit": "months out", "title": "Guests and logistics", "text": "Replies, transport, baraat route, outfits.", "items": ["Replies", "Transport", "Baraat route"]}, {"when": "3", "unit": "weeks out", "title": "The timeline", "text": "Written, shared and rehearsed.", "items": ["Day timelines", "Seating", "Final counts"]}, {"when": "The", "unit": "weekend", "title": "You are guests", "text": "Same care, same calm.", "items": ["On-site team", "Send-off"]}]}]
-MS_PLAN = [{"label": "Three Months", "note": "Room to breathe. Good for a fiftieth anniversary or a first birthday with family flying in.", "rows": [{"when": "12", "unit": "weeks out", "title": "We listen, the room is held", "text": "Who it is for, who is coming, and the venue chosen from two or three we show you.", "items": ["Honouree", "Guest list", "Budget", "Venue held"]}, {"when": "9", "unit": "weeks out", "title": "Your people", "text": "Caterer or restaurant, florist, photographer, music, cake.", "items": ["Catering", "Flowers", "Photographer", "Music", "Cake"]}, {"when": "6", "unit": "weeks out", "title": "Invitations and design", "text": "Invitations out, a design story for the room, the programme sketched with the family.", "items": ["Invitations", "Design story", "Menu", "Programme"]}, {"when": "1", "unit": "week out", "title": "Final numbers", "text": "Counts to the kitchen, run-of-show for toasts and slideshows, call times.", "items": ["Final count", "Run-of-show", "Call times"]}, {"when": "The", "unit": "day", "title": "You host", "text": "We set the room and keep the evening flowing.", "items": ["Room set", "Evening held"]}]}, {"label": "Six Weeks", "note": "Our usual rhythm for most milestones. Brisk, but nothing is rushed.", "rows": [{"when": "6", "unit": "weeks out", "title": "We listen, the room is held", "text": "One call, two or three venues, the one you love held by the end of the week.", "items": ["Honouree", "Guest list", "Venue held"]}, {"when": "5", "unit": "weeks out", "title": "Your people", "text": "Catering, flowers, photographer, music and cake booked together.", "items": ["Catering", "Flowers", "Photographer", "Music", "Cake"]}, {"when": "4", "unit": "weeks out", "title": "Invitations out", "text": "Digital or printed, replies tracked for you.", "items": ["Invitations", "Replies", "Design story"]}, {"when": "1", "unit": "week out", "title": "Final numbers", "text": "Counts, run-of-show, call times.", "items": ["Final count", "Run-of-show"]}, {"when": "The", "unit": "day", "title": "You host", "text": "We are there first and leave last.", "items": ["Room set", "Evening held"]}]}, {"label": "Three Weeks", "note": "A surprise party, a last-minute visit from family abroad. We have done it, and done it well.", "rows": [{"when": "3", "unit": "weeks out", "title": "Everything in week one", "text": "Room held, caterer and florist booked, invitations out, all within seven days.", "items": ["Venue held", "Catering", "Flowers", "Invitations out"]}, {"when": "2", "unit": "weeks out", "title": "The details", "text": "Photographer, music, cake, a short programme.", "items": ["Photographer", "Music", "Cake", "Programme"]}, {"when": "3", "unit": "days out", "title": "Final numbers", "text": "Counts and call times.", "items": ["Final count", "Call times"]}, {"when": "The", "unit": "day", "title": "You host", "text": "Same calm, shorter runway.", "items": ["Room set", "Evening held"]}]}]
-CORP_PLAN = [{"label": "Twelve Weeks", "note": "Ideal for a gala, a launch or anything with a stage and a programme.", "rows": [{"when": "12", "unit": "weeks out", "title": "Brief and venue", "text": "You brief us, we return a one-page plan and a cost estimate in three working days, and hold the venue.", "items": ["Brief", "One-page plan", "Estimate", "Venue held", "COI"]}, {"when": "9", "unit": "weeks out", "title": "Production team", "text": "Staging and AV, catering, d\u00e9cor, photographer, entertainment and registration.", "items": ["AV &amp; staging", "Catering", "D\u00e9cor", "Photographer", "Entertainment", "Registration"]}, {"when": "6", "unit": "weeks out", "title": "Brand and invitations", "text": "Signage, screens, stationery and gifting proofed against your guidelines. Invitations out.", "items": ["Signage proofs", "Screens", "Invitations", "Gifting"]}, {"when": "3", "unit": "weeks out", "title": "Run-of-show", "text": "Minute by minute, speaker briefings, rehearsal slots, seating, contingency.", "items": ["Run-of-show", "Rehearsal", "Seating", "Contingency"]}, {"when": "1", "unit": "week out", "title": "Final confirmations", "text": "Headcount to the caterer, badges printed, call sheet issued, your team briefed.", "items": ["Final count", "Badges", "Call sheet", "Team brief"]}, {"when": "Event", "unit": "day", "title": "We run the floor", "text": "Your team hosts. Afterwards, one debrief, one invoice.", "items": ["Floor held", "Debrief", "One invoice"]}]}, {"label": "Eight Weeks", "note": "Our standard runway. Everything above, in a tighter sequence.", "rows": [{"when": "8", "unit": "weeks out", "title": "Brief and venue", "text": "Plan, estimate and venue in the first week.", "items": ["Brief", "Plan", "Venue held", "COI"]}, {"when": "6", "unit": "weeks out", "title": "Production team", "text": "Booked together.", "items": ["AV &amp; staging", "Catering", "D\u00e9cor", "Photographer", "Registration"]}, {"when": "4", "unit": "weeks out", "title": "Brand and invitations", "text": "Proofs and invitations out.", "items": ["Signage proofs", "Invitations"]}, {"when": "2", "unit": "weeks out", "title": "Run-of-show", "text": "Written and rehearsed.", "items": ["Run-of-show", "Rehearsal", "Seating"]}, {"when": "Event", "unit": "day", "title": "We run the floor", "text": "One debrief, one invoice.", "items": ["Floor held", "One invoice"]}]}, {"label": "Four Weeks", "note": "A client dinner, a holiday party, a team offsite. Quick, and still on brand.", "rows": [{"when": "4", "unit": "weeks out", "title": "Brief, venue, team", "text": "All three in the first week.", "items": ["Brief", "Venue held", "Catering", "AV"]}, {"when": "2", "unit": "weeks out", "title": "Invitations and run-of-show", "text": "Out and written.", "items": ["Invitations", "Run-of-show"]}, {"when": "3", "unit": "days out", "title": "Final confirmations", "text": "Counts and call sheet.", "items": ["Final count", "Call sheet"]}, {"when": "Event", "unit": "day", "title": "We run the floor", "text": "Your team hosts.", "items": ["Floor held", "One invoice"]}]}]
+MS_PLAN = [{"label": "Three Months", "note": "Room to breathe. Good for a fiftieth anniversary or a first birthday with family flying in.", "rows": [{"when": "12", "unit": "weeks out", "title": "We listen, the room is held", "text": "Who it is for, who is coming, and the venue chosen from two or three we show you.", "items": ["Guest of honor", "Guest list", "Budget", "Venue held"]}, {"when": "9", "unit": "weeks out", "title": "Your people", "text": "Caterer or restaurant, florist, photographer, music, cake.", "items": ["Catering", "Flowers", "Photographer", "Music", "Cake"]}, {"when": "6", "unit": "weeks out", "title": "Invitations and design", "text": "Invitations out, a design story for the room, the program sketched with the family.", "items": ["Invitations", "Design story", "Menu", "Program"]}, {"when": "1", "unit": "week out", "title": "Final numbers", "text": "Counts to the kitchen, run-of-show for toasts and slideshows, call times.", "items": ["Final count", "Run-of-show", "Call times"]}, {"when": "The", "unit": "day", "title": "You host", "text": "We set the room and keep the evening flowing.", "items": ["Room set", "Evening held"]}]}, {"label": "Six Weeks", "note": "Our usual rhythm for most milestones. Brisk, but nothing is rushed.", "rows": [{"when": "6", "unit": "weeks out", "title": "We listen, the room is held", "text": "One call, two or three venues, the one you love held by the end of the week.", "items": ["Guest of honor", "Guest list", "Venue held"]}, {"when": "5", "unit": "weeks out", "title": "Your people", "text": "Catering, flowers, photographer, music and cake booked together.", "items": ["Catering", "Flowers", "Photographer", "Music", "Cake"]}, {"when": "4", "unit": "weeks out", "title": "Invitations out", "text": "Digital or printed, replies tracked for you.", "items": ["Invitations", "Replies", "Design story"]}, {"when": "1", "unit": "week out", "title": "Final numbers", "text": "Counts, run-of-show, call times.", "items": ["Final count", "Run-of-show"]}, {"when": "The", "unit": "day", "title": "You host", "text": "We are there first and leave last.", "items": ["Room set", "Evening held"]}]}, {"label": "Three Weeks", "note": "A surprise party, a last-minute visit from family abroad. A short runway, planned with the same care.", "rows": [{"when": "3", "unit": "weeks out", "title": "Everything in week one", "text": "Room held, caterer and florist booked, invitations out, all within seven days.", "items": ["Venue held", "Catering", "Flowers", "Invitations out"]}, {"when": "2", "unit": "weeks out", "title": "The details", "text": "Photographer, music, cake, a short program.", "items": ["Photographer", "Music", "Cake", "Program"]}, {"when": "3", "unit": "days out", "title": "Final numbers", "text": "Counts and call times.", "items": ["Final count", "Call times"]}, {"when": "The", "unit": "day", "title": "You host", "text": "Same calm, shorter runway.", "items": ["Room set", "Evening held"]}]}]
+CORP_PLAN = [{"label": "Twelve Weeks", "note": "Ideal for a gala, a launch or anything with a stage and a program.", "rows": [{"when": "12", "unit": "weeks out", "title": "Brief and venue", "text": "You brief us, we return a one-page plan and a cost estimate, and hold the venue.", "items": ["Brief", "One-page plan", "Estimate", "Venue held", "COI"]}, {"when": "9", "unit": "weeks out", "title": "Production team", "text": "Staging and AV, catering, d\u00e9cor, photographer, entertainment and registration.", "items": ["AV &amp; staging", "Catering", "D\u00e9cor", "Photographer", "Entertainment", "Registration"]}, {"when": "6", "unit": "weeks out", "title": "Brand and invitations", "text": "Signage, screens, stationery and gifting proofed against your guidelines. Invitations out.", "items": ["Signage proofs", "Screens", "Invitations", "Gifting"]}, {"when": "3", "unit": "weeks out", "title": "Run-of-show", "text": "Minute by minute, speaker briefings, rehearsal slots, seating, contingency.", "items": ["Run-of-show", "Rehearsal", "Seating", "Contingency"]}, {"when": "1", "unit": "week out", "title": "Final confirmations", "text": "Headcount to the caterer, badges printed, call sheet issued, your team briefed.", "items": ["Final count", "Badges", "Call sheet", "Team brief"]}, {"when": "Event", "unit": "day", "title": "We run the floor", "text": "Your team hosts. Afterwards, one debrief.", "items": ["Floor held", "Debrief"]}]}, {"label": "Eight Weeks", "note": "Our standard runway. Everything above, in a tighter sequence.", "rows": [{"when": "8", "unit": "weeks out", "title": "Brief and venue", "text": "Plan, estimate and venue in the first week.", "items": ["Brief", "Plan", "Venue held", "COI"]}, {"when": "6", "unit": "weeks out", "title": "Production team", "text": "Booked together.", "items": ["AV &amp; staging", "Catering", "D\u00e9cor", "Photographer", "Registration"]}, {"when": "4", "unit": "weeks out", "title": "Brand and invitations", "text": "Proofs and invitations out.", "items": ["Signage proofs", "Invitations"]}, {"when": "2", "unit": "weeks out", "title": "Run-of-show", "text": "Written and rehearsed.", "items": ["Run-of-show", "Rehearsal", "Seating"]}, {"when": "Event", "unit": "day", "title": "We run the floor", "text": "Followed by one debrief.", "items": ["Floor held", "Debrief"]}]}, {"label": "Four Weeks", "note": "A client dinner, a holiday party, a team offsite. Quick, and still on brand.", "rows": [{"when": "4", "unit": "weeks out", "title": "Brief, venue, team", "text": "All three in the first week.", "items": ["Brief", "Venue held", "Catering", "AV"]}, {"when": "2", "unit": "weeks out", "title": "Invitations and run-of-show", "text": "Out and written.", "items": ["Invitations", "Run-of-show"]}, {"when": "3", "unit": "days out", "title": "Final confirmations", "text": "Counts and call sheet.", "items": ["Final count", "Call sheet"]}, {"when": "Event", "unit": "day", "title": "We run the floor", "text": "Your team hosts.", "items": ["Floor held", "Debrief"]}]}]
+
+TR_PLAN = [{"label": "Three Months", "note": "Time to settle the date with your officiant, prepare the home or venue and bring everyone in without hurry.", "rows": [{"when": "12", "unit": "weeks out", "title": "We learn the tradition", "text": "The occasion, your family\u2019s customs, the officiant\u2019s needs, the guest count and the budget, written into one plan.", "items": ["Customs", "Officiant", "Guest count", "Budget"]}, {"when": "10", "unit": "weeks out", "title": "The setting is chosen", "text": "Your home or a venue, assessed for ceremony space, seating, catering and comfortable guest flow.", "items": ["Venue or home", "Layout", "Timing"]}, {"when": "8", "unit": "weeks out", "title": "Your partners", "text": "D\u00e9cor, catering, photography and other needs, including vendors you already prefer.", "items": ["D\u00e9cor", "Catering", "Photography", "Officiant coordination"]}, {"when": "4", "unit": "weeks out", "title": "Ceremony and design", "text": "Ritual order, supplies, d\u00e9cor, outfits and hospitality agreed with your family and officiant.", "items": ["Ritual sequence", "Supplies", "D\u00e9cor", "Menu"]}, {"when": "1", "unit": "week out", "title": "The day confirmed", "text": "Vendors, delivery times, family responsibilities, guest movement and the schedule, finalized.", "items": ["Timeline", "Vendor calls", "Guest flow"]}, {"when": "The", "unit": "day", "title": "Your family is present", "text": "We manage the setup, transitions and vendors while you take part.", "items": ["On-site team", "Celebration"]}]}, {"label": "Six Weeks", "note": "A comfortable runway for most ceremonies. Priorities are set in the first week.", "rows": [{"when": "6", "unit": "weeks out", "title": "The tradition and the setting", "text": "Customs, officiant, guest count and the home or venue, settled in the first week.", "items": ["Customs", "Guest count", "Venue or home"]}, {"when": "5", "unit": "weeks out", "title": "Your partners", "text": "D\u00e9cor, catering and photography chosen together, with the vendors you prefer.", "items": ["D\u00e9cor", "Catering", "Photography"]}, {"when": "3", "unit": "weeks out", "title": "Ceremony and design", "text": "Ritual order, supplies and hospitality agreed with your family and officiant.", "items": ["Ritual sequence", "Supplies", "Menu"]}, {"when": "1", "unit": "week out", "title": "The day confirmed", "text": "Delivery times, family responsibilities and the schedule.", "items": ["Timeline", "Guest flow"]}, {"when": "The", "unit": "day", "title": "Your family is present", "text": "We hold the day so you can be part of it.", "items": ["On-site team", "Celebration"]}]}, {"label": "Three Weeks", "note": "When the date is close, we set clear priorities in the first few days and focus on what the ceremony needs most.", "rows": [{"when": "3", "unit": "weeks out", "title": "Essentials first", "text": "Customs, the setting and key partners confirmed in the first week.", "items": ["Customs", "Venue or home", "Catering", "Officiant coordination"]}, {"when": "2", "unit": "weeks out", "title": "Ceremony and design", "text": "Ritual order, supplies and d\u00e9cor agreed with your family.", "items": ["Ritual sequence", "Supplies", "D\u00e9cor"]}, {"when": "3", "unit": "days out", "title": "The day confirmed", "text": "Final counts, delivery times and the schedule.", "items": ["Final count", "Timeline"]}, {"when": "The", "unit": "day", "title": "Your family is present", "text": "Same care, shorter runway.", "items": ["On-site team", "Celebration"]}]}]
 
 # ------------------------------------------------------------------ HOME
 home = f'''<header class="hero" data-carousel><div class="wrap">
 <div class="copy">
-<div class="cap on"><p class="kicker">Indian &amp; South Asian Wedding &amp; Event Planning · South Florida</p><h1 class="h-display">Seamless Planning. Timeless Celebrations.</h1><div class="rule left"></div><p class="lede">From family traditions to the finest details, Anvaya brings every part of your celebration together with thoughtful planning and experienced coordination.</p><div class="actions"><a class="btn fill" href="#0" data-book>Plan Your Celebration {ARROW}</a><a class="btn" href="#unfolds">How We Plan</a></div></div>
-<div class="cap"><p class="kicker">Indian &amp; South Asian Weddings</p><h1 class="h-display">One Wedding Weekend. Every Moment Connected.</h1><div class="rule left"></div><p class="lede">Mehndi, haldi, sangeet, baraat, ceremony and reception—beautifully planned around your traditions, your people and your story.</p><div class="actions"><a class="btn fill" href="weddings.html">Explore Wedding Planning {ARROW}</a></div></div>
-<div class="cap"><p class="kicker">Milestones &amp; Corporate Events</p><h1 class="h-display">Meaningful Moments. Beautifully Brought Together.</h1><div class="rule left"></div><p class="lede">From intimate family milestones to standout corporate gatherings, we turn thoughtful ideas into celebrations worth remembering.</p><div class="actions"><a class="btn fill" href="milestones.html">Explore Milestones {ARROW}</a><a class="btn" href="corporate.html">Corporate Events</a></div></div>
-<div class="dots" role="tablist" aria-label="Celebrations"><button role="tab" aria-selected="true">Anvaya</button><button role="tab" aria-selected="false">Weddings</button><button role="tab" aria-selected="false">Milestones &amp; Corporate</button></div>
+<div class="cap on"><p class="kicker">Indian &amp; South Asian Wedding &amp; Event Planning · South Florida</p><h1 class="h-display">Seamless Planning. Timeless Celebrations.</h1><div class="rule left"></div><p class="lede">Eight years of team experience. Cultural understanding. Trusted vendor relationships. One thoughtful plan—so you can enjoy every moment.</p><div class="actions"><a class="btn fill" href="#0" data-book>Plan Your Celebration {ARROW}</a><a class="btn" href="#unfolds">How We Plan</a></div></div>
+<div class="cap"><p class="kicker">Indian &amp; South Asian Weddings</p><h2 class="h-display">One Wedding Weekend. Every Moment Connected.</h2><div class="rule left"></div><p class="lede">Indian, Pakistani, Sikh, South Indian and multicultural celebrations—every ritual and wedding event connected through one clear plan.</p><div class="actions"><a class="btn fill" href="weddings.html">Explore Wedding Planning {ARROW}</a></div></div>
+<div class="cap"><p class="kicker">Milestones · Traditions · Corporate</p><h2 class="h-display">Meaningful Moments. Beautifully Brought Together.</h2><div class="rule left"></div><p class="lede">From meaningful traditions and milestone celebrations to company gatherings, we handle the details so you can enjoy the occasion.</p><div class="actions"><a class="btn fill" href="traditions.html">Explore Traditions {ARROW}</a><a class="btn" href="#services">View All Services</a></div></div>
+<div class="dots" role="tablist" aria-label="Celebrations"><button role="tab" aria-selected="true">Anvaya</button><button role="tab" aria-selected="false">Weddings</button><button role="tab" aria-selected="false">Milestones, Traditions &amp; Corporate</button></div>
 </div>
 <div class="mosaic">{mosaic_set([W[0],M[0],C[0]],True)}{mosaic_set(W,False)}{mosaic_set([M[0],C[0],M[1]],False)}</div>
 </div></header>
 
 <section><div class="wrap"><div class="letter reveal">
-<div class="collage">{slot("studio/team.jpg","The Anvaya team")}{slot("studio/design-board.jpg","A design board coming together")}{slot("studio/listening.jpg","The first conversation, over coffee")}{slot("about/kitchen.jpg","Garlands on the kitchen floor, wedding morning")}<div class="plate">Est. Miami</div></div>
+<div class="photo">{slot("about/kitchen.jpg","Garlands on the kitchen floor, wedding morning")}<span class="plate">Est. Miami</span></div>
 <div>
-<p class="kicker">The Meaning Behind Anvaya</p><h2 class="h-serif" style="margin:.6rem 0 1.4rem">Connecting Moments, Crafting Memories</h2>
+<p class="kicker">The Meaning Behind Anvaya</p><h2 class="h-serif" style="margin:.6rem 0 1.4rem">Experienced Planning. Celebrations That Feel Like Yours.</h2>
 <div class="text">
-<p>Anvaya speaks to connection—to the people, memories and traditions that link one generation to the next. For us, the best celebrations honor those connections while making room for new stories.</p>
-<p>Built on event-planning experience developed through JRN Events, Anvaya brings a fresh perspective to weddings and celebrations: meaningful design, cultural understanding and a clear plan behind every beautiful moment.</p>
-<p>From finding the right venue to choosing among talented vendors and coordinating every event, we bring the details together so your family can enjoy what matters most.</p>
+<p>At Anvaya, every celebration starts with your story—your family, your traditions and the moments you want to share. We bring those details together through thoughtful, full-service planning.</p>
+<p>Our team brings eight years of event experience developed through JRN Events, including work across hundreds of weddings and celebrations. We combine that hands-on understanding with South Florida knowledge and an extensive network of event professionals.</p>
+<p>From venue selection and vendor negotiations to timelines and on-site coordination, we give you meaningful choices and one clear plan. You enjoy the celebration; we take care of what brings it to life.</p>
 <p class="sign">Anvaya</p>
 </div></div></div></div></section>
 
-<section class="ivory"><div class="wrap">
-<div class="head reveal"><p class="kicker">What We Plan</p><h2 class="h-display">Beautifully Different Celebrations. One Thoughtful Approach.</h2><div class="rule"></div></div>
+<section class="ivory" id="services"><div class="wrap">
+<div class="head reveal"><p class="kicker">What We Plan</p><h2 class="h-display">Your Occasion. Our Complete Attention.</h2><div class="rule"></div></div>
 
 <div class="row reveal">
 <div class="art">{"".join(slot(s,b) for s,b in W)}</div>
-<div class="copy"><span class="script">weddings</span><h2 class="h-serif">Indian &amp; South Asian Weddings, Thoughtfully Connected</h2><p class="lede">From Hindu, Sikh, Muslim and Christian ceremonies to multicultural wedding weekends, we plan celebrations shaped by your family, faith and traditions. Each event has its own personality—and one coordinated plan connects them all.</p>
+<div class="copy"><span class="script">weddings</span><h2 class="h-serif">Weddings That Honor Every Part of Your Story</h2><p class="lede">From Indian and Pakistani weddings to Bangladeshi, Sikh, South Indian, Christian and interfaith celebrations, we understand how rituals, families and multiple events fit together. One team plans every part of the weekend.</p>
 <ul><li>Venue selection and wedding-weekend logistics</li><li>Curated vendor options across styles and budgets</li><li>Cultural ceremonies and coordinated timelines</li><li>On-site management from welcome to farewell</li></ul>
 <a class="textlink" href="weddings.html">Our Wedding Planning</a></div>
 </div>
 
 <div class="row flip reveal">
 <div class="art">{"".join(slot(s,b) for s,b in M)}</div>
-<div class="copy"><span class="script">milestones</span><h2 class="h-serif">Life’s Special Chapters, Celebrated Your Way</h2><p class="lede">Engagements, anniversaries, birthdays, baby showers and more. We pair thoughtful styling with dependable coordination, so each occasion feels personal from the first welcome to the final toast.</p>
+<div class="copy"><span class="script">milestones</span><h2 class="h-serif">Life’s Special Chapters, Celebrated Your Way</h2><p class="lede">Milestone birthdays, anniversaries, baby showers and achievements deserve thoughtful celebrations. We bring the setting, vendors and details together so you can enjoy the people who matter most.</p>
 <ul><li>Venues suited to your guest list</li><li>Personalized décor, dining and entertainment</li><li>Invitations, RSVPs and guest experience</li><li>Seamless celebration-day coordination</li></ul>
 <a class="textlink" href="milestones.html">Our Milestone Planning</a></div>
 </div>
 
 <div class="row reveal">
+<div class="art">{slot("weddings/ceremony.jpg","A priest-led ritual by the sacred fire")}{slot("milestones/vow-renewal.jpg","Garlands exchanged, family gathered")}{slot("about/evening.jpg","Lanterns lit for an evening at home")}</div>
+<div class="copy"><span class="script">traditions</span><h2 class="h-serif">Traditions Worth Honoring. Moments Worth Sharing.</h2><p class="lede">From dhoti and half-saree ceremonies to naming celebrations and housewarmings, we plan the rituals, décor, hospitality and flow with care for what each occasion means to your family.</p>
+<ul><li>Ceremony timing and family customs</li><li>Décor, catering and seating</li><li>Priest/officiant and vendor coordination</li><li>Thoughtful hosting and on-site management</li></ul>
+<a class="textlink" href="traditions.html">Explore Traditional Celebrations</a></div>
+</div>
+
+<div class="row flip reveal">
 <div class="art">{"".join(slot(s,b) for s,b in C)}</div>
 <div class="copy"><span class="script">corporate</span><h2 class="h-serif">Corporate Gatherings with Purpose and Personality</h2><p class="lede">From executive dinners and galas to company celebrations and product launches, we create polished experiences that reflect your brand, engage guests and stay organized behind the scenes.</p>
 <ul><li>Venue sourcing and supplier coordination</li><li>Brand-aligned event design and production</li><li>Guest registration and event logistics</li><li>Detailed schedules and on-site delivery</li></ul>
@@ -217,12 +241,12 @@ home = f'''<header class="hero" data-carousel><div class="wrap">
 </div></section>
 
 <section class="sage"><div class="wrap">
-<div class="head reveal"><p class="kicker">The Anvaya Difference</p><h2 class="h-display">More Than Beautiful Events. A Better Way to Plan.</h2><div class="rule"></div><p class="lede">The experience should feel just as considered as the celebration itself.</p></div>
+<div class="head reveal"><p class="kicker">The Anvaya Difference</p><h2 class="h-display">The Experience Behind Every Seamless Celebration.</h2><div class="rule"></div><p class="lede">The experience should feel just as considered as the celebration itself.</p></div>
 <div class="cols four stagger">
 <div><span class="script">i.</span><h3>Cultural Understanding</h3><p>We plan around the meaning behind each tradition—from ceremony sequences and family customs to food preferences, religious considerations and guest experience.</p></div>
 <div><span class="script">ii.</span><h3>Choice, Not a Template</h3><p>Access a diverse network of venue and vendor options. We help you compare styles, services and budgets so the celebration feels like yours.</p></div>
-<div><span class="script">iii.</span><h3>Clarity at Every Step</h3><p>Know what has been decided, what comes next and how each element fits the overall plan. Thoughtful communication keeps everyone aligned.</p></div>
-<div><span class="script">iv.</span><h3>Experience in the Details</h3><p>With planning experience drawn from JRN Events, we bring practical coordination, creative problem-solving and an understanding of how celebrations work in real life.</p></div>
+<div><span class="script">iii.</span><h3>Vendor Choice &amp; Negotiation</h3><p>Our established vendor relationships help us shortlist appropriate options, compare proposals and negotiate terms with your priorities in mind. We gladly coordinate vendors you have chosen, too.</p></div>
+<div><span class="script">iv.</span><h3>Experience You Can Rely On</h3><p>Anvaya is a new brand, supported by event experience gained over eight years through JRN Events and work on hundreds of celebrations. We bring that practical knowledge to every planning decision.</p></div>
 </div></div></section>
 
 <section><div class="wrap">
@@ -231,6 +255,12 @@ home = f'''<header class="hero" data-carousel><div class="wrap">
 {slot("gallery/1.jpg","Wedding Ceremony","tall")}{slot("gallery/2.jpg","Elegant Tablescapes","wide")}{slot("gallery/3.jpg","Sangeet Celebration")}{slot("gallery/4.jpg","Mehndi Details","tall")}{slot("gallery/5.jpg","Inspired Dining")}{slot("gallery/6.jpg","Waterfront Weddings","wide")}
 </div></div></section>
 
+''' + mapsection("Wedding &amp; Event Planning Across Florida",
+  "South Florida is our home market. We plan weddings, traditions, milestones and corporate events in Miami, Fort Lauderdale, Boca Raton and Palm Beach, with U.S. and international destinations available by arrangement.",
+  ["From city hotels to waterfront venues, we plan occasions across Miami-Dade, Broward and Palm Beach counties.",
+   "Destination wedding weekends, family celebrations and corporate programs planned with local venue and vendor coordination.",
+   "Thoughtful planning for coastal celebrations, estate gatherings and intimate occasions on Florida’s Gulf Coast.",
+   "Have a meaningful destination in mind? Tell us where; we can discuss the logistics and planning scope."]) + f'''
 <section><div class="wrap">
 <div class="head reveal"><p class="kicker">Kind Words</p><h2 class="h-display">Stories Shared by Our Clients</h2><div class="rule"></div></div>
 <div class="words stagger">
@@ -244,17 +274,17 @@ home = f'''<header class="hero" data-carousel><div class="wrap">
 about = banner("Our story","We grew up at these celebrations","Anvaya is a wedding and event planning studio based in Miami and working across Florida, founded by people who learned this work in their own families' kitchens and ballrooms. This is who we are and what we believe.",
  [("about/kitchen.jpg","Wedding morning, garlands on the kitchen floor"),("studio/team.jpg","The Anvaya team"),("about/evening.jpg","Last guests leaving, lanterns still lit")]) + f'''
 <section><div class="wrap">
-<div class="head reveal"><p class="kicker">The Story of Anvaya</p><h2 class="h-display">A Name Rooted in Connection</h2><div class="rule"></div></div>
+<div class="head reveal"><p class="kicker">The Story of Anvaya</p><h2 class="h-display">Our Experience. Your Celebration. One Clear Plan.</h2><div class="rule"></div></div>
 {story([
  ("about/kitchen.jpg","Wedding morning at home"),
  ("about/evening.jpg","Hosts missing their own celebration"),
  ("studio/design-board.jpg","Our table in the studio"),
  ("studio/team.jpg","The team today"),
 ],[
- ("one","It Starts with People","Every unforgettable celebration begins with the people at its heart. Families, friendships and traditions give meaning to the moments we gather to celebrate."),
- ("two","Built on Experience","The planning experience behind Anvaya comes from JRN Events—an understanding of real event logistics, supplier collaboration and the details that guests may never see, but always feel."),
- ("three","A More Connected Way to Plan","We created Anvaya around a simple belief: every event, vendor and decision should work toward one shared vision. Personalized celebrations deserve planning that feels equally personal."),
- ("four","Celebrating Across Florida","Today, our focus is Indian and South Asian weddings, milestone occasions and corporate events across South Florida and other Florida destinations—always planned with care for the people involved."),
+ ("one","Every Family Has Its Own Story","No two celebrations should feel the same. We begin by understanding your people, customs, priorities and the experiences you want to share."),
+ ("two","Eight Years Behind Our Approach","Anvaya draws on eight years of team experience developed through JRN Events and work across hundreds of weddings and events—bringing hands-on knowledge of vendors, production and family celebrations."),
+ ("three","Experience Meets Choice","We help you explore suitable venues and vendors, compare proposals, negotiate terms and bring your selected professionals into a coordinated plan—without limiting you to one décor partner."),
+ ("four","Celebrations Across South Florida","Based in the South Florida market, we plan Indian, Pakistani, South Asian, multicultural and interfaith weddings, traditional ceremonies, milestone occasions and corporate events in Florida and beyond."),
 ])}
 </div></section>
 
@@ -269,7 +299,7 @@ about = banner("Our story","We grew up at these celebrations","Anvaya is a weddi
 <div class="head reveal"><p class="kicker">What We Believe</p><h2 class="h-display">Three Principles. Every Celebration.</h2><div class="rule"></div></div>
 <div class="cols stagger">
 <div><span class="script">one</span><h3>Traditions Deserve Understanding</h3><p>We ask, listen and plan with intention. Whether it's a Hindu muhurtham, Sikh Anand Karaj, Muslim nikah or a family-specific custom, the meaning guides the logistics.</p></div>
-<div><span class="script">two</span><h3>Choices Should Feel Clear</h3><p>Your priorities guide venue and vendor selection. We compare appropriate options, explain trade-offs and help make decisions with confidence.</p></div>
+<div><span class="script">two</span><h3>Vendor Options With Real Guidance</h3><p>You deserve options, not a predetermined list. We use our network and negotiation experience to help you compare qualified vendors and choose what fits your style, requirements and budget.</p></div>
 <div><span class="script">three</span><h3>Details Should Work Together</h3><p>Creative ideas are only as good as their execution. We connect teams, timelines and guest needs so every part of the experience feels considered.</p></div>
 </div></div></section>
 
@@ -278,7 +308,7 @@ about = banner("Our story","We grew up at these celebrations","Anvaya is a weddi
 <div class="cols four stagger">
 <div><span class="script">a.</span><h3>Couples Planning Multicultural Weddings</h3><p>Indian, Pakistani, Bangladeshi, Sikh, South Indian and interfaith celebrations often involve distinct events, family priorities and guest logistics. We build the plan around your needs.</p></div>
 <div><span class="script">b.</span><h3>Families Honoring Milestones</h3><p>From milestone anniversaries to family reunions, we help turn shared memories and new beginnings into gatherings with heart.</p></div>
-<div><span class="script">c.</span><h3>Hosts Celebrating Life’s Firsts</h3><p>Birthdays, baby showers, naming ceremonies and more—personal occasions with the right setting, details and flow.</p></div>
+<div><span class="script">c.</span><h3>Families Celebrating Traditions</h3><p>Dhoti, half-saree, naming ceremonies and housewarmings deserve a plan that respects ceremonial details and makes every guest feel welcome.</p></div>
 <div><span class="script">d.</span><h3>Teams Planning Meaningful Events</h3><p>Corporate dinners, launches, retreats and celebrations supported by clear budgets, logistics and brand-minded execution.</p></div>
 </div></div></section>
 
@@ -288,7 +318,7 @@ about = banner("Our story","We grew up at these celebrations","Anvaya is a weddi
 </div></section>
 
 ''' + mapsection("Across South Florida and Beyond",
-  "Anvaya supports celebrations in Miami, Fort Lauderdale, Boca Raton, Palm Beach and other destinations across Florida.",
+  "South Florida is our primary home for planning. We also support celebrations elsewhere in the United States and internationally when the scope and logistics allow.",
   ["South Florida celebrations, from modern city venues to intimate waterfront settings.",
    "Destination wedding weekends and corporate programs with coordinated venue, vendor and guest planning.",
    "Estate events, family milestones and elegant gatherings along the Gulf Coast.",
@@ -297,7 +327,7 @@ about = banner("Our story","We grew up at these celebrations","Anvaya is a weddi
 
 # ------------------------------------------------------------------ BLOG POSTS (listed on Weddings, so parsed first)
 # blog.md: "## Blog N — Headline", "**Field:** value" lines, "### " subheadings, paragraphs with **bold**
-RELATED = {"Weddings":"weddings.html", "Contact":"contact.html", "About":"about.html"}
+RELATED = {"Weddings":"weddings.html", "Contact":"contact.html", "About":"about.html", "Traditions":"traditions.html"}
 inline = lambda s: re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", html.escape(s))
 POSTS = []
 for chunk in ("\n" + (ROOT / "blog.md").read_text(encoding="utf-8")).split("\n## ")[1:]:
@@ -310,7 +340,8 @@ for chunk in ("\n" + (ROOT / "blog.md").read_text(encoding="utf-8")).split("\n##
         elif r: p["body"] += f"<p>{inline(r)}</p>"
     p["path"] = p["Suggested slug"].strip("/")
     POSTS.append(p)
-POST_CARDS = '<div class="cols posts stagger">' + "".join(f'<div><h3><a href="{p["path"]}/index.html">{html.escape(p["h"])}</a></h3><p>{html.escape(p["Meta description"])}</p></div>' for p in POSTS) + '</div>'
+RESOURCES = [("blog/indian-wedding-planning-timeline", "Indian Wedding Planning Timeline: 14 Months, 9 Months or 6 Months", "What happens fourteen, nine or six months before an Indian or South Asian wedding weekend, from venues and vendors to the weekend itself.")]
+POST_CARDS = '<div class="cols posts stagger">' + "".join(f'<div><h3><a href="{path}/index.html">{html.escape(h)}</a></h3><p>{html.escape(d)}</p></div>' for path,h,d in [(p["path"], p["h"], p["Meta description"]) for p in POSTS] + RESOURCES) + '</div>'
 
 # ------------------------------------------------------------------ WEDDINGS
 WED_FAQ = [  # rendered on the page and in the FAQPage schema
@@ -321,15 +352,16 @@ WED_FAQ = [  # rendered on the page and in the FAQPage schema
  ("Can you coordinate a wedding across multiple venues and days?","Yes. We can connect event schedules, vendor arrivals, ceremony timing, guest transportation and venue transitions across a multi-day wedding weekend. The result is one coordinated plan rather than separate events competing for attention."),
 ]
 WED_CTA = cta("Begin Here","Your Wedding Should Feel Like Your Family","Tell us about the traditions you treasure, the celebrations you imagine and the people coming together. We’ll help connect every moment.", "Plan Your Wedding Weekend")  # also closes every blog post
-weddings = banner("Indian &amp; South Asian wedding planners · Miami &amp; Florida","Your wedding, celebrated the way your family remembers it","At Anvaya, we plan Indian and South Asian weddings across Miami, Fort Lauderdale and Palm Beach, from a single ceremony to a four-event weekend.", W) + f'''
+weddings = banner("Weddings","Your wedding, celebrated the way your family remembers it","At Anvaya, we plan Indian and South Asian weddings across Miami, Fort Lauderdale and Palm Beach, from a single ceremony to a four-event weekend.", W) + f'''
 <section><div class="wrap"><div class="letter reveal">
-<div class="collage">{slot("weddings/ceremony.jpg","Pheras, ghee on the fire")}{slot("gallery/4.jpg","Mehndi hands")}{slot("gallery/3.jpg","The DJ at the sangeet")}{slot("gallery/5.jpg","Live dosa counter")}<div class="plate">Weddings</div></div>
+<div class="photo">{slot("weddings/ceremony.jpg","Pheras, ghee on the fire")}<span class="plate">Weddings</span></div>
 <div>
-<p class="kicker">What We Plan</p><h2 class="h-serif" style="margin:.6rem 0 1.4rem">One Wedding Weekend. Every Event Connected.</h2>
+<p class="kicker">What We Plan</p><h2 class="h-serif" style="margin:.6rem 0 1.4rem">One Wedding Weekend. Every Tradition Considered.</h2>
 <div class="text">
 <p>A wedding weekend has many beautiful chapters: mehndi, haldi or pithi, sangeet or garba, baraat, ceremony, reception and the moments in between. Each deserves its own character. All deserve one thoughtful plan.</p>
 <p>Anvaya coordinates venues, budgets, vendor options, family needs and guest movement across each celebration. From the first welcome to the last farewell, we make the whole weekend work together.</p>
 <p>We plan Indian, Pakistani, Bangladeshi, Sikh, South Indian, Muslim, Hindu, Christian and interfaith weddings across South Florida. From a nikah and walima to an Anand Karaj or South Indian muhurtham, we work with your family and officiants to respect the traditions that define your celebration.</p>
+<p><a class="textlink" href="traditions.html">Explore Traditional Ceremonies</a></p>
 </div></div></div></div></section>
 
 <section class="ivory" id="process"><div class="wrap">
@@ -358,8 +390,7 @@ weddings = banner("Indian &amp; South Asian wedding planners · Miami &amp; Flor
  ("Invitations &amp; Guest Experience","Save-the-dates, invitation suites, wedding websites, RSVPs, welcome gifts and information for visiting guests.",("studio/design-board.jpg","Invitation suite on the board")),
 ]) + '''
 </div></section>
-''' + planner(WED_PLAN, "Your Planning Calendar", "Your Wedding, Planned at the Right Pace", "Explore a planning approach for the time you have. The sequence stays thoughtful; the schedule adapts.", [("studio/listening.jpg","The first conversation"),("studio/walkthrough.jpg","Walking the venue"),("studio/tasting.jpg","Tasting with the family"),("studio/design-board.jpg","Design board"),("weddings/baraat.jpg","Baraat route agreed"),("studio/timeline.jpg","Timeline in hand"),("weddings/ceremony.jpg","The weekend")], "white") + '''
-<section><div class="wrap">
+<section class="ivory"><div class="wrap">
 <div class="head reveal"><p class="kicker">Ways to Work With Us</p><h2 class="h-display">The Right Level of Support for Your Wedding</h2><div class="rule"></div></div>
 <div class="ways stagger">
 <div><p class="kicker">Full Planning</p><h3>From First Ideas to Final Farewell</h3><p>For couples who want one experienced team to plan and coordinate the entire wedding journey.</p><ul><li>Budget, venues and vendor selection</li><li>Event design and guest experience</li><li>Accommodations and transportation</li><li>Detailed schedules and on-site management</li></ul></div>
@@ -367,28 +398,31 @@ weddings = banner("Indian &amp; South Asian wedding planners · Miami &amp; Flor
 <div><p class="kicker">Wedding Weekend Management</p><h3>Enjoy Everything You’ve Planned</h3><p>For couples who have made their selections and want professional coordination for the final stretch and celebration days.</p><ul><li>Vendor handover and final confirmations</li><li>Detailed schedules and cue sheets</li><li>Rehearsal and ceremony coordination</li><li>On-site event management</li></ul></div>
 </div></div></section>
 
-<section class="ivory"><div class="wrap">
+<section><div class="wrap">
 <div class="head reveal"><p class="kicker">Questions Couples Ask</p><h2 class="h-display">Before We Begin</h2><div class="rule"></div></div>
 ''' + faq(WED_FAQ) + '''</div></section>
 
-<section><div class="wrap">
+<section class="ivory"><div class="wrap">
 <div class="head reveal"><h2 class="h-display">Blog</h2><div class="rule"></div></div>
 ''' + POST_CARDS + '''
 </div></section>
 ''' + WED_CTA
 
 # ------------------------------------------------------------------ MILESTONES
-milestones = banner("Milestone celebrations · Miami &amp; Florida","Anniversaries, birthdays and blessings, celebrated properly","The occasions that mark a life deserve more than a restaurant booking. At Anvaya, we plan milestone celebrations across Florida, with our home in South Florida, so that the person it is for, and the people who love them, can simply be together.", M) + f'''
+MS_CTA = cta("Begin Here","Let’s Celebrate What Matters Most","Tell us who you’re celebrating and what makes the occasion special. We’ll help shape the experience around them.", "Plan a Milestone")
+milestones = banner("Milestone celebrations · Miami &amp; Florida","Anniversaries, birthdays and achievements, celebrated properly","The occasions that mark a life deserve more than a restaurant booking. At Anvaya, we plan milestone celebrations across Florida, with our home in South Florida, so that the person it is for, and the people who love them, can simply be together.", M) + f'''
 <section><div class="wrap">
-<div class="head reveal"><p class="kicker">Occasions</p><h2 class="h-display">Every Milestone Has a Story</h2><div class="rule"></div><p class="lede">Some moments call for an intimate gathering. Others deserve a room full of everyone you love. We plan each with the same attention to the people behind the occasion.</p></div>
+<div class="head reveal"><p class="kicker">Occasions</p><h2 class="h-display">Milestones Worth Making Time For</h2><div class="rule"></div><p class="lede">Some milestones deserve an intimate dinner. Others bring everyone together. We plan each around the people being celebrated, with thoughtful details and dependable coordination.</p></div>
 <div class="occasions stagger">
-<div tabindex="0"><div class="bg"><img src="img/studio/listening.jpg" alt="" loading="lazy"></div><p class="kicker">Beginnings</p><h3>Engagements &amp; Roka</h3><p>Celebrate two families coming together with a setting, ceremony plan, welcoming details and dining that feel personal from the start.</p></div>
-<div tabindex="0"><div class="bg"><img src="img/milestones/vow-renewal.jpg" alt="" loading="lazy"></div><p class="kicker">Anniversaries</p><h3>Love, Through the Years</h3><p>From silver jubilees to golden anniversaries, honor a shared journey with meaningful details, family moments and a celebration worth revisiting.</p></div>
-<div tabindex="0"><div class="bg"><img src="img/milestones/first-birthday.jpg" alt="" loading="lazy"></div><p class="kicker">Birthdays</p><h3>Birthdays Worth Remembering</h3><p>First birthdays, sweet sixteens and major milestones—styled around the guest of honor, with entertainment and flow to match the crowd.</p></div>
-<div tabindex="0"><div class="bg"><img src="img/milestones/baby-shower.jpg" alt="" loading="lazy"></div><p class="kicker">New Arrivals</p><h3>Baby Showers &amp; Naming Ceremonies</h3><p>Beautiful baby showers, godh bharai, naamkaran and other family traditions, with the ceremony and gathering planned together.</p></div>
-<div tabindex="0"><div class="bg"><img src="img/about/kitchen.jpg" alt="" loading="lazy"></div><p class="kicker">New Homes</p><h3>Housewarmings &amp; Griha Pravesh</h3><p>Begin a new chapter with thoughtful hospitality, comfortable guest flow and any religious ceremonies coordinated with your family.</p></div>
-<div tabindex="0"><div class="bg"><img src="img/milestones/anniversary.jpg" alt="" loading="lazy"></div><p class="kicker">Achievements</p><h3>Graduations &amp; Retirements</h3><p>Honor the journey with welcoming spaces, speeches, décor and meaningful experiences for colleagues, friends and family.</p></div>
-</div></div></section>
+<div tabindex="0"><div class="bg"><img src="img/milestones/first-birthday.jpg" alt="" loading="lazy"></div><p class="kicker">01</p><h3>Milestone Birthdays</h3><p>Celebrate 40, 50, 60, 70 or any meaningful birthday with a setting, food and entertainment that reflect the guest of honor.</p></div>
+<div tabindex="0"><div class="bg"><img src="img/milestones/anniversary.jpg" alt="" loading="lazy"></div><p class="kicker">02</p><h3>Silver &amp; Golden Anniversaries</h3><p>Mark 25, 40 or 50 years with a personal gathering, meaningful speeches and shared memories.</p></div>
+<div tabindex="0"><div class="bg"><img src="img/milestones/baby-shower.jpg" alt="" loading="lazy"></div><p class="kicker">03</p><h3>Baby Showers</h3><p>Welcome a new chapter with a beautiful, comfortable celebration for family and friends.</p></div>
+<div tabindex="0"><div class="bg"><img src="img/gallery/3.jpg" alt="" loading="lazy"></div><p class="kicker">04</p><h3>Sweet Sixteens &amp; Quinceañeras</h3><p>Create a celebration that reflects their personality, from entrances and décor to music, dining and special family moments.</p></div>
+<div tabindex="0"><div class="bg"><img src="img/gallery/2.jpg" alt="" loading="lazy"></div><p class="kicker">05</p><h3>Graduation Celebrations</h3><p>Honor achievements with a gathering that makes the graduate feel seen and celebrated.</p></div>
+<div tabindex="0"><div class="bg"><img src="img/corporate/dinner.jpg" alt="" loading="lazy"></div><p class="kicker">06</p><h3>Retirement &amp; Personal Achievements</h3><p>Bring together colleagues, friends and family to recognize a meaningful life chapter.</p></div>
+</div>
+<p class="occ-more reveal">Planning a naming ceremony, housewarming or family ritual? <a class="textlink" href="traditions.html">Explore Traditions</a></p>
+</div></section>
 
 <section class="ivory" id="process"><div class="wrap">
 <div class="head reveal"><p class="kicker">How We Plan a Milestone</p><h2 class="h-display">Personal Moments. Effortless Coordination.</h2><div class="rule"></div><p class="lede">From the first idea to the last guest, we connect the creative and practical details.</p></div>
@@ -396,7 +430,7 @@ milestones = banner("Milestone celebrations · Miami &amp; Florida","Anniversari
  ("Discover the Occasion","We understand who you are celebrating, your guest list, priorities, budget and the feeling you want to create.",["Occasion","Guest count","Budget"],("studio/listening.jpg","Listening first")),
  ("Choose the Setting","We source suitable spaces and compare their atmosphere, convenience and practical fit for your gathering.",["Venue options","Date"],("milestones/baby-shower.jpg","A garden terrace, held")),
  ("Select the Right Vendors","Catering, décor, photography, entertainment and specialty suppliers—chosen to suit the occasion and your preferences.",["Catering","Florals","Photography","Music","Cake"],("milestones/first-birthday.jpg","Cake, florals, grandparents")),
- ("Design the Experience","We shape the invitation, room styling, menu, ceremony or entertainment program around the celebration.",["Invitations","RSVPs","Design","Menu"],("studio/design-board.jpg","Design board")),
+ ("Design the Experience","We shape invitations, room styling, menus and entertainment around the guest of honor and the celebration.",["Invitations","RSVPs","Design","Menu"],("studio/design-board.jpg","Design board")),
  ("Finalize the Details","Guest counts, vendor times, special moments and final schedules are aligned before the celebration begins.",["Guest count","Program","Vendor times"],("studio/timeline.jpg","Run-of-show in hand")),
  ("Celebrate with Confidence","We coordinate the setup and flow of the event so you can enjoy every moment with your guests.",["Setup","On-site coordination"],("milestones/vow-renewal.jpg","Fifty years, garlands exchanged")),
 ], "Whether it’s a small gathering or a major milestone, we plan around your occasion—not a fixed formula.")}
@@ -410,14 +444,56 @@ milestones = banner("Milestone celebrations · Miami &amp; Florida","Anniversari
  ("Décor &amp; Florals","Backdrops, table styling, floral design, lighting and personalized details.",("milestones/anniversary.jpg","Candlelit anniversary table")),
  ("Photography","Photography, videography and photo experiences that preserve the memories.",("gallery/4.jpg","Photographer at work")),
  ("Entertainment &amp; Program","Music, hosts, speeches, activities and timing for the event’s special moments.",("gallery/3.jpg","DJ and dance floor")),
- ("Ceremony","Planning support for blessings, vow renewals, naming ceremonies and cultural observances.",("milestones/vow-renewal.jpg","Garlands at fifty years")),
+ ("Guest Experience","Invitations, seating, welcome details, accessibility and the flow of meaningful speeches and family moments.",("studio/design-board.jpg","Invitations and welcome details")),
 ]) + '''
 </div></section>
-''' + planner(MS_PLAN, "Your Planning Calendar", "A Thoughtful Plan for Your Timeline", "Explore how your celebration can come together based on the time available.", [("studio/listening.jpg","Listening first"),("milestones/baby-shower.jpg","The room, held"),("milestones/first-birthday.jpg","Cake and florals"),("studio/design-board.jpg","Invitations and design"),("studio/timeline.jpg","Run-of-show"),("milestones/vow-renewal.jpg","The day")], "ivory") + '''
-''' + cta("Begin Here","Let’s Celebrate What Matters Most","Tell us who you’re celebrating and what makes the occasion special. We’ll help shape the experience around them.", "Plan a Milestone")
+''' + plan_link("milestones", MS_PLAN, "Your Planning Calendar", "A Thoughtful Plan for Your Timeline", "Explore how your celebration can come together based on the time available.", "ivory") + '''
+''' + MS_CTA
+
+# ------------------------------------------------------------------ TRADITIONS (new in V4; mirrors the Milestones page)
+T = [("about/kitchen.jpg","Marigold garlands strung at home before the ceremony"),("weddings/ceremony.jpg","A priest-led ritual by the sacred fire"),("milestones/first-birthday.jpg","Grandparents at a family celebration")]
+TR_CTA = cta("Begin Here","Let\u2019s Honor Your Tradition, Your Way.","Tell us the ceremony, the date and the customs important to your family. We\u2019ll help bring the right people and details together.", "Plan a Traditional Celebration", "Contact Anvaya")
+traditions = banner("Traditional ceremonies \u00b7 Miami &amp; Florida","Traditions Worth Honoring. Moments Worth Sharing.","From dhoti and half-saree ceremonies to naming celebrations and housewarmings, we plan the rituals, d\u00e9cor, hospitality and flow with care for what each occasion means to your family.", T) + f'''
+<section><div class="wrap">
+<div class="head reveal"><p class="kicker">Our Traditions</p><h2 class="h-display">Every Tradition Has a Meaning. Every Detail Deserves Care.</h2><div class="rule"></div><p class="lede">Your family\u2019s customs deserve more than a beautiful backdrop. We coordinate the ceremony, timing, hospitality and vendors so generations can share the occasion together.</p></div>
+<div class="occasions stagger">
+<div tabindex="0"><div class="bg"><img src="img/weddings/ceremony.jpg" alt="" loading="lazy"></div><p class="kicker">01</p><h3>Dhoti Ceremony</h3><p>A meaningful coming-of-age celebration with thoughtful staging, family seating, ritual arrangements and hospitality.</p></div>
+<div tabindex="0"><div class="bg"><img src="img/gallery/4.jpg" alt="" loading="lazy"></div><p class="kicker">02</p><h3>Half-Saree Ceremony</h3><p>Mark an important cultural milestone with elegant d\u00e9cor, ceremony flow, outfits and guest coordination.</p></div>
+<div tabindex="0"><div class="bg"><img src="img/milestones/first-birthday.jpg" alt="" loading="lazy"></div><p class="kicker">03</p><h3>Naming &amp; Cradle Ceremonies</h3><p>From naamkaran to cradle celebrations, we coordinate the family traditions and a welcoming gathering around them.</p></div>
+<div tabindex="0"><div class="bg"><img src="img/about/kitchen.jpg" alt="" loading="lazy"></div><p class="kicker">04</p><h3>Housewarming &amp; Griha Pravesh</h3><p>Ceremony timing, priest coordination, seating and catering planned carefully for celebrations at home.</p></div>
+<div tabindex="0"><div class="bg"><img src="img/gallery/5.jpg" alt="" loading="lazy"></div><p class="kicker">05</p><h3>Annaprashan &amp; First-Rice Ceremonies</h3><p>A warm, family-centered occasion with ceremonial details, d\u00e9cor and meal arrangements brought together.</p></div>
+<div tabindex="0"><div class="bg"><img src="img/weddings/mandap.jpg" alt="" loading="lazy"></div><p class="kicker">06</p><h3>Pujas, Blessings &amp; Family Rituals</h3><p>We listen to your family and officiant, then build a practical event plan around your specific observance.</p></div>
+</div></div></section>
+
+<section class="ivory" id="process"><div class="wrap">
+<div class="head reveal"><p class="kicker">How We Plan</p><h2 class="h-display">Deep Respect for Traditions. A Clear Plan for Everyone.</h2><div class="rule"></div><p class="lede">Each family follows its own customs. We begin by understanding yours, then coordinate the people and details that make the celebration feel right.</p></div>
+{timeline([
+ ("Understand the Tradition","We learn the occasion, family customs, officiant needs, guest count and budget.",["Customs","Guests","Budget"],("studio/listening.jpg","Listening to the family")),
+ ("Choose the Setting","We assess the home or venue for ceremony space, seating, catering and comfortable guest flow.",["Venue","Layout","Timing"],("about/evening.jpg","An evening gathering at home")),
+ ("Curate Your Partners","We offer suitable choices for décor, catering, photography and other event needs, including vendors you already prefer.",["Vendor options","Proposals","Coordination"],("studio/tasting.jpg","Tasting the menu")),
+ ("Plan the Ceremony &amp; Design","We coordinate with the family and officiant on ritual order, supplies, décor, outfits and hospitality.",["Ritual sequence","Décor","Food"],("studio/design-board.jpg","Ceremony and décor details")),
+ ("Confirm the Day","We finalize vendors, delivery times, family responsibilities, guest movement and the event schedule.",["Timeline","Vendor calls","Guest flow"],("studio/timeline.jpg","The run-of-show")),
+ ("Coordinate While You Celebrate","Our team manages the setup, transitions and vendors, giving the family more time to be present.",["On-site team","Celebration"],("milestones/vow-renewal.jpg","Garlands, family gathered")),
+], "Every family’s customs are different. We plan around yours.")}
+</div></section>
+
+<section><div class="wrap">
+<div class="head reveal"><p class="kicker">What We Coordinate</p><h2 class="h-display">The Right People for a Meaningful Occasion</h2><div class="rule"></div><p class="lede">We bring together the vendors and practical requirements your family needs, with choice and thoughtful coordination.</p></div>
+''' + ledger([
+ ("Venue &amp; Layout","Homes, clubhouses and event spaces with practical arrangements for ceremony and guests.",("about/evening.jpg","An evening gathering at home")),
+ ("Catering &amp; Hospitality","Vegetarian, regional and family-preferred menus, serving arrangements and guest comfort.",("gallery/5.jpg","A vegetarian live counter")),
+ ("D\u00e9cor &amp; Florals","Ceremony backdrops, stages, seating, floral accents and personalized welcome details.",("gallery/1.jpg","Florals and a ceremony stage")),
+ ("Photography &amp; Film","Artists who can follow key ceremonial moments without interrupting them.",("gallery/4.jpg","Photographer at a ceremony")),
+ ("Priest / Officiant Coordination","Confirmed ritual order, timing, supplies and family participation with the officiant you choose.",("weddings/mandap.jpg","Priest at the ceremony")),
+ ("Guest &amp; Day-of Logistics","Invitations, seating, vendor arrival, parking and a clear run-of-show.",("studio/timeline.jpg","Run-of-show in hand")),
+]) + '''
+</div></section>
+''' + plan_link("traditions", TR_PLAN, "Your Planning Timeline", "A Simple Plan for Your Date", "Whether your occasion is months away or approaching soon, we help set clear priorities for the time available.", "ivory") + '''
+''' + TR_CTA
 
 # ------------------------------------------------------------------ CORPORATE
-corporate = banner("Corporate event planners · Miami &amp; Florida","Corporate events your company will be remembered for","At Anvaya, we produce offsites, launches, award nights, holiday celebrations and client dinners across Florida, from our home in Miami, with one point of contact and one invoice.", C) + f'''
+CORP_CTA = cta("Begin Here","Have an Event in Mind? Let’s Make It Happen.","Share your dates, goals, guest count and budget parameters. We’ll discuss an approach tailored to your event.", "Request a Proposal")
+corporate = banner("Corporate event planners · Miami &amp; Florida","Corporate events your company will be remembered for","At Anvaya, we produce offsites, launches, award nights, holiday celebrations and client dinners across Florida, from our home in Miami, with one point of contact.", C) + f'''
 <section><div class="wrap">
 <div class="head reveal"><p class="kicker">Occasions</p><h2 class="h-display">Events That Bring People and Purpose Together</h2><div class="rule"></div><p class="lede">Whether you are celebrating a team, welcoming clients or introducing something new, we turn your business objective into a well-orchestrated experience.</p></div>
 <div class="occasions stagger">
@@ -441,8 +517,8 @@ corporate = banner("Corporate event planners · Miami &amp; Florida","Corporate 
 ], "One coordinated team behind the scenes. A seamless experience in the room.")}
 </div></section>
 
-''' + planner(CORP_PLAN, "Your Production Calendar", "The Right Timeline for Your Event", "Explore planning priorities for the timeframe you have, from early venue decisions to final production details.", [("studio/listening.jpg","The brief"),("studio/walkthrough.jpg","Venue held"),("corporate/launch.jpg","Production floor"),("studio/design-board.jpg","Brand proofs"),("corporate/rehearsal.jpg","Rehearsal"),("corporate/gala.jpg","Event day")], "white") + '''
-<section><div class="wrap">
+''' + plan_link("corporate", CORP_PLAN, "Your Production Calendar", "The Right Timeline for Your Event", "Explore planning priorities for the timeframe you have, from early venue decisions to final production details.", "white") + '''
+<section class="ivory"><div class="wrap">
 <div class="head reveal"><p class="kicker">Working With Your Team</p><h2 class="h-display">Clear Communication. Confident Execution.</h2><div class="rule"></div></div>
 <div class="cols four stagger">
 <div><span class="script">i.</span><h3>One Planning Point of Contact</h3><p>A coordinated lead for schedules, updates and supplier questions, reducing unnecessary back-and-forth.</p></div>
@@ -450,12 +526,12 @@ corporate = banner("Corporate event planners · Miami &amp; Florida","Corporate 
 <div><span class="script">iii.</span><h3>Designed Around Your Brand</h3><p>We align décor, printed materials, displays and guest touchpoints with your event goals and brand identity.</p></div>
 <div><span class="script">iv.</span><h3>Prepared for the Live Moment</h3><p>Run-of-show planning, rehearsals, vendor cues and on-site management help the entire program run smoothly.</p></div>
 </div></div></section>
-''' + cta("Begin Here","Have an Event in Mind? Let’s Make It Happen.","Share your dates, goals, guest count and budget parameters. We’ll discuss an approach tailored to your event.", "Request a Proposal")
+''' + CORP_CTA
 
 # ------------------------------------------------------------------ CONTACT
 contact = f'''
 <section style="padding-top:clamp(3rem,6vw,5rem)"><div class="wrap">
-<div class="head reveal"><p class="kicker">Contact Anvaya</p><h1 class="h-display">Every Beautiful Celebration Begins Here</h1><div class="rule"></div><p class="lede">Tell us a little about your occasion, where you hope to celebrate and what matters most. We’ll take it from there, one thoughtful conversation at a time. Or <a href="#0" data-book class="textlink">book a call</a> directly.</p></div>
+<div class="head reveal"><p class="kicker">Contact Anvaya</p><h1 class="h-display">Every Beautiful Celebration Begins Here</h1><div class="rule"></div><p class="lede">Tell us what you are celebrating, where your family is gathering and what matters most. We’ll discuss the right planning approach, vendor options and next steps. Or <a href="#0" data-book class="textlink">book a call</a> directly.</p></div>
 <div class="contact reveal">
 <div>
 <dl>
@@ -480,6 +556,7 @@ contact = f'''
 <div class="chooser">
 <label><input type="radio" name="type" value="Wedding" id="t-w" checked><span>A Wedding or Wedding Weekend</span></label>
 <label><input type="radio" name="type" value="Milestone" id="t-m"><span>A Milestone</span></label>
+<label><input type="radio" name="type" value="Traditional Ceremony" id="t-t"><span>A Traditional Ceremony</span></label>
 <label><input type="radio" name="type" value="Corporate" id="t-c"><span>A Corporate Occasion</span></label>
 <label><input type="radio" name="type" value="Other" id="t-o"><span>Something Else</span></label>
 </div></fieldset>
@@ -503,7 +580,7 @@ def post_main(p):
 <h1 class="h-display">{html.escape(p["h"])}</h1><div class="rule left"></div>
 {p["body"]}
 <p class="related">Related pages: {rel}</p>
-</div></section>''' + WED_CTA
+</div></section>''' + (TR_CTA if "Traditions" in p["Related pages"] else WED_CTA)  # close on the celebration the article is about
 
 def post_ld(p):
     url = SITE + p["Suggested slug"]
@@ -515,24 +592,77 @@ blog_index = f'''<section><div class="wrap">
 {POST_CARDS}
 </div></section>'''
 
-BODIES = {"index":home,"about":about,"weddings":weddings,"milestones":milestones,"corporate":corporate,"contact":contact}
-THEME = {"index":"","about":"t-about","weddings":"t-weddings","milestones":"t-milestones","corporate":"t-corporate","contact":""}
+# ------------------------------------------------------------------ PLANNING CALENDARS
+# one page per celebration, reached from the preview on its celebration page (plan_link)
+CALS = {
+ CAL_PAGE["weddings"]: dict(sid="weddings", parent="Blog", parent_href="blog/index.html", crumb="Wedding Planning Timeline", name="Indian &amp; South Asian Weddings", tile=W[0][0], data=WED_PLAN, cta=WED_CTA,
+   h="Indian Wedding Planning Timeline: 14 Months, 9 Months or 6 Months", lede="Explore a planning approach for the time you have. The sequence stays thoughtful; the schedule adapts.",
+   trio=[("studio/walkthrough.jpg","Walking the venue"),("weddings/baraat.jpg","Baraat route agreed"),("studio/tasting.jpg","Tasting with the family")],
+   imgs=[("studio/listening.jpg","The first conversation"),("studio/walkthrough.jpg","Walking the venue"),("studio/tasting.jpg","Tasting with the family"),("studio/design-board.jpg","Design board"),("weddings/baraat.jpg","Baraat route agreed"),("studio/timeline.jpg","Timeline in hand"),("weddings/ceremony.jpg","The weekend")],
+   title="Indian Wedding Planning Timeline: 14, 9 or 6 Months | Anvaya",
+   desc="Plan an Indian or South Asian wedding in South Florida at the right pace: what happens fourteen, nine or six months out, from venues and vendors to the wedding weekend."),
+ CAL_PAGE["milestones"]: dict(sid="milestones", parent="Milestones", name="Milestone Celebrations", tile=M[0][0], data=MS_PLAN, cta=MS_CTA,
+   h="A Thoughtful Plan for Your Timeline", lede="Explore how your celebration can come together based on the time available.",
+   trio=[("milestones/baby-shower.jpg","Baby shower brunch on the terrace"),("milestones/vow-renewal.jpg","Fifty years, garlands exchanged"),("milestones/first-birthday.jpg","First birthday with grandparents")],
+   imgs=[("studio/listening.jpg","Listening first"),("milestones/baby-shower.jpg","The room, held"),("milestones/first-birthday.jpg","Cake and florals"),("studio/design-board.jpg","Invitations and design"),("studio/timeline.jpg","Run-of-show"),("milestones/vow-renewal.jpg","The day")],
+   title="Milestone Celebration Planning Calendar | Anvaya",
+   desc="How a milestone celebration comes together in South Florida with three months, six weeks or three weeks to go, from the first conversation to the day."),
+ CAL_PAGE["traditions"]: dict(sid="traditions", parent="Traditions", name="Traditional Ceremonies", tile=T[0][0], data=TR_PLAN, cta=TR_CTA,
+   h="A Simple Plan for Your Date", lede="Whether your occasion is months away or approaching soon, we help set clear priorities for the time available.",
+   trio=[("about/evening.jpg","An evening gathering at home"),("weddings/ceremony.jpg","A priest-led ritual by the sacred fire"),("about/kitchen.jpg","Marigold garlands strung at home")],
+   imgs=[("studio/listening.jpg","Listening to the family"),("about/evening.jpg","The home, prepared"),("studio/tasting.jpg","Tasting the menu"),("studio/design-board.jpg","Ceremony and d\u00e9cor details"),("studio/timeline.jpg","The run-of-show"),("milestones/vow-renewal.jpg","The day")],
+   title="Traditional Ceremony Planning Calendar | Anvaya",
+   desc="How a dhoti, half-saree, naming or housewarming ceremony comes together in South Florida with three months, six weeks or three weeks to go."),
+ CAL_PAGE["corporate"]: dict(sid="corporate", parent="Corporate", name="Corporate Events", tile=C[0][0], data=CORP_PLAN, cta=CORP_CTA,
+   h="The Right Timeline for Your Event", lede="Explore planning priorities for the timeframe you have, from early venue decisions to final production details.",
+   trio=[("corporate/rehearsal.jpg","Tech rehearsal"),("corporate/gala.jpg","Awards gala, Miami ballroom"),("corporate/launch.jpg","Product launch, Wynwood")],
+   imgs=[("studio/listening.jpg","The brief"),("studio/walkthrough.jpg","Venue held"),("corporate/launch.jpg","Production floor"),("studio/design-board.jpg","Brand proofs"),("corporate/rehearsal.jpg","Rehearsal"),("corporate/gala.jpg","Event day")],
+   title="Corporate Event Planning Calendar | Anvaya",
+   desc="Production calendars for corporate events in South Florida: what happens twelve, eight or four weeks out, from the brief and venue to event day."),
+}
+def paces_text(data):  # "Fourteen months, nine months or six months"
+    ls = [d["label"].lower() for d in data]
+    return (", ".join(ls[:-1]) + " or " + ls[-1]).capitalize()
+
+def cal_page(slug):
+    """breadcrumb banner, the calendar, the other two calendars, and the celebration's own closing CTA"""
+    c = CALS[slug]
+    crumb = f'<a href="{c.get("parent_href", c["sid"] + ".html")}">{c["parent"]}</a> <span aria-hidden="true">/</span> {c.get("crumb", "Planning Calendar")}'
+    others = "".join(f'<a class="t-{o["sid"]}" href="{s}.html"><div class="bg"><img src="{IMG}/{o["tile"]}" alt="" loading="lazy"></div><h3>{o["name"]}</h3><p>{paces_text(o["data"])}</p><p class="go">View the calendar {ARROW}</p></a>' for s,o in CALS.items() if s != slug)
+    return banner(crumb, c["h"], c["lede"], c["trio"]) + planner(c["data"], c["imgs"]) + f'''
+<section class="ivory"><div class="wrap">
+<div class="head reveal"><p class="kicker">Planning Something Else?</p><h2 class="h-display">More Planning Calendars</h2><div class="rule"></div></div>
+<div class="occasions plan-tiles stagger">{others}</div>
+</div></section>
+''' + c["cta"]
+
+BODIES = {"index":home,"about":about,"weddings":weddings,"milestones":milestones,"traditions":traditions,"corporate":corporate,"contact":contact}
+THEME = {"index":"","about":"t-about","weddings":"t-weddings","milestones":"t-milestones","traditions":"t-traditions","corporate":"t-corporate","contact":""}
 TITLES = {
  "index":"Indian &amp; South Asian Wedding Planner in Miami | Anvaya",
- "about":"About Anvaya | South Florida Indian Wedding &amp; Event Planners",
+ "about":"About Anvaya | Experienced Wedding Planners South Florida",
  "weddings":"Indian &amp; South Asian Wedding Planner Miami, FL | Anvaya",
  "milestones":"Milestone Event Planner Miami &amp; South Florida | Anvaya",
+ "traditions":"Indian Traditional Ceremony Planner Miami &amp; South Florida | Anvaya",
  "corporate":"Corporate Event Planner Miami &amp; South Florida | Anvaya",
  "contact":"Contact Anvaya | Wedding &amp; Event Planner South Florida",
 }
 DESC = {
- "index":"Plan Indian and South Asian weddings in Miami, Fort Lauderdale and Palm Beach with Anvaya. Cultural understanding, vendor choices and seamless multi-event coordination.",
- "about":"Meet Anvaya, a South Florida wedding and event planning brand shaped by JRN Events experience, cultural understanding and seamless celebration planning.",
- "weddings":"Anvaya plans Indian, Pakistani, Bangladeshi, Sikh and multicultural wedding celebrations across Miami, Fort Lauderdale and Palm Beach. Explore full-service planning.",
- "milestones":"Celebrate birthdays, anniversaries, baby showers, roka, naming ceremonies and more with Anvaya’s thoughtful milestone event planning in South Florida.",
+ "index":"Anvaya plans Indian, South Asian and multicultural weddings across South Florida with eight years of team experience, vendor selection and full-service coordination.",
+ "about":"Meet Anvaya, a South Florida wedding and event planner backed by eight years of team experience through JRN Events, cultural expertise and vendor negotiation.",
+ "weddings":"Full-service Indian, Pakistani, Sikh, South Indian and multicultural wedding planning in Miami, Fort Lauderdale and Palm Beach, with experienced vendor coordination.",
+ "milestones":"Plan milestone birthdays, anniversaries, baby showers, graduations and retirement celebrations in Miami, Fort Lauderdale and Palm Beach with Anvaya.",
+ "traditions":"Plan dhoti, half-saree, naming and housewarming ceremonies in Miami, Fort Lauderdale and Palm Beach with culturally informed event planning from Anvaya.",
  "corporate":"Anvaya coordinates company celebrations, launches, galas, retreats and client events across Miami, Fort Lauderdale and Palm Beach with thoughtful design and reliable logistics.",
- "contact":"Connect with Anvaya about Indian wedding planning, milestone celebrations and corporate events in Miami, Fort Lauderdale, Palm Beach and across Florida.",
+ "contact":"Connect with Anvaya to plan weddings, traditional ceremonies, milestone celebrations and corporate events in Miami, Fort Lauderdale and Palm Beach.",
 }
+ACTIVE = {}
+for s, c in CALS.items():
+    BODIES[s], THEME[s], TITLES[s], DESC[s], ACTIVE[s] = cal_page(s), "t-" + c["sid"], c["title"], c["desc"], "" if "parent_href" in c else c["sid"]
+
+def page_url(slug):  # canonical URL; a page ending in /index is served as its folder
+    return f'{SITE}/' if slug == "index" else f'{SITE}/{slug[:-5]}' if slug.endswith("/index") else f'{SITE}/{slug}.html'
+
 def schema(slug):
     biz = {"@context":"https://schema.org","@type":["LocalBusiness","EventPlanner"],"name":"Anvaya","url":SITE,"image":f"{SITE}/img/weddings/mandap.jpg",
       "description":"Luxury Indian and South Asian wedding planner and event planning studio in Miami, serving South Florida and all of Florida.",
@@ -542,11 +672,21 @@ def schema(slug):
       "hasOfferCatalog":{"@type":"OfferCatalog","name":"Celebrations","itemListElement":[
         {"@type":"Offer","itemOffered":{"@type":"Service","name":"Indian & South Asian wedding planning","url":f"{SITE}/weddings.html"}},
         {"@type":"Offer","itemOffered":{"@type":"Service","name":"Milestone celebration planning","url":f"{SITE}/milestones.html"}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"Traditional ceremony planning","url":f"{SITE}/traditions.html"}},
         {"@type":"Offer","itemOffered":{"@type":"Service","name":"Corporate event production","url":f"{SITE}/corporate.html"}}]}}
     out = [biz]
     if slug == "weddings":
         out.append({"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
           {"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in WED_FAQ]})
+    crumbs = [("Home", f"{SITE}/")]
+    if slug in CALS:
+        c = CALS[slug]
+        crumbs += [(c["parent"], f'{SITE}/{c.get("parent_href", c["sid"] + ".html")}'), (c.get("crumb", "Planning Calendar"), page_url(slug))]
+    elif slug != "index":
+        crumbs.append((dict(PAGES)[slug], page_url(slug)))
+    if len(crumbs) > 1:
+        out.append({"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+          {"@type":"ListItem","position":k+1,"name":n,"item":u} for k,(n,u) in enumerate(crumbs)]})
     return '<script type="application/ld+json">' + json.dumps(out) + '</script>'
 
 def shell(title, desc, main, url, ld, active="", base=""):
@@ -564,7 +704,8 @@ def document(head, body, theme=""):
 
 def page(slug, fragment):
     theme = THEME[slug]
-    head, body = shell(TITLES[slug], DESC[slug], BODIES[slug], f'{SITE}/{"" if slug=="index" else slug+".html"}', schema(slug), slug)
+    base = "../" * slug.count("/")  # pages in sub-folders (the blog resource) re-root their relative links
+    head, body = shell(TITLES[slug], DESC[slug], BODIES[slug], page_url(slug), schema(slug), ACTIVE.get(slug, slug), base)
     if fragment:
         return head + f'<script>document.addEventListener("DOMContentLoaded",function(){{document.body.classList.add("{theme}")}})</script>' + body
     return document(head, body, theme)
@@ -574,6 +715,8 @@ def write(rel, text):
     (DIST / rel).write_text(text, encoding="utf-8", newline="\n")
 
 for slug,_ in PAGES:
+    write(f"{slug}.html", page(slug, fragment=False))
+for slug in CALS:
     write(f"{slug}.html", page(slug, fragment=False))
 write("artifact-index.html", page("index", fragment=True))
 write("blog/index.html", document(*shell("Blog | Anvaya", "", blog_index, f"{SITE}/blog/", "", base="../")))

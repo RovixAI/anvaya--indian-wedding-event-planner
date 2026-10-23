@@ -35,19 +35,98 @@
     s.querySelectorAll('.falls li').forEach(function(li,k){ li.style.setProperty('--j', k); });
   });
   // image slots reveal individually, staggered within their group
-  document.querySelectorAll('.trio, .row .art, .gallery, .mosaic .set, .portrait').forEach(function(g){
+  document.querySelectorAll('.trio, .row .art, .gallery, .mosaic .set, .portrait, .letter .photo').forEach(function(g){
     g.querySelectorAll('.slot').forEach(function(sl,k){ sl.classList.add('reveal-img'); sl.style.setProperty('--i', k); });
   });
-  // timeline line grows with scroll position
-  var tls = document.querySelectorAll('.timeline');
-  function lineProgress(){
-    tls.forEach(function(tl){
-      var r = tl.getBoundingClientRect(), vh = window.innerHeight;
-      var p = (vh*0.72 - r.top) / r.height;
-      tl.style.setProperty('--p', Math.max(0, Math.min(1, p)).toFixed(3));
+  // timeline: the line draws with the scroll and each step is pulled into focus (--t, 0 to 1) as the line reaches it.
+  // Where the row fits the screen it is pinned: it holds in place while the page scrolls past, so the steps arrive one by one
+  // (on the rail, the scroll glides the cards across). Values ease toward the scroll position every frame, so a jumpy wheel
+  // still reads as one smooth motion, and scrolling back plays it in reverse. Geometry is measured once per layout change,
+  // so a scroll reads nothing but scrollY and each frame only writes.
+  var navBar = document.querySelector('.nav');
+  var clamp = function(x){ return x < 0 ? 0 : x > 1 ? 1 : x; };
+  document.querySelectorAll('.timeline').forEach(function(tl){
+    var steps = [].slice.call(tl.querySelectorAll('.step')), n = steps.length - 1, stage = tl.parentNode, pin = stage.parentNode, nav = pin.nextElementSibling;
+    if (!(nav && nav.classList.contains('tl-nav'))) nav = null;
+    var pinned = false, pinTop = 0, fitW = 0, raf = 0, last = 0, M = {};
+    var goal = {p: 0, t: steps.map(function(){ return 0; })}, now = {p: 0, t: goal.t.slice()};
+    function fit(){
+      if (innerWidth === fitW) return; // mobile toolbars resize the height mid-scroll; only a real width change re-fits
+      fitW = innerWidth; pinned = false;
+      pin.classList.remove('pinned'); pin.style.height = ''; stage.style.removeProperty('--pic-h');
+      if (reduce) return;
+      var fab = document.querySelector('.fab'), fabH = fab ? Math.max(0, innerHeight - fab.getBoundingClientRect().top) : 0; // keep the row clear of the floating contact bar
+      var navH = navBar ? navBar.offsetHeight : 0, room = innerHeight - navH - fabH - 24, slot = tl.querySelector('.pic .slot');
+      var over = tl.offsetHeight - room, picH = slot ? slot.offsetHeight - Math.max(0, over) : 0;
+      if (over > 0 && picH < 130) return; // trimming the photos would gut them: leave the row in the page flow
+      if (over > 0) stage.style.setProperty('--pic-h', picH + 'px');
+      pin.classList.add('pinned'); pinned = true;
+      var h = stage.offsetHeight;
+      pinTop = navH + Math.max(12, (innerHeight - navH - fabH - h) / 2);
+      stage.style.setProperty('--pin-top', pinTop + 'px');
+      pin.style.height = (h + innerHeight * (0.3 * steps.length + 0.25)) + 'px'; // about a third of a screen of scroll per step
+    }
+    function measure(){
+      var y = scrollY;
+      M.pin = pin.getBoundingClientRect().top + y; // the pin box never sticks (its stage does), so this is its place in the page
+      M.tl = tl.getBoundingClientRect().top + y;
+      M.range = pin.offsetHeight - stage.offsetHeight;
+      M.cw = steps[0].offsetWidth + parseFloat(getComputedStyle(tl).columnGap);
+      M.max = tl.scrollWidth - tl.clientWidth;
+      M.rail = M.max > 1; M.vh = innerHeight;
+    }
+    function aim(){ // where the scroll says the line and each step should be
+      var y = scrollY, vh = M.vh, top = (pinned ? M.pin : M.tl) - y, p;
+      var enter = clamp((vh * 0.92 - top) / (vh * 0.45)); // the first step arrives as the row comes into view
+      if (pinned) p = (pinTop - top) / M.range / 0.85; // the last stretch holds the finished row
+      else if (M.rail) p = enter ? (tl.scrollLeft + tl.clientWidth) / tl.scrollWidth : 0;
+      else p = (vh * 0.8 - top) / (vh * 0.5);
+      goal.p = clamp(p);
+      var swiped = M.rail && !pinned, edge = swiped ? tl.getBoundingClientRect().right : 0;
+      steps.forEach(function(s, i){
+        if (swiped){ var b = s.getBoundingClientRect(); goal.t[i] = enter * clamp((edge - b.left) / (b.width * 0.6)); } // a card blooms as it slides into view
+        else goal.t[i] = i ? clamp(goal.p * n - (i - 1)) : enter; // step i arrives while the line travels to it
+      });
+    }
+    function frame(ts){ // ease toward the goal at the same pace on 60 and 120 Hz screens, then rest
+      var dt = last ? Math.min(64, ts - last) : 16.7, k = 1 - Math.pow(0.9, dt / 16.7), busy = false; raf = 0;
+      now.p += (goal.p - now.p) * k;
+      if (Math.abs(goal.p - now.p) < 0.0005) now.p = goal.p; else busy = true;
+      tl.style.setProperty('--p', now.p.toFixed(4));
+      if (pinned && M.rail){ // glide card to card, resting on each for the last third of its stretch
+        var s = now.p * n, i = Math.floor(s), m = clamp((s - i) / 0.65); m = m * m * (3 - 2 * m);
+        tl.scrollLeft = Math.min(M.max, (i + m) * M.cw);
+      }
+      steps.forEach(function(s, i){
+        var t = now.t[i] + (goal.t[i] - now.t[i]) * k;
+        if (Math.abs(goal.t[i] - t) < 0.001) t = goal.t[i]; else busy = true;
+        now.t[i] = t; s.style.setProperty('--t', t.toFixed(3));
+        if (t > 0.97) s.classList.add('in'); else if (t < 0.85) s.classList.remove('in'); // details settle once a step has arrived
+      });
+      last = busy ? ts : 0;
+      if (busy) raf = requestAnimationFrame(frame);
+    }
+    function update(){
+      if (reduce){ tl.style.setProperty('--p', 1); steps.forEach(function(s){ s.classList.add('in'); }); }
+      else { aim(); if (!raf) raf = requestAnimationFrame(frame); }
+      if (nav && !pinned){
+        var x = tl.scrollLeft, end = x > M.max - 4, at = end ? n : Math.round(x / M.cw);
+        nav.querySelector('.prev').disabled = x < 4; nav.querySelector('.next').disabled = end;
+        nav.querySelector('.tl-count b').textContent = (at < 9 ? '0' : '') + (at + 1);
+      }
+    }
+    function relayout(){ fit(); measure(); update(); }
+    if (nav) nav.addEventListener('click', function(e){
+      var b = e.target.closest('button'); if (!b) return;
+      tl.scrollBy({left: b.classList.contains('next') ? M.cw : -M.cw, behavior: 'smooth'});
     });
-  }
-  if (tls.length){ lineProgress(); window.addEventListener('scroll', lineProgress, {passive:true}); window.addEventListener('resize', lineProgress); }
+    relayout();
+    window.addEventListener('scroll', update, {passive:true});
+    window.addEventListener('resize', relayout);
+    window.addEventListener('load', function(){ fitW = 0; relayout(); }); // web fonts change the row height
+    if ('ResizeObserver' in window) new ResizeObserver(function(){ measure(); update(); }).observe(document.body); // content above settling moves the section
+    tl.addEventListener('scroll', update, {passive:true});
+  });
 
   // reveal + timeline activation
   var io = ('IntersectionObserver' in window) ? new IntersectionObserver(function(entries){
@@ -57,7 +136,7 @@
       io.unobserve(e.target);
     });
   }, {threshold: 0.15, rootMargin: '0px 0px -8% 0px'}) : null;
-  var targets = document.querySelectorAll('.reveal, .stagger, .step, .slot.reveal-img, .mapwrap, .mv .panel');
+  var targets = document.querySelectorAll('.reveal, .stagger, .slot.reveal-img, .mapwrap, .mv .panel');
   if (io) targets.forEach(function(el){ io.observe(el); }); else targets.forEach(function(el){ el.classList.add('in'); });
   // hero images are above the fold: show at once
   document.querySelectorAll('.mosaic .slot, .trio .slot').forEach(function(el){ setTimeout(function(){ el.classList.add('in'); }, 150); });
@@ -92,7 +171,10 @@
       deck.querySelectorAll('.pcard').forEach(function(el){ if (io) io.observe(el); else el.classList.add('in'); });
     }
     tabs.forEach(function(t,k){ t.addEventListener('click', function(){ render(k); pl.scrollIntoView({behavior: reduce ? 'auto':'smooth', block:'start'}); }); });
-    render(0);
+    // a link to one pace (wedding-planning-calendar.html#nine-months, from the celebration page) opens the calendar on that pace
+    var start = 0; tabs.forEach(function(t,k){ if (t.id && location.hash === '#' + t.id) start = k; });
+    render(start);
+    if (start) requestAnimationFrame(function(){ tabs[start].scrollIntoView({block:'start', behavior:'instant'}); });
   });
 
   // story: sticky frame follows the chapter in view
