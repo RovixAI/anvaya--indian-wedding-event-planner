@@ -665,6 +665,34 @@ body{padding-bottom:4.5rem}
 
 /* faq on ivory */
 .ivory .faq details{border-color:var(--line)}
+
+/* ---- mobile pass ---- */
+/* the open row of a vendor/coordination list shows its whole description (a fixed 6em clipped longer copy) */
+.ledger li.on p{max-height:14em}
+@media (max-width:860px),(max-height:500px){.ledger li.on p{max-height:none}}
+/* the space kept clear for the floating contact bar sits inside the footer, so the page ends on the footer colour, not a blank strip */
+body{padding-bottom:0}
+footer{padding-bottom:calc(2rem + 4.5rem)}
+/* contact steps: one numeral column, so the three steps line up whatever the width of i., ii., iii. */
+.after > div{grid-template-columns:2.2rem 1fr}
+/* comfortable tap targets (~44px) without moving anything: the hit area grows, the layout does not */
+.hero .dots button,.textlink{position:relative}
+.hero .dots button::before{content:"";position:absolute;inset:-.55rem -.4rem}
+.textlink::before{content:"";position:absolute;inset:-.7rem -.3rem}
+.horizons button{min-height:44px}
+@media (max-width:560px){
+  .hero .dots{row-gap:1.15rem} /* rows of tabs far enough apart that their enlarged tap areas do not overlap */
+  .occasions > :is(div,a){min-height:0} /* one column: cards fit their copy instead of a fixed 230px box */
+  .faq summary{font-size:1.25rem;line-height:1.35}
+  legend,footer h4,.hero .dots button,.contact dt{font-size:.72rem}
+  .months .mo .unit,.pcard .when .unit{font-size:.7rem}
+  .ledger .view .cap{font-size:.72rem}
+  .flmap .pin text,.flmap .pin.far text{font-size:12px;letter-spacing:.06em} /* the map shrinks to the phone, so its labels need a larger size to stay legible */
+}
+@media (max-width:400px){
+  .mosaic::before{right:-10px;bottom:-10px} /* the offset frame behind the hero photos stays on a 320px screen */
+  .hero .dots button{letter-spacing:.16em} /* the one-line "Milestones, Traditions & Corporate" tab must fit a 320px screen */
+}
 </style><script type="application/ld+json">[{"@context": "https://schema.org", "@type": ["LocalBusiness", "EventPlanner"], "name": "Anvaya", "url": "https://anvaya-events.vercel.app", "image": "https://anvaya-events.vercel.app/img/weddings/mandap.jpg", "description": "Luxury Indian and South Asian wedding planner and event planning studio in Miami, serving South Florida and all of Florida.", "areaServed": [{"@type": "State", "name": "Florida"}, {"@type": "City", "name": "Miami"}, {"@type": "City", "name": "Coral Gables"}, {"@type": "City", "name": "Miami Beach"}, {"@type": "City", "name": "Fort Lauderdale"}, {"@type": "City", "name": "Hollywood"}, {"@type": "City", "name": "Boca Raton"}, {"@type": "City", "name": "Delray Beach"}, {"@type": "City", "name": "West Palm Beach"}, {"@type": "City", "name": "Palm Beach"}, {"@type": "City", "name": "Jupiter"}, {"@type": "City", "name": "Naples"}, {"@type": "City", "name": "Orlando"}, {"@type": "City", "name": "Tampa"}, {"@type": "City", "name": "Sarasota"}, {"@type": "City", "name": "Fort Myers"}, {"@type": "City", "name": "Jacksonville"}, {"@type": "City", "name": "Key West"}], "address": {"@type": "PostalAddress", "addressLocality": "Miami", "addressRegion": "FL", "addressCountry": "US"}, "knowsAbout": ["Wedding planning in Florida", "Destination weddings in Orlando, Tampa and Naples", "Indian wedding planning", "South Asian weddings", "Hindu wedding ceremonies", "Sikh weddings", "Muslim weddings", "Sangeet", "Mehndi", "Baraat", "Anniversary celebrations", "Corporate event production"], "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Celebrations", "itemListElement": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Indian & South Asian wedding planning", "url": "https://anvaya-events.vercel.app/weddings.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Milestone celebration planning", "url": "https://anvaya-events.vercel.app/milestones.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Traditional ceremony planning", "url": "https://anvaya-events.vercel.app/traditions.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Corporate event production", "url": "https://anvaya-events.vercel.app/corporate.html"}}]}}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://anvaya-events.vercel.app/"}, {"@type": "ListItem", "position": 2, "name": "About", "item": "https://anvaya-events.vercel.app/about.html"}]}]</script></head><body class="t-about"><nav class="nav" aria-label="Main"><div class="wrap">
 <a class="brand" href="index.html" aria-label="Anvaya home"><img src="img/logo-dark.webp" alt="Anvaya" onerror="this.closest('.brand').classList.add('nologo')"><span class="wordmark">Anvaya</span></a>
 <button class="menu-btn" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
@@ -673,27 +701,27 @@ body{padding-bottom:4.5rem}
 <div class="trio"><figure class="slot "><img src="img/about/kitchen.jpg" alt="Wedding morning, garlands on the kitchen floor"><figcaption>Wedding morning, garlands on the kitchen floor</figcaption></figure><figure class="slot "><img src="img/studio/team.jpg" alt="The Anvaya team"><figcaption>The Anvaya team</figcaption></figure><figure class="slot "><img src="img/about/evening.jpg" alt="Last guests leaving, lanterns still lit"><figcaption>Last guests leaving, lanterns still lit</figcaption></figure></div>
 </div></header>
 <section><div class="wrap">
-<div class="head reveal"><p class="kicker">The Story of Anvaya</p><h2 class="h-display">Our Experience. Your Celebration. One Clear Plan.</h2><div class="rule"></div></div>
-<div class="story"><div class="frame"><figure class="slot on"><img src="img/about/kitchen.jpg" alt="Wedding morning at home" loading="lazy"><figcaption>Wedding morning at home</figcaption></figure><figure class="slot"><img src="img/about/evening.jpg" alt="Hosts missing their own celebration" loading="lazy"><figcaption>Hosts missing their own celebration</figcaption></figure><figure class="slot"><img src="img/studio/design-board.jpg" alt="Our table in the studio" loading="lazy"><figcaption>Our table in the studio</figcaption></figure><figure class="slot"><img src="img/studio/team.jpg" alt="The team today" loading="lazy"><figcaption>The team today</figcaption></figure></div><div class="chapters"><div class="chapter"><span class="script">one</span><h3>Every Family Has Its Own Story</h3><p>No two celebrations should feel the same. We begin by understanding your people, customs, priorities and the experiences you want to share.</p></div><div class="chapter"><span class="script">two</span><h3>Eight Years Behind Our Approach</h3><p>Anvaya draws on eight years of team experience developed through JRN Events and work across hundreds of weddings and events—bringing hands-on knowledge of vendors, production and family celebrations.</p></div><div class="chapter"><span class="script">three</span><h3>Experience Meets Choice</h3><p>We help you explore suitable venues and vendors, compare proposals, negotiate terms and bring your selected professionals into a coordinated plan—without limiting you to one décor partner.</p></div><div class="chapter"><span class="script">four</span><h3>Celebrations Across South Florida</h3><p>Based in the South Florida market, we plan Indian, Pakistani, South Asian, multicultural and interfaith weddings, traditional ceremonies, milestone occasions and corporate events in Florida and beyond.</p></div></div></div>
+<div class="head reveal"><p class="kicker">The Story of Anvaya</p><h2 class="h-display">The Experience and People Behind Anvaya</h2><div class="rule"></div></div>
+<div class="story"><div class="frame"><figure class="slot on"><img src="img/about/kitchen.jpg" alt="Wedding morning at home" loading="lazy"><figcaption>Wedding morning at home</figcaption></figure><figure class="slot"><img src="img/about/evening.jpg" alt="Hosts missing their own celebration" loading="lazy"><figcaption>Hosts missing their own celebration</figcaption></figure><figure class="slot"><img src="img/studio/design-board.jpg" alt="Our table in the studio" loading="lazy"><figcaption>Our table in the studio</figcaption></figure><figure class="slot"><img src="img/studio/team.jpg" alt="The team today" loading="lazy"><figcaption>The team today</figcaption></figure></div><div class="chapters"><div class="chapter"><span class="script">one</span><h3>Every Celebration Begins with Your Story</h3><p>No two celebrations should feel the same. We begin by understanding your people, customs, priorities and the experiences you want to share.</p></div><div class="chapter"><span class="script">two</span><h3>Experience That Makes a Difference</h3><p>Anvaya draws on eight years of team experience developed through JRN Events and work across hundreds of weddings and events—bringing hands-on knowledge of vendors, production and family celebrations.</p></div><div class="chapter"><span class="script">three</span><h3>Trusted Relationships. More Choices for You.</h3><p>We help you explore suitable venues and vendors, compare proposals, negotiate terms and bring your selected professionals into a coordinated plan—without limiting you to one décor partner.</p></div><div class="chapter"><span class="script">four</span><h3>Celebrations Across South Florida</h3><p>Based in the South Florida market, we plan Indian, Pakistani, South Asian, multicultural and interfaith weddings, traditional ceremonies, milestone occasions and corporate events in Florida and beyond.</p></div></div></div>
 </div></section>
 
 <section class="ivory"><div class="wrap">
-<div class="head reveal"><p class="kicker">What Drives Us</p><h2 class="h-display">Purpose Behind Every Celebration</h2><div class="rule"></div></div>
+<div class="head reveal"><p class="kicker">What Drives Us</p><h2 class="h-display">Our Mission and Vision</h2><div class="rule"></div></div>
 <div class="mv">
 <div class="panel"><figure class="slot "><img src="img/milestones/vow-renewal.jpg" alt="Garlands exchanged at fifty years" loading="lazy"><figcaption>Garlands exchanged at fifty years</figcaption></figure><div class="card"><p class="kicker">Mission</p><h3>Make Every Moment Matter</h3><p>To create deeply personal celebrations through cultural understanding, meaningful design, thoughtful vendor choices and seamless coordination—so hosts and guests can truly enjoy being together.</p></div></div>
 <div class="panel"><figure class="slot "><img src="img/weddings/ceremony.jpg" alt="Pheras under the mandap" loading="lazy"><figcaption>Pheras under the mandap</figcaption></figure><div class="card"><p class="kicker">Vision</p><h3>Become a Trusted Celebration Partner</h3><p>To be known across Florida for celebrations that connect people, honor traditions and bring creativity together with clarity, care and dependable execution.</p></div></div>
 </div></div></section>
 
 <section><div class="wrap">
-<div class="head reveal"><p class="kicker">What We Believe</p><h2 class="h-display">Three Principles. Every Celebration.</h2><div class="rule"></div></div>
+<div class="head reveal"><p class="kicker">What We Believe</p><h2 class="h-display">What Guides Every Decision We Make</h2><div class="rule"></div></div>
 <div class="cols stagger">
 <div><span class="script">one</span><h3>Traditions Deserve Understanding</h3><p>We ask, listen and plan with intention. Whether it's a Hindu muhurtham, Sikh Anand Karaj, Muslim nikah or a family-specific custom, the meaning guides the logistics.</p></div>
-<div><span class="script">two</span><h3>Vendor Options With Real Guidance</h3><p>You deserve options, not a predetermined list. We use our network and negotiation experience to help you compare qualified vendors and choose what fits your style, requirements and budget.</p></div>
+<div><span class="script">two</span><h3>Vendor Options With Guidance</h3><p>You deserve options, not a predetermined list. We use our network and negotiation experience to help you compare qualified vendors and choose what fits your style, requirements and budget.</p></div>
 <div><span class="script">three</span><h3>Details Should Work Together</h3><p>Creative ideas are only as good as their execution. We connect teams, timelines and guest needs so every part of the experience feels considered.</p></div>
 </div></div></section>
 
 <section class="sage"><div class="wrap">
-<div class="head reveal"><p class="kicker">Who We Work With</p><h2 class="h-display">Different Celebrations. Shared Attention to Detail.</h2></div>
+<div class="head reveal"><p class="kicker">Who We Work With</p><h2 class="h-display">Who We Plan For</h2></div>
 <div class="cols four stagger">
 <div><span class="script">a.</span><h3>Couples Planning Multicultural Weddings</h3><p>Indian, Pakistani, Bangladeshi, Sikh, South Indian and interfaith celebrations often involve distinct events, family priorities and guest logistics. We build the plan around your needs.</p></div>
 <div><span class="script">b.</span><h3>Families Honoring Milestones</h3><p>From milestone anniversaries to family reunions, we help turn shared memories and new beginnings into gatherings with heart.</p></div>

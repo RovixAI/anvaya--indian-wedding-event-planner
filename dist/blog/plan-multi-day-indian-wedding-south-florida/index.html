@@ -665,11 +665,39 @@ body{padding-bottom:4.5rem}
 
 /* faq on ivory */
 .ivory .faq details{border-color:var(--line)}
+
+/* ---- mobile pass ---- */
+/* the open row of a vendor/coordination list shows its whole description (a fixed 6em clipped longer copy) */
+.ledger li.on p{max-height:14em}
+@media (max-width:860px),(max-height:500px){.ledger li.on p{max-height:none}}
+/* the space kept clear for the floating contact bar sits inside the footer, so the page ends on the footer colour, not a blank strip */
+body{padding-bottom:0}
+footer{padding-bottom:calc(2rem + 4.5rem)}
+/* contact steps: one numeral column, so the three steps line up whatever the width of i., ii., iii. */
+.after > div{grid-template-columns:2.2rem 1fr}
+/* comfortable tap targets (~44px) without moving anything: the hit area grows, the layout does not */
+.hero .dots button,.textlink{position:relative}
+.hero .dots button::before{content:"";position:absolute;inset:-.55rem -.4rem}
+.textlink::before{content:"";position:absolute;inset:-.7rem -.3rem}
+.horizons button{min-height:44px}
+@media (max-width:560px){
+  .hero .dots{row-gap:1.15rem} /* rows of tabs far enough apart that their enlarged tap areas do not overlap */
+  .occasions > :is(div,a){min-height:0} /* one column: cards fit their copy instead of a fixed 230px box */
+  .faq summary{font-size:1.25rem;line-height:1.35}
+  legend,footer h4,.hero .dots button,.contact dt{font-size:.72rem}
+  .months .mo .unit,.pcard .when .unit{font-size:.7rem}
+  .ledger .view .cap{font-size:.72rem}
+  .flmap .pin text,.flmap .pin.far text{font-size:12px;letter-spacing:.06em} /* the map shrinks to the phone, so its labels need a larger size to stay legible */
+}
+@media (max-width:400px){
+  .mosaic::before{right:-10px;bottom:-10px} /* the offset frame behind the hero photos stays on a 320px screen */
+  .hero .dots button{letter-spacing:.16em} /* the one-line "Milestones, Traditions & Corporate" tab must fit a 320px screen */
+}
 </style><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "How to Plan a Multi-Day Indian Wedding in South Florida", "description": "Planning a mehndi, haldi, sangeet, baraat, ceremony and reception in Miami or Palm Beach? Learn how to connect venues, vendors and guest logistics.", "url": "https://anvaya-events.vercel.app/blog/plan-multi-day-indian-wedding-south-florida", "mainEntityOfPage": "https://anvaya-events.vercel.app/blog/plan-multi-day-indian-wedding-south-florida", "author": {"@type": "Organization", "name": "Anvaya", "url": "https://anvaya-events.vercel.app"}, "publisher": {"@type": "Organization", "name": "Anvaya", "url": "https://anvaya-events.vercel.app"}}</script></head><body class=""><nav class="nav" aria-label="Main"><div class="wrap">
 <a class="brand" href="index.html" aria-label="Anvaya home"><img src="img/logo-dark.webp" alt="Anvaya" onerror="this.closest('.brand').classList.add('nologo')"><span class="wordmark">Anvaya</span></a>
 <button class="menu-btn" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
 <ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="weddings.html">Weddings</a></li><li><a href="milestones.html">Milestones</a></li><li><a href="traditions.html">Traditions</a></li><li><a href="corporate.html">Corporate</a></li><li><a href="contact.html">Contact</a></li></ul></div></nav><main><section><div class="wrap article reveal">
-<h1 class="h-display">How to Plan a Multi-Day Indian Wedding in South Florida</h1><div class="rule left"></div>
+<h1 class="h-display">How to Plan a <span style="white-space:nowrap">Multi-Day</span> Indian Wedding in South Florida</h1><div class="rule left"></div>
 <p>A multi-day Indian wedding can feel like several celebrations happening at once. Each event has its own atmosphere, guest list and traditions, yet every detail affects the others. The secret isn&#x27;t planning six beautiful events separately. It&#x27;s planning one connected wedding experience.</p><h2>Begin with the full event list</h2><p>Before touring venues, write down every occasion you expect to host. Include welcome dinners, mehndi, haldi or pithi, garba or sangeet, baraat, ceremony, reception and farewell brunch. Ask both families about religious requirements, preferred dates and any customs that need a particular time of day.</p><h2>Select venues for the entire weekend</h2><p>A ballroom may look perfect in photographs and still be wrong for your baraat, mandap or catering needs. Check capacity for every event, room-turnover time, outdoor sound policies, religious ceremony rules, vendor access, kitchen restrictions and weather backup. If guests will move between venues, account for traffic and shuttle loading, not just driving distance.</p><h2>Build one shared budget</h2><p>Assign estimated spending by event and by major category: venue, catering, décor, photo and video, entertainment, attire, transport and planning. Keep a contingency allowance for unexpected logistics. This makes trade-offs clearer when you decide where to invest in visual impact and where to simplify.</p><h2>Choose vendors who understand the schedule</h2><p>Multiple event days mean several deliveries, setup windows and changing spaces. Ask prospective vendors about load-in constraints, travel between locations, staffing and their experience with the ceremonies involved. A photographer covering an Anand Karaj may need a different briefing from one covering a nighttime reception.</p><h2>Plan around people, not just production</h2><p>Guests need understandable itineraries, hotel and transportation information, dietary details and reasonable breaks. Families may need private moments, prayer spaces or places for older guests to rest. These considerations shape the quality of the weekend as much as flowers and lighting do.</p><h2>Create a single master timeline</h2><p>The master schedule should connect vendors, families, officiants, transportation and venues. From the first makeup appointment to the final send-off, each transition needs an owner. Share tailored versions with each party rather than sending everyone a huge spreadsheet.</p><p>A memorable South Florida wedding honors culture and hospitality while keeping the logistics calm. <strong>Anvaya helps couples connect every event of their Indian wedding weekend through one clear planning approach.</strong></p>
 <p class="related">Related pages: <a class="textlink" href="weddings.html">Weddings</a> · <a class="textlink" href="contact.html">Contact</a></p>
 </div></section><section class="cta sage"><div class="wrap reveal">

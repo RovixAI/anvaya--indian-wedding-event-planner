@@ -190,7 +190,7 @@ home = f'''<header class="hero" data-carousel><div class="wrap">
 <section><div class="wrap"><div class="letter reveal">
 <div class="photo">{slot("about/kitchen.jpg","Garlands on the kitchen floor, wedding morning")}<span class="plate">Est. Miami</span></div>
 <div>
-<p class="kicker">About Anvaya</p><h2 class="h-serif" style="margin:.6rem 0 1.4rem"><span style="display:inline-block">Your Celebration.</span> <span style="display:inline-block">Every Detail Taken Care Of.</span></h2>
+<p class="kicker">About Anvaya</p><h2 class="h-serif" style="margin:.6rem 0 1.4rem"><span style="display:inline-block">Experienced Planning.</span> <span style="display:inline-block">Thoughtful Celebrations.</span></h2>
 <div class="text">
 <p>At Anvaya, every celebration begins with your story, your family, and your traditions. We bring everything together through thoughtful planning, ensuring every detail is considered and every tradition is&nbsp;honored.</p>
 <p>Our team brings eight years of experience through JRN Events, having worked on hundreds of weddings and celebrations across different cultures. With deep South Florida knowledge and strong vendor relationships, we help you find quality services at competitive&nbsp;prices.</p>
@@ -199,39 +199,39 @@ home = f'''<header class="hero" data-carousel><div class="wrap">
 </div></div></div></div></section>
 
 <section class="ivory" id="services"><div class="wrap">
-<div class="head reveal"><p class="kicker">What We Plan</p><h2 class="h-display">Your Occasion. Our Complete Attention.</h2><div class="rule"></div></div>
+<div class="head reveal"><p class="kicker">What We Plan</p><h2 class="h-display">Celebrations We Plan</h2><div class="rule"></div></div>
 
 <div class="row reveal">
 <div class="art">{"".join(slot(s,b) for s,b in W)}</div>
-<div class="copy"><span class="script">weddings</span><h2 class="h-serif">Weddings That Honor Every Part of Your Story</h2><p class="lede">From Indian and Pakistani weddings to Bangladeshi, Sikh, South Indian, Christian and interfaith celebrations, we understand how rituals, families and multiple events fit together. One team plans every part of the weekend.</p>
+<div class="copy"><span class="script">weddings</span><h2 class="h-serif"><span style="display:inline-block">Every Tradition Honored.</span> <span style="display:inline-block">Every Wedding Thoughtfully Planned.</span></h2><p class="lede">From Indian and Pakistani weddings to Bangladeshi, Sikh, South Indian, Christian and interfaith celebrations, we understand how rituals, families and multiple events fit together. One team plans every part of the weekend.</p>
 <ul><li>Venue selection and wedding-weekend logistics</li><li>Curated vendor options across styles and budgets</li><li>Cultural ceremonies and coordinated timelines</li><li>On-site management from welcome to farewell</li></ul>
 <a class="textlink" href="weddings.html">Our Wedding Planning</a></div>
 </div>
 
 <div class="row flip reveal">
 <div class="art">{"".join(slot(s,b) for s,b in M)}</div>
-<div class="copy"><span class="script">milestones</span><h2 class="h-serif">Life’s Special Chapters, Celebrated Your Way</h2><p class="lede">Milestone birthdays, anniversaries, baby showers and achievements deserve thoughtful celebrations. We bring the setting, vendors and details together so you can enjoy the people who matter most.</p>
+<div class="copy"><span class="script">milestones</span><h2 class="h-serif">Your Milestones. Beautifully Celebrated.</h2><p class="lede">Milestone birthdays, anniversaries, baby showers and achievements deserve thoughtful celebrations. We bring the setting, vendors and details together so you can enjoy the people who matter most.</p>
 <ul><li>Venues suited to your guest list</li><li>Personalized décor, dining and entertainment</li><li>Invitations, RSVPs and guest experience</li><li>Seamless celebration-day coordination</li></ul>
 <a class="textlink" href="milestones.html">Our Milestone Planning</a></div>
 </div>
 
 <div class="row reveal">
 <div class="art">{slot("weddings/ceremony.jpg","A priest-led ritual by the sacred fire")}{slot("milestones/vow-renewal.jpg","Garlands exchanged, family gathered")}{slot("about/evening.jpg","Lanterns lit for an evening at home")}</div>
-<div class="copy"><span class="script">traditions</span><h2 class="h-serif">Traditions Worth Honoring. Moments Worth Sharing.</h2><p class="lede">From dhoti and half-saree ceremonies to naming celebrations and housewarmings, we plan the rituals, décor, hospitality and flow with care for what each occasion means to your family.</p>
+<div class="copy"><span class="script">traditions</span><h2 class="h-serif">Meaningful Traditions. Thoughtfully Planned.</h2><p class="lede">From dhoti and half-saree ceremonies to naming celebrations and housewarmings, we plan the rituals, décor, hospitality and flow with care for what each occasion means to your family.</p>
 <ul><li>Ceremony timing and family customs</li><li>Décor, catering and seating</li><li>Priest/officiant and vendor coordination</li><li>Thoughtful hosting and on-site management</li></ul>
 <a class="textlink" href="traditions.html">Explore Traditional Celebrations</a></div>
 </div>
 
 <div class="row flip reveal">
 <div class="art">{"".join(slot(s,b) for s,b in C)}</div>
-<div class="copy"><span class="script">corporate</span><h2 class="h-serif">Corporate Gatherings with Purpose and Personality</h2><p class="lede">From executive dinners and galas to company celebrations and product launches, we create polished experiences that reflect your brand, engage guests and stay organized behind the scenes.</p>
+<div class="copy"><span class="script">corporate</span><h2 class="h-serif">Corporate Events Planned with Purpose.</h2><p class="lede">From executive dinners and galas to company celebrations and product launches, we create polished experiences that reflect your brand, engage guests and stay organized behind the scenes.</p>
 <ul><li>Venue sourcing and supplier coordination</li><li>Brand-aligned event design and production</li><li>Guest registration and event logistics</li><li>Detailed schedules and on-site delivery</li></ul>
 <a class="textlink" href="corporate.html">Our Corporate Events</a></div>
 </div>
 </div></section>
 
 <section id="unfolds"><div class="wrap">
-<div class="head reveal"><p class="kicker">How We Work</p><h2 class="h-display">A Clear Plan Behind Every Beautiful Celebration</h2><div class="rule"></div><p class="lede">Good planning gives creativity room to shine. Our five steps keep your vision, budget, vendors and event experience moving together.</p></div>
+<div class="head reveal"><p class="kicker">How We Work</p><h2 class="h-display">How We Bring Your Celebration Together</h2><div class="rule"></div><p class="lede">Good planning gives creativity room to shine. Our five steps keep your vision, budget, vendors and event experience moving together.</p></div>
 {timeline([
  ("We Understand Your Story","We begin with your occasion, priorities, family traditions, guest count and budget. What matters to you becomes the starting point of every decision.",["Your vision","Guest count","Budget"],("studio/listening.jpg","The first conversation")),
  ("We Find the Right Setting","We shortlist venues that fit your events, guests and overall vision—considering ceremony needs, access, logistics and the experience you want to create.",["Venue options","Dates confirmed"],("studio/walkthrough.jpg","Walking the ballroom together")),
@@ -242,7 +242,7 @@ home = f'''<header class="hero" data-carousel><div class="wrap">
 </div></section>
 
 <section class="sage"><div class="wrap">
-<div class="head reveal"><p class="kicker">The Anvaya Difference</p><h2 class="h-display">The Experience Behind Every Seamless Celebration.</h2><div class="rule"></div><p class="lede">The experience should feel just as considered as the celebration itself.</p></div>
+<div class="head reveal"><p class="kicker">The Anvaya Difference</p><h2 class="h-display">Why Families Choose Anvaya</h2><div class="rule"></div><p class="lede">The experience should feel just as considered as the celebration itself.</p></div>
 <div class="cols four stagger">
 <div><span class="script">i.</span><h3>Cultural Understanding</h3><p>We plan around the meaning behind each tradition—from ceremony sequences and family customs to food preferences, religious considerations and guest experience.</p></div>
 <div><span class="script">ii.</span><h3>Choice, Not a Template</h3><p>Access a diverse network of venue and vendor options. We help you compare styles, services and budgets so the celebration feels like yours.</p></div>
@@ -251,25 +251,25 @@ home = f'''<header class="hero" data-carousel><div class="wrap">
 </div></div></section>
 
 <section><div class="wrap">
-<div class="head reveal"><p class="kicker">Celebrations &amp; Inspiration</p><h2 class="h-display">Moments Worth Remembering</h2><div class="rule"></div></div>
+<div class="head reveal"><p class="kicker">Celebrations &amp; Inspiration</p><h2 class="h-display">Celebrations That Inspire</h2><div class="rule"></div></div>
 <div class="gallery">
 {slot("gallery/1.jpg","Wedding Ceremony","tall")}{slot("gallery/2.jpg","Elegant Tablescapes","wide")}{slot("gallery/3.jpg","Sangeet Celebration")}{slot("gallery/4.jpg","Mehndi Details","tall")}{slot("gallery/5.jpg","Inspired Dining")}{slot("gallery/6.jpg","Waterfront Weddings","wide")}
 </div></div></section>
 
-''' + mapsection("Wedding &amp; Event Planning Across Florida",
-  "South Florida is our home market. We plan weddings, traditions, milestones and corporate events in Miami, Fort Lauderdale, Boca Raton and Palm Beach, with U.S. and international destinations available by arrangement.",
+''' + mapsection("Rooted in South Florida. Planning Beyond.",
+  "We plan weddings, traditions, milestones and corporate events in Miami, Fort Lauderdale, Boca Raton and Palm Beach, with U.S. and international destinations available by arrangement.",
   ["From city hotels to waterfront venues, we plan occasions across Miami-Dade, Broward and Palm Beach counties.",
    "Destination wedding weekends, family celebrations and corporate programs planned with local venue and vendor coordination.",
    "Thoughtful planning for coastal celebrations, estate gatherings and intimate occasions on Florida’s Gulf Coast.",
    "Have a meaningful destination in mind? Tell us where; we can discuss the logistics and planning scope."]) + f'''
 <section><div class="wrap">
-<div class="head reveal"><p class="kicker">Kind Words</p><h2 class="h-display">Stories Shared by Our Clients</h2><div class="rule"></div></div>
+<div class="head reveal"><p class="kicker">Kind Words</p><h2 class="h-display">Words from the Families We Serve</h2><div class="rule"></div></div>
 <div class="words stagger">
 <blockquote><p><span class="placeholder">[Genuine, permission-approved client review]</span></p><cite><span class="placeholder">[Client · Occasion · Location]</span></cite></blockquote>
 <blockquote><p><span class="placeholder">[Genuine, permission-approved client review]</span></p><cite><span class="placeholder">[Client · Occasion · Location]</span></cite></blockquote>
 <blockquote><p><span class="placeholder">[Genuine, permission-approved client review]</span></p><cite><span class="placeholder">[Client · Occasion · Location]</span></cite></blockquote>
 </div></div></section>
-''' + cta("Begin Here","Your Celebration Starts with a Conversation","Tell us what you are planning, which traditions matter and where you imagine bringing everyone together. We’ll explore how to make it beautifully yours.", label2="Contact Anvaya")
+''' + cta("Begin Here","Let’s Plan Something Meaningful Together.","Tell us what you are planning, which traditions matter and where you imagine bringing everyone together. We’ll explore how to make it beautifully yours.", label2="Contact Anvaya")
 
 # ------------------------------------------------------------------ ABOUT
 about = banner("Our Story","Eight Years of Experience. Hundreds of Celebrations.",
@@ -277,37 +277,37 @@ about = banner("Our Story","Eight Years of Experience. Hundreds of Celebrations.
   "We understand what makes each celebration meaningful, from honoring family traditions to coordinating every detail. With trusted vendor relationships, thoughtful planning, and a commitment to quality and value, we take care of everything so you can enjoy the moments that matter most."],
  [("about/kitchen.jpg","Wedding morning, garlands on the kitchen floor"),("studio/team.jpg","The Anvaya team"),("about/evening.jpg","Last guests leaving, lanterns still lit")]) + f'''
 <section><div class="wrap">
-<div class="head reveal"><p class="kicker">The Story of Anvaya</p><h2 class="h-display">Our Experience. Your Celebration. One Clear Plan.</h2><div class="rule"></div></div>
+<div class="head reveal"><p class="kicker">The Story of Anvaya</p><h2 class="h-display">The Experience and People Behind Anvaya</h2><div class="rule"></div></div>
 {story([
  ("about/kitchen.jpg","Wedding morning at home"),
  ("about/evening.jpg","Hosts missing their own celebration"),
  ("studio/design-board.jpg","Our table in the studio"),
  ("studio/team.jpg","The team today"),
 ],[
- ("one","Every Family Has Its Own Story","No two celebrations should feel the same. We begin by understanding your people, customs, priorities and the experiences you want to share."),
- ("two","Eight Years Behind Our Approach","Anvaya draws on eight years of team experience developed through JRN Events and work across hundreds of weddings and events—bringing hands-on knowledge of vendors, production and family celebrations."),
- ("three","Experience Meets Choice","We help you explore suitable venues and vendors, compare proposals, negotiate terms and bring your selected professionals into a coordinated plan—without limiting you to one décor partner."),
+ ("one","Every Celebration Begins with Your Story","No two celebrations should feel the same. We begin by understanding your people, customs, priorities and the experiences you want to share."),
+ ("two","Experience That Makes a Difference","Anvaya draws on eight years of team experience developed through JRN Events and work across hundreds of weddings and events—bringing hands-on knowledge of vendors, production and family celebrations."),
+ ("three","Trusted Relationships. More Choices for You.","We help you explore suitable venues and vendors, compare proposals, negotiate terms and bring your selected professionals into a coordinated plan—without limiting you to one décor partner."),
  ("four","Celebrations Across South Florida","Based in the South Florida market, we plan Indian, Pakistani, South Asian, multicultural and interfaith weddings, traditional ceremonies, milestone occasions and corporate events in Florida and beyond."),
 ])}
 </div></section>
 
 <section class="ivory"><div class="wrap">
-<div class="head reveal"><p class="kicker">What Drives Us</p><h2 class="h-display">Purpose Behind Every Celebration</h2><div class="rule"></div></div>
+<div class="head reveal"><p class="kicker">What Drives Us</p><h2 class="h-display">Our Mission and Vision</h2><div class="rule"></div></div>
 <div class="mv">
 <div class="panel">{slot("milestones/vow-renewal.jpg","Garlands exchanged at fifty years")}<div class="card"><p class="kicker">Mission</p><h3>Make Every Moment Matter</h3><p>To create deeply personal celebrations through cultural understanding, meaningful design, thoughtful vendor choices and seamless coordination—so hosts and guests can truly enjoy being together.</p></div></div>
 <div class="panel">{slot("weddings/ceremony.jpg","Pheras under the mandap")}<div class="card"><p class="kicker">Vision</p><h3>Become a Trusted Celebration Partner</h3><p>To be known across Florida for celebrations that connect people, honor traditions and bring creativity together with clarity, care and dependable execution.</p></div></div>
 </div></div></section>
 
 <section><div class="wrap">
-<div class="head reveal"><p class="kicker">What We Believe</p><h2 class="h-display">Three Principles. Every Celebration.</h2><div class="rule"></div></div>
+<div class="head reveal"><p class="kicker">What We Believe</p><h2 class="h-display">What Guides Every Decision We Make</h2><div class="rule"></div></div>
 <div class="cols stagger">
 <div><span class="script">one</span><h3>Traditions Deserve Understanding</h3><p>We ask, listen and plan with intention. Whether it's a Hindu muhurtham, Sikh Anand Karaj, Muslim nikah or a family-specific custom, the meaning guides the logistics.</p></div>
-<div><span class="script">two</span><h3>Vendor Options With Real Guidance</h3><p>You deserve options, not a predetermined list. We use our network and negotiation experience to help you compare qualified vendors and choose what fits your style, requirements and budget.</p></div>
+<div><span class="script">two</span><h3>Vendor Options With Guidance</h3><p>You deserve options, not a predetermined list. We use our network and negotiation experience to help you compare qualified vendors and choose what fits your style, requirements and budget.</p></div>
 <div><span class="script">three</span><h3>Details Should Work Together</h3><p>Creative ideas are only as good as their execution. We connect teams, timelines and guest needs so every part of the experience feels considered.</p></div>
 </div></div></section>
 
 <section class="sage"><div class="wrap">
-<div class="head reveal"><p class="kicker">Who We Work With</p><h2 class="h-display">Different Celebrations. Shared Attention to Detail.</h2></div>
+<div class="head reveal"><p class="kicker">Who We Work With</p><h2 class="h-display">Who We Plan For</h2></div>
 <div class="cols four stagger">
 <div><span class="script">a.</span><h3>Couples Planning Multicultural Weddings</h3><p>Indian, Pakistani, Bangladeshi, Sikh, South Indian and interfaith celebrations often involve distinct events, family priorities and guest logistics. We build the plan around your needs.</p></div>
 <div><span class="script">b.</span><h3>Families Honoring Milestones</h3><p>From milestone anniversaries to family reunions, we help turn shared memories and new beginnings into gatherings with heart.</p></div>
@@ -344,7 +344,7 @@ for chunk in ("\n" + (ROOT / "blog.md").read_text(encoding="utf-8")).split("\n##
     p["path"] = p["Suggested slug"].strip("/")
     POSTS.append(p)
 RESOURCES = [("blog/indian-wedding-planning-timeline", "Indian Wedding Planning Timeline: 14 Months, 9 Months or 6 Months", "What happens fourteen, nine or six months before an Indian or South Asian wedding weekend, from venues and vendors to the weekend itself.")]
-POST_CARDS = '<div class="cols posts stagger">' + "".join(f'<div><h3><a href="{path}/index.html">{html.escape(h)}</a></h3><p>{html.escape(d)}</p></div>' for path,h,d in [(p["path"], p["h"], p["Meta description"]) for p in POSTS] + RESOURCES) + '</div>'
+POST_CARDS = '<div class="cols posts stagger">' + "".join(f'<div><h3><a href="{path}/index.html">{re.sub(r"(\S+-\S+)", r'<span style="white-space:nowrap">\1</span>', html.escape(h))}</a></h3><p>{html.escape(d)}</p></div>' for path,h,d in [(p["path"], p["h"], p["Meta description"]) for p in POSTS] + RESOURCES) + '</div>'
 
 # ------------------------------------------------------------------ WEDDINGS
 WED_FAQ = [  # rendered on the page and in the FAQPage schema
@@ -355,7 +355,7 @@ WED_FAQ = [  # rendered on the page and in the FAQPage schema
  ("Can you coordinate a wedding across multiple venues and days?","Yes. We can connect event schedules, vendor arrivals, ceremony timing, guest transportation and venue transitions across a multi-day wedding weekend. The result is one coordinated plan rather than separate events competing for attention."),
 ]
 WED_CTA = cta("Begin Here","Your Wedding Should Feel Like Your Family","Tell us about the traditions you treasure, the celebrations you imagine and the people coming together. We’ll help connect every moment.", "Plan Your Wedding Weekend")  # also closes every blog post
-weddings = banner("Weddings","Your wedding, celebrated the way your family remembers it","At Anvaya, we plan Indian and South Asian weddings across Miami, Fort Lauderdale and Palm Beach, from a single ceremony to a four-event weekend.", W) + f'''
+weddings = banner("Weddings","Your wedding, celebrated the way your family remembers it","At Anvaya, we plan Indian, South Asian and multicultural weddings across South Florida, thoughtfully honoring each family’s traditions and celebrations.", W) + f'''
 <section><div class="wrap"><div class="letter reveal">
 <div class="photo">{slot("weddings/ceremony.jpg","Pheras, ghee on the fire")}<span class="plate">Weddings</span></div>
 <div>
@@ -368,7 +368,7 @@ weddings = banner("Weddings","Your wedding, celebrated the way your family remem
 </div></div></div></div></section>
 
 <section class="ivory" id="process"><div class="wrap">
-<div class="head reveal"><p class="kicker">How We Plan Your Wedding</p><h2 class="h-display">The Anvaya Planning System</h2><div class="rule"></div><p class="lede">Understand the family. Find the setting. Choose the right team. Design the events. Connect the logistics. Celebrate with confidence.</p></div>
+<div class="head reveal"><p class="kicker">How We Plan Your Wedding</p><h2 class="h-display">How We Plan Your Wedding, Step by Step</h2><div class="rule"></div><p class="lede">Understand the family. Find the setting. Choose the right team. Design the events. Connect the logistics. Celebrate with confidence.</p></div>
 {timeline([
  ("Understand Your Family &amp; Vision","We learn the wedding events, religious and family traditions, guest expectations, planning priorities and budget. Your story becomes the planning brief.",["Event list","Budget priorities","Guest estimate"],("studio/listening.jpg","Over coffee, listening")),
  ("Find &amp; Secure Your Venues","We compare venues with more than aesthetics in mind: ceremony space, baraat possibilities, catering policies, guest rooms, weather backup and event transitions.",["Ceremony venue","Reception venue","Hotel rooms"],("studio/walkthrough.jpg","Walking the ballroom")),
@@ -380,7 +380,7 @@ weddings = banner("Weddings","Your wedding, celebrated the way your family remem
 </div></section>
 
 <section><div class="wrap">
-<div class="head reveal"><p class="kicker">Your Wedding Vendor Team</p><h2 class="h-display">More Choice. One Coordinated Team.</h2><div class="rule"></div><p class="lede">Explore a range of vendor styles and services. We help compare options, match them to your priorities and coordinate the professionals you choose.</p></div>
+<div class="head reveal"><p class="kicker">Your Wedding Vendor Team</p><h2 class="h-display">The Right Vendors for Every Part of Your Wedding</h2><div class="rule"></div><p class="lede">Explore a range of vendor styles and services. We help compare options, match them to your priorities and coordinate the professionals you choose.</p></div>
 ''' + ledger([
  ("Venues","Hotels, resorts, ballrooms and outdoor settings assessed for ceremonies, guest capacity, catering, room blocks and multi-event logistics.",("studio/walkthrough.jpg","Walking a Palm Beach ballroom")),
  ("Catering","Indian, Pakistani, South Asian and fusion menus, tastings, vegetarian and religious dietary needs, live stations and late-night food.",("gallery/5.jpg","Live dosa and chaat counter")),
@@ -394,28 +394,28 @@ weddings = banner("Weddings","Your wedding, celebrated the way your family remem
 ]) + '''
 </div></section>
 <section class="ivory"><div class="wrap">
-<div class="head reveal"><p class="kicker">Ways to Work With Us</p><h2 class="h-display">The Right Level of Support for Your Wedding</h2><div class="rule"></div></div>
+<div class="head reveal"><p class="kicker">Ways to Work With Us</p><h2 class="h-display">Wedding Planning Services Tailored to You</h2><div class="rule"></div></div>
 <div class="ways stagger">
-<div><p class="kicker">Full Planning</p><h3>From First Ideas to Final Farewell</h3><p>For couples who want one experienced team to plan and coordinate the entire wedding journey.</p><ul><li>Budget, venues and vendor selection</li><li>Event design and guest experience</li><li>Accommodations and transportation</li><li>Detailed schedules and on-site management</li></ul></div>
-<div class="mark"><p class="kicker">Partial Planning</p><h3>Build on What You’ve Started</h3><p>For couples who have booked key elements and want experienced guidance to complete the plan.</p><ul><li>Review existing bookings and budgets</li><li>Source remaining vendor options</li><li>Refine designs and event logistics</li><li>Manage the wedding weekend</li></ul></div>
-<div><p class="kicker">Wedding Weekend Management</p><h3>Enjoy Everything You’ve Planned</h3><p>For couples who have made their selections and want professional coordination for the final stretch and celebration days.</p><ul><li>Vendor handover and final confirmations</li><li>Detailed schedules and cue sheets</li><li>Rehearsal and ceremony coordination</li><li>On-site event management</li></ul></div>
+<div><p class="kicker">Full Planning</p><h3>Full Wedding Planning, From Start to Finish</h3><p>For couples who want one experienced team to plan and coordinate the entire wedding journey.</p><ul><li>Budget, venues and vendor selection</li><li>Event design and guest experience</li><li>Accommodations and transportation</li><li>Detailed schedules and on-site management</li></ul></div>
+<div class="mark"><p class="kicker">Partial Planning</p><h3>Expert Guidance for the Plans You’ve Begun</h3><p>For couples who have booked key elements and want experienced guidance to complete the plan.</p><ul><li>Review existing bookings and budgets</li><li>Source remaining vendor options</li><li>Refine designs and event logistics</li><li>Manage the wedding weekend</li></ul></div>
+<div><p class="kicker">Wedding Weekend Management</p><h3>We Coordinate. You Celebrate.</h3><p>For couples who have made their selections and want professional coordination for the final stretch and celebration days.</p><ul><li>Vendor handover and final confirmations</li><li>Detailed schedules and cue sheets</li><li>Rehearsal and ceremony coordination</li><li>On-site event management</li></ul></div>
 </div></div></section>
 
 <section><div class="wrap">
-<div class="head reveal"><p class="kicker">Questions Couples Ask</p><h2 class="h-display">Before We Begin</h2><div class="rule"></div></div>
+<div class="head reveal"><p class="kicker">Questions Couples Ask</p><h2 class="h-display">Frequently Asked Wedding Planning Questions</h2><div class="rule"></div></div>
 ''' + faq(WED_FAQ) + '''</div></section>
 
 <section class="ivory"><div class="wrap">
 <div class="head reveal"><h2 class="h-display">Blog</h2><div class="rule"></div></div>
 ''' + POST_CARDS + '''
 </div></section>
-''' + WED_CTA
+''' + WED_CTA.replace("Your Wedding Should Feel Like Your Family", "Let’s Bring Your Wedding Vision Together")  # this page only: blog posts and the calendar page keep the shared heading
 
 # ------------------------------------------------------------------ MILESTONES
 MS_CTA = cta("Begin Here","Let’s Celebrate What Matters Most","Tell us who you’re celebrating and what makes the occasion special. We’ll help shape the experience around them.", "Plan a Milestone")
-milestones = banner("Milestone celebrations · Miami &amp; Florida","Anniversaries, birthdays and achievements, celebrated properly","The occasions that mark a life deserve more than a restaurant booking. At Anvaya, we plan milestone celebrations across Florida, with our home in South Florida, so that the person it is for, and the people who love them, can simply be together.", M) + f'''
+milestones = banner("Milestone celebrations · Miami &amp; Florida","Life’s milestones, celebrated with meaning and care","At Anvaya, we plan birthdays, anniversaries and milestone celebrations across Florida, creating thoughtful experiences centered around the people who matter most.", M) + f'''
 <section><div class="wrap">
-<div class="head reveal"><p class="kicker">Occasions</p><h2 class="h-display">Milestones Worth Making Time For</h2><div class="rule"></div><p class="lede">Some milestones deserve an intimate dinner. Others bring everyone together. We plan each around the people being celebrated, with thoughtful details and dependable coordination.</p></div>
+<div class="head reveal"><p class="kicker">Occasions</p><h2 class="h-display">Life’s Milestones, Beautifully Celebrated</h2><div class="rule"></div><p class="lede">Some milestones deserve an intimate dinner. Others bring everyone together. We plan each around the people being celebrated, with thoughtful details and dependable coordination.</p></div>
 <div class="occasions stagger">
 <div tabindex="0"><div class="bg"><img src="img/milestones/first-birthday.jpg" alt="" loading="lazy"></div><p class="kicker">01</p><h3>Milestone Birthdays</h3><p>Celebrate 40, 50, 60, 70 or any meaningful birthday with a setting, food and entertainment that reflect the guest of honor.</p></div>
 <div tabindex="0"><div class="bg"><img src="img/milestones/anniversary.jpg" alt="" loading="lazy"></div><p class="kicker">02</p><h3>Silver &amp; Golden Anniversaries</h3><p>Mark 25, 40 or 50 years with a personal gathering, meaningful speeches and shared memories.</p></div>
@@ -428,7 +428,7 @@ milestones = banner("Milestone celebrations · Miami &amp; Florida","Anniversari
 </div></section>
 
 <section class="ivory" id="process"><div class="wrap">
-<div class="head reveal"><p class="kicker">How We Plan a Milestone</p><h2 class="h-display">Personal Moments. Effortless Coordination.</h2><div class="rule"></div><p class="lede">From the first idea to the last guest, we connect the creative and practical details.</p></div>
+<div class="head reveal"><p class="kicker">How We Plan a Milestone</p><h2 class="h-display">How We Plan Your Milestone Celebration</h2><div class="rule"></div><p class="lede">From the first idea to the last guest, we connect the creative and practical details.</p></div>
 {timeline([
  ("Discover the Occasion","We understand who you are celebrating, your guest list, priorities, budget and the feeling you want to create.",["Occasion","Guest count","Budget"],("studio/listening.jpg","Listening first")),
  ("Choose the Setting","We source suitable spaces and compare their atmosphere, convenience and practical fit for your gathering.",["Venue options","Date"],("milestones/baby-shower.jpg","A garden terrace, held")),
@@ -440,7 +440,7 @@ milestones = banner("Milestone celebrations · Miami &amp; Florida","Anniversari
 </div></section>
 
 <section><div class="wrap">
-<div class="head reveal"><p class="kicker">What We Coordinate</p><h2 class="h-display">Thoughtful Details, Beautifully Managed</h2><div class="rule"></div><p class="lede">From the setting to the final toast, we help bring the right people and details together.</p></div>
+<div class="head reveal"><p class="kicker">What We Coordinate</p><h2 class="h-display">Everything Your Celebration Needs</h2><div class="rule"></div><p class="lede">From the setting to the final toast, we help bring the right people and details together.</p></div>
 ''' + ledger([
  ("Venue","Private dining spaces, gardens, hotels, homes and ballrooms selected for guest comfort and occasion.",("milestones/baby-shower.jpg","A garden terrace")),
  ("Food &amp; Drink","Caterers, custom menus, cakes, dessert displays and dietary options that feel right for your guests.",("milestones/first-birthday.jpg","Cake and florals")),
@@ -450,7 +450,7 @@ milestones = banner("Milestone celebrations · Miami &amp; Florida","Anniversari
  ("Guest Experience","Invitations, seating, welcome details, accessibility and the flow of meaningful speeches and family moments.",("studio/design-board.jpg","Invitations and welcome details")),
 ]) + '''
 </div></section>
-''' + plan_link("milestones", MS_PLAN, "Your Planning Calendar", "A Thoughtful Plan for Your Timeline", "Explore how your celebration can come together based on the time available.", "ivory") + '''
+''' + plan_link("milestones", MS_PLAN, "Your Planning Calendar", "Planning Around Your Celebration Date", "Explore how your celebration can come together based on the time available.", "ivory") + '''
 ''' + MS_CTA
 
 # ------------------------------------------------------------------ TRADITIONS (new in V4; mirrors the Milestones page)
@@ -464,12 +464,12 @@ traditions = banner("Traditional ceremonies \u00b7 Miami &amp; Florida","Traditi
 <div tabindex="0"><div class="bg"><img src="img/gallery/4.jpg" alt="" loading="lazy"></div><p class="kicker">02</p><h3>Half-Saree Ceremony</h3><p>Mark an important cultural milestone with elegant d\u00e9cor, ceremony flow, outfits and guest coordination.</p></div>
 <div tabindex="0"><div class="bg"><img src="img/milestones/first-birthday.jpg" alt="" loading="lazy"></div><p class="kicker">03</p><h3>Naming &amp; Cradle Ceremonies</h3><p>From naamkaran to cradle celebrations, we coordinate the family traditions and a welcoming gathering around them.</p></div>
 <div tabindex="0"><div class="bg"><img src="img/about/kitchen.jpg" alt="" loading="lazy"></div><p class="kicker">04</p><h3>Housewarming &amp; Griha Pravesh</h3><p>Ceremony timing, priest coordination, seating and catering planned carefully for celebrations at home.</p></div>
-<div tabindex="0"><div class="bg"><img src="img/gallery/5.jpg" alt="" loading="lazy"></div><p class="kicker">05</p><h3>Annaprashan &amp; First-Rice Ceremonies</h3><p>A warm, family-centered occasion with ceremonial details, d\u00e9cor and meal arrangements brought together.</p></div>
+<div tabindex="0"><div class="bg"><img src="img/gallery/5.jpg" alt="" loading="lazy"></div><p class="kicker">05</p><h3>Annaprashan &amp; <span style="white-space:nowrap">First-Rice</span> Ceremonies</h3><p>A warm, family-centered occasion with ceremonial details, d\u00e9cor and meal arrangements brought together.</p></div>
 <div tabindex="0"><div class="bg"><img src="img/weddings/mandap.jpg" alt="" loading="lazy"></div><p class="kicker">06</p><h3>Pujas, Blessings &amp; Family Rituals</h3><p>We listen to your family and officiant, then build a practical event plan around your specific observance.</p></div>
 </div></div></section>
 
 <section class="ivory" id="process"><div class="wrap">
-<div class="head reveal"><p class="kicker">How We Plan</p><h2 class="h-display">Deep Respect for Traditions. A Clear Plan for Everyone.</h2><div class="rule"></div><p class="lede">Each family follows its own customs. We begin by understanding yours, then coordinate the people and details that make the celebration feel right.</p></div>
+<div class="head reveal"><p class="kicker">How We Plan</p><h2 class="h-display">Planning Around Your Family’s Traditions</h2><div class="rule"></div><p class="lede">Each family follows its own customs. We begin by understanding yours, then coordinate the people and details that make the celebration feel right.</p></div>
 {timeline([
  ("Understand the Tradition","We learn the occasion, family customs, officiant needs, guest count and budget.",["Customs","Guests","Budget"],("studio/listening.jpg","Listening to the family")),
  ("Choose the Setting","We assess the home or venue for ceremony space, seating, catering and comfortable guest flow.",["Venue","Layout","Timing"],("about/evening.jpg","An evening gathering at home")),
@@ -481,7 +481,7 @@ traditions = banner("Traditional ceremonies \u00b7 Miami &amp; Florida","Traditi
 </div></section>
 
 <section><div class="wrap">
-<div class="head reveal"><p class="kicker">What We Coordinate</p><h2 class="h-display">The Right People for a Meaningful Occasion</h2><div class="rule"></div><p class="lede">We bring together the vendors and practical requirements your family needs, with choice and thoughtful coordination.</p></div>
+<div class="head reveal"><p class="kicker">What We Coordinate</p><h2 class="h-display">Everything Needed for Your Traditional Celebration</h2><div class="rule"></div><p class="lede">We bring together the vendors and practical requirements your family needs, with choice and thoughtful coordination.</p></div>
 ''' + ledger([
  ("Venue &amp; Layout","Homes, clubhouses and event spaces with practical arrangements for ceremony and guests.",("about/evening.jpg","An evening gathering at home")),
  ("Catering &amp; Hospitality","Vegetarian, regional and family-preferred menus, serving arrangements and guest comfort.",("gallery/5.jpg","A vegetarian live counter")),
@@ -491,14 +491,14 @@ traditions = banner("Traditional ceremonies \u00b7 Miami &amp; Florida","Traditi
  ("Guest &amp; Day-of Logistics","Invitations, seating, vendor arrival, parking and a clear run-of-show.",("studio/timeline.jpg","Run-of-show in hand")),
 ]) + '''
 </div></section>
-''' + plan_link("traditions", TR_PLAN, "Your Planning Timeline", "A Simple Plan for Your Date", "Whether your occasion is months away or approaching soon, we help set clear priorities for the time available.", "ivory") + '''
+''' + plan_link("traditions", TR_PLAN, "Your Planning Timeline", "Your Ceremony Planning Timeline", "Whether your occasion is months away or approaching soon, we help set clear priorities for the time available.", "ivory") + '''
 ''' + TR_CTA
 
 # ------------------------------------------------------------------ CORPORATE
 CORP_CTA = cta("Begin Here","Have an Event in Mind? Let’s Make It Happen.","Share your dates, goals, guest count and budget parameters. We’ll discuss an approach tailored to your event.", "Request a Proposal")
-corporate = banner("Corporate event planners · Miami &amp; Florida","Corporate events your company will be remembered for","At Anvaya, we produce offsites, launches, award nights, holiday celebrations and client dinners across Florida, from our home in Miami, with one point of contact.", C) + f'''
+corporate = banner("Corporate event planners · Miami &amp; Florida","Corporate gatherings, planned to feel effortless","At Anvaya, we produce offsites, launches, award nights, holiday celebrations and client dinners across Florida, from our home in Miami, with one point of contact.", C) + f'''
 <section><div class="wrap">
-<div class="head reveal"><p class="kicker">Occasions</p><h2 class="h-display">Events That Bring People and Purpose Together</h2><div class="rule"></div><p class="lede">Whether you are celebrating a team, welcoming clients or introducing something new, we turn your business objective into a well-orchestrated experience.</p></div>
+<div class="head reveal"><p class="kicker">Occasions</p><h2 class="h-display">Corporate Events That Reflect Your Brand</h2><div class="rule"></div><p class="lede">Whether you are celebrating a team, welcoming clients or introducing something new, we turn your business objective into a well-orchestrated experience.</p></div>
 <div class="occasions stagger">
 <div tabindex="0"><div class="bg"><img src="img/studio/walkthrough.jpg" alt="" loading="lazy"></div><p class="kicker">Internal</p><h3>Offsites &amp; Retreats</h3><p>Purposeful environments for collaboration, connection and fresh thinking, supported by thoughtful schedules and guest logistics.</p></div>
 <div tabindex="0"><div class="bg"><img src="img/corporate/launch.jpg" alt="" loading="lazy"></div><p class="kicker">External</p><h3>Product Launches</h3><p>Brand-led environments, staging, AV and show moments that make your launch feel memorable and professional.</p></div>
@@ -509,7 +509,7 @@ corporate = banner("Corporate event planners · Miami &amp; Florida","Corporate 
 </div></div></section>
 
 <section class="ivory" id="process"><div class="wrap">
-<div class="head reveal"><p class="kicker">How We Produce Your Event</p><h2 class="h-display">A Clear Plan. An Exceptional Guest Experience.</h2><div class="rule"></div><p class="lede">From the brief to the final cue, we bring creative ideas and production details into one coordinated plan.</p></div>
+<div class="head reveal"><p class="kicker">How We Produce Your Event</p><h2 class="h-display">From Event Brief to Confident Execution</h2><div class="rule"></div><p class="lede">From the brief to the final cue, we bring creative ideas and production details into one coordinated plan.</p></div>
 {timeline([
  ("Understand the Brief","We align on the objective, audience, guest count, location, budget and brand requirements.",["Objective","Guests","Budget","Brand"],("studio/listening.jpg","The brief")),
  ("Secure the Venue","We compare spaces based on function, atmosphere, technical needs, accessibility and total event costs.",["Venue","Contract","Requirements"],("studio/walkthrough.jpg","Walking the venue")),
@@ -520,21 +520,21 @@ corporate = banner("Corporate event planners · Miami &amp; Florida","Corporate 
 ], "One coordinated team behind the scenes. A seamless experience in the room.")}
 </div></section>
 
-''' + plan_link("corporate", CORP_PLAN, "Your Production Calendar", "The Right Timeline for Your Event", "Explore planning priorities for the timeframe you have, from early venue decisions to final production details.", "white") + '''
+''' + plan_link("corporate", CORP_PLAN, "Your Production Calendar", "Your Corporate Event Planning Timeline", "Explore planning priorities for the timeframe you have, from early venue decisions to final production details.", "white") + '''
 <section class="ivory"><div class="wrap">
-<div class="head reveal"><p class="kicker">Working With Your Team</p><h2 class="h-display">Clear Communication. Confident Execution.</h2><div class="rule"></div></div>
+<div class="head reveal"><p class="kicker">Working With Your Team</p><h2 class="h-display"><span style="display:inline-block">One Coordinated Team.</span> <span style="display:inline-block">Every Detail Managed.</span></h2><div class="rule"></div></div>
 <div class="cols four stagger">
 <div><span class="script">i.</span><h3>One Planning Point of Contact</h3><p>A coordinated lead for schedules, updates and supplier questions, reducing unnecessary back-and-forth.</p></div>
 <div><span class="script">ii.</span><h3>Logistics Considered Early</h3><p>Venue requirements, insurance coordination, permits where applicable and production needs are addressed before event week.</p></div>
 <div><span class="script">iii.</span><h3>Designed Around Your Brand</h3><p>We align décor, printed materials, displays and guest touchpoints with your event goals and brand identity.</p></div>
 <div><span class="script">iv.</span><h3>Prepared for the Live Moment</h3><p>Run-of-show planning, rehearsals, vendor cues and on-site management help the entire program run smoothly.</p></div>
 </div></div></section>
-''' + CORP_CTA
+''' + CORP_CTA.replace("Have an Event in Mind? Let’s Make It Happen.", "Let’s Plan Your Next Corporate Event")  # this page only: the calendar page keeps the shared heading
 
 # ------------------------------------------------------------------ CONTACT
 contact = f'''
 <section style="padding-top:clamp(3rem,6vw,5rem)"><div class="wrap">
-<div class="head reveal"><p class="kicker">Contact Anvaya</p><h1 class="h-display">Every Beautiful Celebration Begins Here</h1><div class="rule"></div><p class="lede">Tell us what you are celebrating, where your family is gathering and what matters most. We’ll discuss the right planning approach, vendor options and next steps. Or <a href="#0" data-book class="textlink">book a call</a> directly.</p></div>
+<div class="head reveal"><p class="kicker">Contact Anvaya</p><h1 class="h-display">Let’s Start Planning Your Celebration</h1><div class="rule"></div><p class="lede">Tell us what you are celebrating, where your family is gathering and what matters most. We’ll discuss the right planning approach, vendor options and next steps. Or <a href="#0" data-book class="textlink">book a call</a> directly.</p></div>
 <div class="contact reveal">
 <div>
 <dl>
@@ -580,7 +580,7 @@ contact = f'''
 def post_main(p):
     rel = " · ".join(f'<a class="textlink" href="{RELATED[n]}">{n}</a>' for n in p["Related pages"].split(" · "))
     return f'''<section><div class="wrap article reveal">
-<h1 class="h-display">{html.escape(p["h"])}</h1><div class="rule left"></div>
+<h1 class="h-display">{re.sub(r"(\S+-\S+)", r'<span style="white-space:nowrap">\1</span>', html.escape(p["h"]))}</h1><div class="rule left"></div>
 {p["body"]}
 <p class="related">Related pages: {rel}</p>
 </div></section>''' + (TR_CTA if "Traditions" in p["Related pages"] else WED_CTA)  # close on the celebration the article is about
