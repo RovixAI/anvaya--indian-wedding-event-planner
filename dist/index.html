@@ -665,6 +665,34 @@ body{padding-bottom:4.5rem}
 
 /* faq on ivory */
 .ivory .faq details{border-color:var(--line)}
+
+/* ---- mobile pass ---- */
+/* the open row of a vendor/coordination list shows its whole description (a fixed 6em clipped longer copy) */
+.ledger li.on p{max-height:14em}
+@media (max-width:860px),(max-height:500px){.ledger li.on p{max-height:none}}
+/* the space kept clear for the floating contact bar sits inside the footer, so the page ends on the footer colour, not a blank strip */
+body{padding-bottom:0}
+footer{padding-bottom:calc(2rem + 4.5rem)}
+/* contact steps: one numeral column, so the three steps line up whatever the width of i., ii., iii. */
+.after > div{grid-template-columns:2.2rem 1fr}
+/* comfortable tap targets (~44px) without moving anything: the hit area grows, the layout does not */
+.hero .dots button,.textlink{position:relative}
+.hero .dots button::before{content:"";position:absolute;inset:-.55rem -.4rem}
+.textlink::before{content:"";position:absolute;inset:-.7rem -.3rem}
+.horizons button{min-height:44px}
+@media (max-width:560px){
+  .hero .dots{row-gap:1.15rem} /* rows of tabs far enough apart that their enlarged tap areas do not overlap */
+  .occasions > :is(div,a){min-height:0} /* one column: cards fit their copy instead of a fixed 230px box */
+  .faq summary{font-size:1.25rem;line-height:1.35}
+  legend,footer h4,.hero .dots button,.contact dt{font-size:.72rem}
+  .months .mo .unit,.pcard .when .unit{font-size:.7rem}
+  .ledger .view .cap{font-size:.72rem}
+  .flmap .pin text,.flmap .pin.far text{font-size:12px;letter-spacing:.06em} /* the map shrinks to the phone, so its labels need a larger size to stay legible */
+}
+@media (max-width:400px){
+  .mosaic::before{right:-10px;bottom:-10px} /* the offset frame behind the hero photos stays on a 320px screen */
+  .hero .dots button{letter-spacing:.16em} /* the one-line "Milestones, Traditions & Corporate" tab must fit a 320px screen */
+}
 </style><script type="application/ld+json">[{"@context": "https://schema.org", "@type": ["LocalBusiness", "EventPlanner"], "name": "Anvaya", "url": "https://anvaya-events.vercel.app", "image": "https://anvaya-events.vercel.app/img/weddings/mandap.jpg", "description": "Luxury Indian and South Asian wedding planner and event planning studio in Miami, serving South Florida and all of Florida.", "areaServed": [{"@type": "State", "name": "Florida"}, {"@type": "City", "name": "Miami"}, {"@type": "City", "name": "Coral Gables"}, {"@type": "City", "name": "Miami Beach"}, {"@type": "City", "name": "Fort Lauderdale"}, {"@type": "City", "name": "Hollywood"}, {"@type": "City", "name": "Boca Raton"}, {"@type": "City", "name": "Delray Beach"}, {"@type": "City", "name": "West Palm Beach"}, {"@type": "City", "name": "Palm Beach"}, {"@type": "City", "name": "Jupiter"}, {"@type": "City", "name": "Naples"}, {"@type": "City", "name": "Orlando"}, {"@type": "City", "name": "Tampa"}, {"@type": "City", "name": "Sarasota"}, {"@type": "City", "name": "Fort Myers"}, {"@type": "City", "name": "Jacksonville"}, {"@type": "City", "name": "Key West"}], "address": {"@type": "PostalAddress", "addressLocality": "Miami", "addressRegion": "FL", "addressCountry": "US"}, "knowsAbout": ["Wedding planning in Florida", "Destination weddings in Orlando, Tampa and Naples", "Indian wedding planning", "South Asian weddings", "Hindu wedding ceremonies", "Sikh weddings", "Muslim weddings", "Sangeet", "Mehndi", "Baraat", "Anniversary celebrations", "Corporate event production"], "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Celebrations", "itemListElement": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Indian & South Asian wedding planning", "url": "https://anvaya-events.vercel.app/weddings.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Milestone celebration planning", "url": "https://anvaya-events.vercel.app/milestones.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Traditional ceremony planning", "url": "https://anvaya-events.vercel.app/traditions.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Corporate event production", "url": "https://anvaya-events.vercel.app/corporate.html"}}]}}]</script></head><body class=""><nav class="nav" aria-label="Main"><div class="wrap">
 <a class="brand" href="index.html" aria-label="Anvaya home"><img src="img/logo-dark.webp" alt="Anvaya" onerror="this.closest('.brand').classList.add('nologo')"><span class="wordmark">Anvaya</span></a>
 <button class="menu-btn" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
@@ -681,7 +709,7 @@ body{padding-bottom:4.5rem}
 <section><div class="wrap"><div class="letter reveal">
 <div class="photo"><figure class="slot "><img src="img/about/kitchen.jpg" alt="Garlands on the kitchen floor, wedding morning" loading="lazy"><figcaption>Garlands on the kitchen floor, wedding morning</figcaption></figure><span class="plate">Est. Miami</span></div>
 <div>
-<p class="kicker">About Anvaya</p><h2 class="h-serif" style="margin:.6rem 0 1.4rem"><span style="display:inline-block">Your Celebration.</span> <span style="display:inline-block">Every Detail Taken Care Of.</span></h2>
+<p class="kicker">About Anvaya</p><h2 class="h-serif" style="margin:.6rem 0 1.4rem"><span style="display:inline-block">Experienced Planning.</span> <span style="display:inline-block">Thoughtful Celebrations.</span></h2>
 <div class="text">
 <p>At Anvaya, every celebration begins with your story, your family, and your traditions. We bring everything together through thoughtful planning, ensuring every detail is considered and every tradition is&nbsp;honored.</p>
 <p>Our team brings eight years of experience through JRN Events, having worked on hundreds of weddings and celebrations across different cultures. With deep South Florida knowledge and strong vendor relationships, we help you find quality services at competitive&nbsp;prices.</p>
@@ -690,44 +718,44 @@ body{padding-bottom:4.5rem}
 </div></div></div></div></section>
 
 <section class="ivory" id="services"><div class="wrap">
-<div class="head reveal"><p class="kicker">What We Plan</p><h2 class="h-display">Your Occasion. Our Complete Attention.</h2><div class="rule"></div></div>
+<div class="head reveal"><p class="kicker">What We Plan</p><h2 class="h-display">Celebrations We Plan</h2><div class="rule"></div></div>
 
 <div class="row reveal">
 <div class="art"><figure class="slot "><img src="img/weddings/mandap.jpg" alt="South Indian mandap at Biscayne Bay" loading="lazy"><figcaption>South Indian mandap at Biscayne Bay</figcaption></figure><figure class="slot "><img src="img/weddings/baraat.jpg" alt="Baraat arriving under royal palms" loading="lazy"><figcaption>Baraat arriving under royal palms</figcaption></figure><figure class="slot "><img src="img/weddings/sangeet.jpg" alt="Sangeet night, marigold stage" loading="lazy"><figcaption>Sangeet night, marigold stage</figcaption></figure></div>
-<div class="copy"><span class="script">weddings</span><h2 class="h-serif">Weddings That Honor Every Part of Your Story</h2><p class="lede">From Indian and Pakistani weddings to Bangladeshi, Sikh, South Indian, Christian and interfaith celebrations, we understand how rituals, families and multiple events fit together. One team plans every part of the weekend.</p>
+<div class="copy"><span class="script">weddings</span><h2 class="h-serif"><span style="display:inline-block">Every Tradition Honored.</span> <span style="display:inline-block">Every Wedding Thoughtfully Planned.</span></h2><p class="lede">From Indian and Pakistani weddings to Bangladeshi, Sikh, South Indian, Christian and interfaith celebrations, we understand how rituals, families and multiple events fit together. One team plans every part of the weekend.</p>
 <ul><li>Venue selection and wedding-weekend logistics</li><li>Curated vendor options across styles and budgets</li><li>Cultural ceremonies and coordinated timelines</li><li>On-site management from welcome to farewell</li></ul>
 <a class="textlink" href="weddings.html">Our Wedding Planning</a></div>
 </div>
 
 <div class="row flip reveal">
 <div class="art"><figure class="slot "><img src="img/milestones/anniversary.jpg" alt="Fiftieth anniversary dinner, Palm Beach" loading="lazy"><figcaption>Fiftieth anniversary dinner, Palm Beach</figcaption></figure><figure class="slot "><img src="img/milestones/first-birthday.jpg" alt="First birthday with grandparents" loading="lazy"><figcaption>First birthday with grandparents</figcaption></figure><figure class="slot "><img src="img/milestones/baby-shower.jpg" alt="Baby shower brunch on the terrace" loading="lazy"><figcaption>Baby shower brunch on the terrace</figcaption></figure></div>
-<div class="copy"><span class="script">milestones</span><h2 class="h-serif">Life’s Special Chapters, Celebrated Your Way</h2><p class="lede">Milestone birthdays, anniversaries, baby showers and achievements deserve thoughtful celebrations. We bring the setting, vendors and details together so you can enjoy the people who matter most.</p>
+<div class="copy"><span class="script">milestones</span><h2 class="h-serif">Your Milestones. Beautifully Celebrated.</h2><p class="lede">Milestone birthdays, anniversaries, baby showers and achievements deserve thoughtful celebrations. We bring the setting, vendors and details together so you can enjoy the people who matter most.</p>
 <ul><li>Venues suited to your guest list</li><li>Personalized décor, dining and entertainment</li><li>Invitations, RSVPs and guest experience</li><li>Seamless celebration-day coordination</li></ul>
 <a class="textlink" href="milestones.html">Our Milestone Planning</a></div>
 </div>
 
 <div class="row reveal">
 <div class="art"><figure class="slot "><img src="img/weddings/ceremony.jpg" alt="A priest-led ritual by the sacred fire" loading="lazy"><figcaption>A priest-led ritual by the sacred fire</figcaption></figure><figure class="slot "><img src="img/milestones/vow-renewal.jpg" alt="Garlands exchanged, family gathered" loading="lazy"><figcaption>Garlands exchanged, family gathered</figcaption></figure><figure class="slot "><img src="img/about/evening.jpg" alt="Lanterns lit for an evening at home" loading="lazy"><figcaption>Lanterns lit for an evening at home</figcaption></figure></div>
-<div class="copy"><span class="script">traditions</span><h2 class="h-serif">Traditions Worth Honoring. Moments Worth Sharing.</h2><p class="lede">From dhoti and half-saree ceremonies to naming celebrations and housewarmings, we plan the rituals, décor, hospitality and flow with care for what each occasion means to your family.</p>
+<div class="copy"><span class="script">traditions</span><h2 class="h-serif">Meaningful Traditions. Thoughtfully Planned.</h2><p class="lede">From dhoti and half-saree ceremonies to naming celebrations and housewarmings, we plan the rituals, décor, hospitality and flow with care for what each occasion means to your family.</p>
 <ul><li>Ceremony timing and family customs</li><li>Décor, catering and seating</li><li>Priest/officiant and vendor coordination</li><li>Thoughtful hosting and on-site management</li></ul>
 <a class="textlink" href="traditions.html">Explore Traditional Celebrations</a></div>
 </div>
 
 <div class="row flip reveal">
 <div class="art"><figure class="slot "><img src="img/corporate/gala.jpg" alt="Awards gala, Miami ballroom" loading="lazy"><figcaption>Awards gala, Miami ballroom</figcaption></figure><figure class="slot "><img src="img/corporate/launch.jpg" alt="Product launch, Wynwood" loading="lazy"><figcaption>Product launch, Wynwood</figcaption></figure><figure class="slot "><img src="img/corporate/dinner.jpg" alt="Leadership dinner, Brickell" loading="lazy"><figcaption>Leadership dinner, Brickell</figcaption></figure></div>
-<div class="copy"><span class="script">corporate</span><h2 class="h-serif">Corporate Gatherings with Purpose and Personality</h2><p class="lede">From executive dinners and galas to company celebrations and product launches, we create polished experiences that reflect your brand, engage guests and stay organized behind the scenes.</p>
+<div class="copy"><span class="script">corporate</span><h2 class="h-serif">Corporate Events Planned with Purpose.</h2><p class="lede">From executive dinners and galas to company celebrations and product launches, we create polished experiences that reflect your brand, engage guests and stay organized behind the scenes.</p>
 <ul><li>Venue sourcing and supplier coordination</li><li>Brand-aligned event design and production</li><li>Guest registration and event logistics</li><li>Detailed schedules and on-site delivery</li></ul>
 <a class="textlink" href="corporate.html">Our Corporate Events</a></div>
 </div>
 </div></section>
 
 <section id="unfolds"><div class="wrap">
-<div class="head reveal"><p class="kicker">How We Work</p><h2 class="h-display">A Clear Plan Behind Every Beautiful Celebration</h2><div class="rule"></div><p class="lede">Good planning gives creativity room to shine. Our five steps keep your vision, budget, vendors and event experience moving together.</p></div>
+<div class="head reveal"><p class="kicker">How We Work</p><h2 class="h-display">How We Bring Your Celebration Together</h2><div class="rule"></div><p class="lede">Good planning gives creativity room to shine. Our five steps keep your vision, budget, vendors and event experience moving together.</p></div>
 <div class="tl-pin"><div class="tl-stage"><ol class="timeline" style="--n:4"><li class="step" style="--i:0"><span class="num">01</span><div class="pic" style="--src:url(img/studio/listening.jpg)"><figure class="slot "><img src="img/studio/listening.jpg" alt="The first conversation" loading="lazy"><figcaption>The first conversation</figcaption></figure></div><div class="body"><h3>We Understand Your Story</h3><p>We begin with your occasion, priorities, family traditions, guest count and budget. What matters to you becomes the starting point of every decision.</p><ul class="falls"><li>Your vision</li><li>Guest count</li><li>Budget</li></ul><span class="state"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 4.5"/></svg>Confirmed</span></div></li><li class="step" style="--i:1"><span class="num">02</span><div class="pic" style="--src:url(img/studio/walkthrough.jpg)"><figure class="slot "><img src="img/studio/walkthrough.jpg" alt="Walking the ballroom together" loading="lazy"><figcaption>Walking the ballroom together</figcaption></figure></div><div class="body"><h3>We Find the Right Setting</h3><p>We shortlist venues that fit your events, guests and overall vision—considering ceremony needs, access, logistics and the experience you want to create.</p><ul class="falls"><li>Venue options</li><li>Dates confirmed</li></ul><span class="state"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 4.5"/></svg>Confirmed</span></div></li><li class="step" style="--i:2"><span class="num">03</span><div class="pic" style="--src:url(img/studio/tasting.jpg)"><figure class="slot "><img src="img/studio/tasting.jpg" alt="Menu tasting with the family" loading="lazy"><figcaption>Menu tasting with the family</figcaption></figure></div><div class="body"><h3>We Curate Your Vendor Team</h3><p>Explore options for catering, décor, photography, music and more. We help compare proposals, coordinate decisions and bring your chosen partners into one plan.</p><ul class="falls"><li>Vendor options</li><li>Proposals</li><li>Contracts</li></ul><span class="state"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 4.5"/></svg>Confirmed</span></div></li><li class="step" style="--i:3"><span class="num">04</span><div class="pic" style="--src:url(img/studio/design-board.jpg)"><figure class="slot "><img src="img/studio/design-board.jpg" alt="Swatches, garlands, stationery" loading="lazy"><figcaption>Swatches, garlands, stationery</figcaption></figure></div><div class="body"><h3>We Shape Every Detail</h3><p>Design, menus, schedules and traditions come together in a considered experience. Every supplier knows what is expected and when.</p><ul class="falls"><li>Event design</li><li>Menus</li><li>Ceremony details</li></ul><span class="state"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 4.5"/></svg>Confirmed</span></div></li><li class="step" style="--i:4"><span class="num">05</span><div class="pic" style="--src:url(img/studio/timeline.jpg)"><figure class="slot "><img src="img/studio/timeline.jpg" alt="The day, in our hands" loading="lazy"><figcaption>The day, in our hands</figcaption></figure></div><div class="body"><h3>We Bring It All Together</h3><p>On celebration day, our team coordinates deliveries, vendors, transitions and timing so the event unfolds with confidence and care.</p><ul class="falls"><li>On-site coordination</li><li>Event timeline</li></ul><span class="state"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 4.5"/></svg>Confirmed</span></div></li></ol></div></div><div class="tl-nav"><button type="button" class="prev" aria-label="Previous step"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 12h16M14 6l6 6-6 6"/></svg></button><span class="tl-count" aria-hidden="true"><b>01</b><i></i>05</span><button type="button" class="next" aria-label="Next step"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 12h16M14 6l6 6-6 6"/></svg></button></div><div class="timeline-note reveal"><p>One vision. Connected details. Memories that stay with you.</p></div>
 </div></section>
 
 <section class="sage"><div class="wrap">
-<div class="head reveal"><p class="kicker">The Anvaya Difference</p><h2 class="h-display">The Experience Behind Every Seamless Celebration.</h2><div class="rule"></div><p class="lede">The experience should feel just as considered as the celebration itself.</p></div>
+<div class="head reveal"><p class="kicker">The Anvaya Difference</p><h2 class="h-display">Why Families Choose Anvaya</h2><div class="rule"></div><p class="lede">The experience should feel just as considered as the celebration itself.</p></div>
 <div class="cols four stagger">
 <div><span class="script">i.</span><h3>Cultural Understanding</h3><p>We plan around the meaning behind each tradition—from ceremony sequences and family customs to food preferences, religious considerations and guest experience.</p></div>
 <div><span class="script">ii.</span><h3>Choice, Not a Template</h3><p>Access a diverse network of venue and vendor options. We help you compare styles, services and budgets so the celebration feels like yours.</p></div>
@@ -736,13 +764,13 @@ body{padding-bottom:4.5rem}
 </div></div></section>
 
 <section><div class="wrap">
-<div class="head reveal"><p class="kicker">Celebrations &amp; Inspiration</p><h2 class="h-display">Moments Worth Remembering</h2><div class="rule"></div></div>
+<div class="head reveal"><p class="kicker">Celebrations &amp; Inspiration</p><h2 class="h-display">Celebrations That Inspire</h2><div class="rule"></div></div>
 <div class="gallery">
 <figure class="slot tall"><img src="img/gallery/1.jpg" alt="Wedding Ceremony" loading="lazy"><figcaption>Wedding Ceremony</figcaption></figure><figure class="slot wide"><img src="img/gallery/2.jpg" alt="Elegant Tablescapes" loading="lazy"><figcaption>Elegant Tablescapes</figcaption></figure><figure class="slot "><img src="img/gallery/3.jpg" alt="Sangeet Celebration" loading="lazy"><figcaption>Sangeet Celebration</figcaption></figure><figure class="slot tall"><img src="img/gallery/4.jpg" alt="Mehndi Details" loading="lazy"><figcaption>Mehndi Details</figcaption></figure><figure class="slot "><img src="img/gallery/5.jpg" alt="Inspired Dining" loading="lazy"><figcaption>Inspired Dining</figcaption></figure><figure class="slot wide"><img src="img/gallery/6.jpg" alt="Waterfront Weddings" loading="lazy"><figcaption>Waterfront Weddings</figcaption></figure>
 </div></div></section>
 
 <section class="ivory mapsec"><div class="wrap">
-<div class="head reveal"><p class="kicker">Where We Work</p><h2 class="h-display">Wedding &amp; Event Planning Across Florida</h2><div class="rule"></div><p class="lede">South Florida is our home market. We plan weddings, traditions, milestones and corporate events in Miami, Fort Lauderdale, Boca Raton and Palm Beach, with U.S. and international destinations available by arrangement.</p></div>
+<div class="head reveal"><p class="kicker">Where We Work</p><h2 class="h-display">Rooted in South Florida. Planning Beyond.</h2><div class="rule"></div><p class="lede">We plan weddings, traditions, milestones and corporate events in Miami, Fort Lauderdale, Boca Raton and Palm Beach, with U.S. and international destinations available by arrangement.</p></div>
 <div class="mapwrap" style="grid-template-columns:1fr;justify-items:center"><svg class="flmap" viewBox="0 0 530 540" role="img" aria-label="Map of Florida showing where Anvaya plans celebrations, with South Florida at its heart">
 <path class="land" d="M19.2 89.6 L23.8 52.4 L138.8 52.4 L143.4 71.0 L276.8 77.2 L304.4 71.0 L309.0 114.4 L322.8 164.0 L341.2 213.6 L355.0 269.4 L368.8 312.8 L364.2 362.4 L359.6 399.6 L350.4 412.0 L327.4 415.1 L313.6 381.0 L290.6 362.4 L276.8 331.4 L263.0 300.4 L244.6 250.8 L244.6 213.6 L235.4 176.4 L212.4 145.4 L184.8 108.2 L166.4 117.5 L125.0 133.0 L102.0 102.0 L69.8 89.6 L37.6 95.8 Z"/>
 <path class="land" d="M348.1 415.1 L336.6 427.5 L322.8 439.9 L304.4 446.1 L286.0 452.3" fill="none" stroke-width="5" stroke-linecap="round" style="fill:none;stroke:var(--ivory-2)"/>
@@ -753,14 +781,14 @@ body{padding-bottom:4.5rem}
 </svg></div>
 <div class="mapcols stagger"><div><span class="script">home</span><h3>Miami, Fort Lauderdale &amp; Palm Beach</h3><p>From city hotels to waterfront venues, we plan occasions across Miami-Dade, Broward and Palm Beach counties.</p></div><div><span class="script">central</span><h3>Orlando &amp; Tampa</h3><p>Destination wedding weekends, family celebrations and corporate programs planned with local venue and vendor coordination.</p></div><div><span class="script">gulf</span><h3>Naples, Sarasota &amp; Fort Myers</h3><p>Thoughtful planning for coastal celebrations, estate gatherings and intimate occasions on Florida’s Gulf Coast.</p></div><div><span class="script">beyond</span><h3>Jacksonville, the Panhandle &amp; the Keys</h3><p>Have a meaningful destination in mind? Tell us where; we can discuss the logistics and planning scope.</p></div></div></div></section>
 <section><div class="wrap">
-<div class="head reveal"><p class="kicker">Kind Words</p><h2 class="h-display">Stories Shared by Our Clients</h2><div class="rule"></div></div>
+<div class="head reveal"><p class="kicker">Kind Words</p><h2 class="h-display">Words from the Families We Serve</h2><div class="rule"></div></div>
 <div class="words stagger">
 <blockquote><p><span class="placeholder">[Genuine, permission-approved client review]</span></p><cite><span class="placeholder">[Client · Occasion · Location]</span></cite></blockquote>
 <blockquote><p><span class="placeholder">[Genuine, permission-approved client review]</span></p><cite><span class="placeholder">[Client · Occasion · Location]</span></cite></blockquote>
 <blockquote><p><span class="placeholder">[Genuine, permission-approved client review]</span></p><cite><span class="placeholder">[Client · Occasion · Location]</span></cite></blockquote>
 </div></div></section>
 <section class="cta sage"><div class="wrap reveal">
-<p class="kicker">Begin Here</p><h2 class="h-display">Your Celebration Starts with a Conversation</h2><p class="lede">Tell us what you are planning, which traditions matter and where you imagine bringing everyone together. We’ll explore how to make it beautifully yours.</p>
+<p class="kicker">Begin Here</p><h2 class="h-display">Let’s Plan Something Meaningful Together.</h2><p class="lede">Tell us what you are planning, which traditions matter and where you imagine bringing everyone together. We’ll explore how to make it beautifully yours.</p>
 <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center"><a class="btn on-sage" href="#0" data-book>Book a Conversation <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a><a class="btn on-sage" href="contact.html" style="border-color:rgba(244,241,234,.45)">Contact Anvaya</a></div></div></section></main><footer><div class="wrap">
 <div class="top">
 <div style="display:grid;gap:1rem"><a class="brand" href="index.html"><img src="img/logo-dark.webp" alt="Anvaya" onerror="this.closest('.brand').classList.add('nologo')"><span class="wordmark">Anvaya</span></a><p>Anvaya plans weddings, traditional ceremonies, milestones and corporate events across South Florida and beyond. Eight years of team experience, culturally informed planning and considered vendor choices. Seamless Planning. Timeless Celebrations.</p></div>

@@ -665,12 +665,40 @@ body{padding-bottom:4.5rem}
 
 /* faq on ivory */
 .ivory .faq details{border-color:var(--line)}
+
+/* ---- mobile pass ---- */
+/* the open row of a vendor/coordination list shows its whole description (a fixed 6em clipped longer copy) */
+.ledger li.on p{max-height:14em}
+@media (max-width:860px),(max-height:500px){.ledger li.on p{max-height:none}}
+/* the space kept clear for the floating contact bar sits inside the footer, so the page ends on the footer colour, not a blank strip */
+body{padding-bottom:0}
+footer{padding-bottom:calc(2rem + 4.5rem)}
+/* contact steps: one numeral column, so the three steps line up whatever the width of i., ii., iii. */
+.after > div{grid-template-columns:2.2rem 1fr}
+/* comfortable tap targets (~44px) without moving anything: the hit area grows, the layout does not */
+.hero .dots button,.textlink{position:relative}
+.hero .dots button::before{content:"";position:absolute;inset:-.55rem -.4rem}
+.textlink::before{content:"";position:absolute;inset:-.7rem -.3rem}
+.horizons button{min-height:44px}
+@media (max-width:560px){
+  .hero .dots{row-gap:1.15rem} /* rows of tabs far enough apart that their enlarged tap areas do not overlap */
+  .occasions > :is(div,a){min-height:0} /* one column: cards fit their copy instead of a fixed 230px box */
+  .faq summary{font-size:1.25rem;line-height:1.35}
+  legend,footer h4,.hero .dots button,.contact dt{font-size:.72rem}
+  .months .mo .unit,.pcard .when .unit{font-size:.7rem}
+  .ledger .view .cap{font-size:.72rem}
+  .flmap .pin text,.flmap .pin.far text{font-size:12px;letter-spacing:.06em} /* the map shrinks to the phone, so its labels need a larger size to stay legible */
+}
+@media (max-width:400px){
+  .mosaic::before{right:-10px;bottom:-10px} /* the offset frame behind the hero photos stays on a 320px screen */
+  .hero .dots button{letter-spacing:.16em} /* the one-line "Milestones, Traditions & Corporate" tab must fit a 320px screen */
+}
 </style></head><body class=""><nav class="nav" aria-label="Main"><div class="wrap">
 <a class="brand" href="index.html" aria-label="Anvaya home"><img src="img/logo-dark.webp" alt="Anvaya" onerror="this.closest('.brand').classList.add('nologo')"><span class="wordmark">Anvaya</span></a>
 <button class="menu-btn" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
 <ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="weddings.html">Weddings</a></li><li><a href="milestones.html">Milestones</a></li><li><a href="traditions.html">Traditions</a></li><li><a href="corporate.html">Corporate</a></li><li><a href="contact.html">Contact</a></li></ul></div></nav><main><section><div class="wrap">
 <div class="head reveal"><h1 class="h-display">Blog</h1><div class="rule"></div></div>
-<div class="cols posts stagger"><div><h3><a href="blog/plan-multi-day-indian-wedding-south-florida/index.html">How to Plan a Multi-Day Indian Wedding in South Florida</a></h3><p>Planning a mehndi, haldi, sangeet, baraat, ceremony and reception in Miami or Palm Beach? Learn how to connect venues, vendors and guest logistics.</p></div><div><h3><a href="blog/miami-indian-wedding-venue-checklist/index.html">Miami Indian Wedding Venues: What to Ask Before You Book</a></h3><p>Choosing an Indian wedding venue in Miami? Ask about baraat routes, outside catering, fire policies, mandap setups, hotel rooms and weather plans.</p></div><div><h3><a href="blog/south-asian-wedding-planning-traditions-florida/index.html">Indian, Pakistani and Bangladeshi Weddings: Planning with Cultural Care</a></h3><p>Learn how culturally thoughtful planning supports mehndi, sangeet, nikah, walima, Anand Karaj and multicultural weddings across South Florida.</p></div><div><h3><a href="blog/indian-wedding-planner-cost-south-florida/index.html">How Much Does an Indian Wedding Planner Cost in South Florida?</a></h3><p>Understand the factors affecting Indian wedding planning costs in Miami, Fort Lauderdale and Palm Beach, from event count to vendors and logistics.</p></div><div><h3><a href="blog/south-asian-wedding-guest-experience-checklist/index.html">A Practical Guest Experience Checklist for South Asian Wedding Weekends</a></h3><p>Make a multi-day South Asian wedding weekend easier for guests with smart travel information, shuttles, ceremony guidance, meals and timeline planning.</p></div><div><h3><a href="blog/dhoti-half-saree-naming-ceremony-planning-south-florida/index.html">Dhoti, Half-Saree and Naming Ceremonies in South Florida: A Family Planning Guide</a></h3><p>Planning a dhoti, half-saree or naming ceremony in Miami, Fort Lauderdale or Palm Beach? A practical guide to timing, setting, food, guests and the day itself.</p></div><div><h3><a href="blog/indian-wedding-planning-timeline/index.html">Indian Wedding Planning Timeline: 14 Months, 9 Months or 6 Months</a></h3><p>What happens fourteen, nine or six months before an Indian or South Asian wedding weekend, from venues and vendors to the weekend itself.</p></div></div>
+<div class="cols posts stagger"><div><h3><a href="blog/plan-multi-day-indian-wedding-south-florida/index.html">How to Plan a <span style="white-space:nowrap">Multi-Day</span> Indian Wedding in South Florida</a></h3><p>Planning a mehndi, haldi, sangeet, baraat, ceremony and reception in Miami or Palm Beach? Learn how to connect venues, vendors and guest logistics.</p></div><div><h3><a href="blog/miami-indian-wedding-venue-checklist/index.html">Miami Indian Wedding Venues: What to Ask Before You Book</a></h3><p>Choosing an Indian wedding venue in Miami? Ask about baraat routes, outside catering, fire policies, mandap setups, hotel rooms and weather plans.</p></div><div><h3><a href="blog/south-asian-wedding-planning-traditions-florida/index.html">Indian, Pakistani and Bangladeshi Weddings: Planning with Cultural Care</a></h3><p>Learn how culturally thoughtful planning supports mehndi, sangeet, nikah, walima, Anand Karaj and multicultural weddings across South Florida.</p></div><div><h3><a href="blog/indian-wedding-planner-cost-south-florida/index.html">How Much Does an Indian Wedding Planner Cost in South Florida?</a></h3><p>Understand the factors affecting Indian wedding planning costs in Miami, Fort Lauderdale and Palm Beach, from event count to vendors and logistics.</p></div><div><h3><a href="blog/south-asian-wedding-guest-experience-checklist/index.html">A Practical Guest Experience Checklist for South Asian Wedding Weekends</a></h3><p>Make a multi-day South Asian wedding weekend easier for guests with smart travel information, shuttles, ceremony guidance, meals and timeline planning.</p></div><div><h3><a href="blog/dhoti-half-saree-naming-ceremony-planning-south-florida/index.html">Dhoti, <span style="white-space:nowrap">Half-Saree</span> and Naming Ceremonies in South Florida: A Family Planning Guide</a></h3><p>Planning a dhoti, half-saree or naming ceremony in Miami, Fort Lauderdale or Palm Beach? A practical guide to timing, setting, food, guests and the day itself.</p></div><div><h3><a href="blog/indian-wedding-planning-timeline/index.html">Indian Wedding Planning Timeline: 14 Months, 9 Months or 6 Months</a></h3><p>What happens fourteen, nine or six months before an Indian or South Asian wedding weekend, from venues and vendors to the weekend itself.</p></div></div>
 </div></section></main><footer><div class="wrap">
 <div class="top">
 <div style="display:grid;gap:1rem"><a class="brand" href="index.html"><img src="img/logo-dark.webp" alt="Anvaya" onerror="this.closest('.brand').classList.add('nologo')"><span class="wordmark">Anvaya</span></a><p>Anvaya plans weddings, traditional ceremonies, milestones and corporate events across South Florida and beyond. Eight years of team experience, culturally informed planning and considered vendor choices. Seamless Planning. Timeless Celebrations.</p></div>

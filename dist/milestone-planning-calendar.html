@@ -665,6 +665,34 @@ body{padding-bottom:4.5rem}
 
 /* faq on ivory */
 .ivory .faq details{border-color:var(--line)}
+
+/* ---- mobile pass ---- */
+/* the open row of a vendor/coordination list shows its whole description (a fixed 6em clipped longer copy) */
+.ledger li.on p{max-height:14em}
+@media (max-width:860px),(max-height:500px){.ledger li.on p{max-height:none}}
+/* the space kept clear for the floating contact bar sits inside the footer, so the page ends on the footer colour, not a blank strip */
+body{padding-bottom:0}
+footer{padding-bottom:calc(2rem + 4.5rem)}
+/* contact steps: one numeral column, so the three steps line up whatever the width of i., ii., iii. */
+.after > div{grid-template-columns:2.2rem 1fr}
+/* comfortable tap targets (~44px) without moving anything: the hit area grows, the layout does not */
+.hero .dots button,.textlink{position:relative}
+.hero .dots button::before{content:"";position:absolute;inset:-.55rem -.4rem}
+.textlink::before{content:"";position:absolute;inset:-.7rem -.3rem}
+.horizons button{min-height:44px}
+@media (max-width:560px){
+  .hero .dots{row-gap:1.15rem} /* rows of tabs far enough apart that their enlarged tap areas do not overlap */
+  .occasions > :is(div,a){min-height:0} /* one column: cards fit their copy instead of a fixed 230px box */
+  .faq summary{font-size:1.25rem;line-height:1.35}
+  legend,footer h4,.hero .dots button,.contact dt{font-size:.72rem}
+  .months .mo .unit,.pcard .when .unit{font-size:.7rem}
+  .ledger .view .cap{font-size:.72rem}
+  .flmap .pin text,.flmap .pin.far text{font-size:12px;letter-spacing:.06em} /* the map shrinks to the phone, so its labels need a larger size to stay legible */
+}
+@media (max-width:400px){
+  .mosaic::before{right:-10px;bottom:-10px} /* the offset frame behind the hero photos stays on a 320px screen */
+  .hero .dots button{letter-spacing:.16em} /* the one-line "Milestones, Traditions & Corporate" tab must fit a 320px screen */
+}
 </style><script type="application/ld+json">[{"@context": "https://schema.org", "@type": ["LocalBusiness", "EventPlanner"], "name": "Anvaya", "url": "https://anvaya-events.vercel.app", "image": "https://anvaya-events.vercel.app/img/weddings/mandap.jpg", "description": "Luxury Indian and South Asian wedding planner and event planning studio in Miami, serving South Florida and all of Florida.", "areaServed": [{"@type": "State", "name": "Florida"}, {"@type": "City", "name": "Miami"}, {"@type": "City", "name": "Coral Gables"}, {"@type": "City", "name": "Miami Beach"}, {"@type": "City", "name": "Fort Lauderdale"}, {"@type": "City", "name": "Hollywood"}, {"@type": "City", "name": "Boca Raton"}, {"@type": "City", "name": "Delray Beach"}, {"@type": "City", "name": "West Palm Beach"}, {"@type": "City", "name": "Palm Beach"}, {"@type": "City", "name": "Jupiter"}, {"@type": "City", "name": "Naples"}, {"@type": "City", "name": "Orlando"}, {"@type": "City", "name": "Tampa"}, {"@type": "City", "name": "Sarasota"}, {"@type": "City", "name": "Fort Myers"}, {"@type": "City", "name": "Jacksonville"}, {"@type": "City", "name": "Key West"}], "address": {"@type": "PostalAddress", "addressLocality": "Miami", "addressRegion": "FL", "addressCountry": "US"}, "knowsAbout": ["Wedding planning in Florida", "Destination weddings in Orlando, Tampa and Naples", "Indian wedding planning", "South Asian weddings", "Hindu wedding ceremonies", "Sikh weddings", "Muslim weddings", "Sangeet", "Mehndi", "Baraat", "Anniversary celebrations", "Corporate event production"], "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Celebrations", "itemListElement": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Indian & South Asian wedding planning", "url": "https://anvaya-events.vercel.app/weddings.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Milestone celebration planning", "url": "https://anvaya-events.vercel.app/milestones.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Traditional ceremony planning", "url": "https://anvaya-events.vercel.app/traditions.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Corporate event production", "url": "https://anvaya-events.vercel.app/corporate.html"}}]}}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://anvaya-events.vercel.app/"}, {"@type": "ListItem", "position": 2, "name": "Milestones", "item": "https://anvaya-events.vercel.app/milestones.html"}, {"@type": "ListItem", "position": 3, "name": "Planning Calendar", "item": "https://anvaya-events.vercel.app/milestone-planning-calendar.html"}]}]</script></head><body class="t-milestones"><nav class="nav" aria-label="Main"><div class="wrap">
 <a class="brand" href="index.html" aria-label="Anvaya home"><img src="img/logo-dark.webp" alt="Anvaya" onerror="this.closest('.brand').classList.add('nologo')"><span class="wordmark">Anvaya</span></a>
 <button class="menu-btn" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
