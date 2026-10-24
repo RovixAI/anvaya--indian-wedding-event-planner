@@ -723,7 +723,56 @@ footer{padding-bottom:calc(2rem + 4.5rem)}
   .banner .trio .slot:nth-child(3){grid-area:2/2}
 }
 @media (max-width:560px){.banner .trio{aspect-ratio:1.45}}
-</style><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "A Practical Guest Experience Checklist for South Asian Wedding Weekends", "description": "Make a multi-day South Asian wedding weekend easier for guests with smart travel information, shuttles, ceremony guidance, meals and timeline planning.", "url": "https://anvaya-events.vercel.app/blog/south-asian-wedding-guest-experience-checklist", "mainEntityOfPage": "https://anvaya-events.vercel.app/blog/south-asian-wedding-guest-experience-checklist", "author": {"@type": "Organization", "name": "Anvaya", "url": "https://anvaya-events.vercel.app"}, "publisher": {"@type": "Organization", "name": "Anvaya", "url": "https://anvaya-events.vercel.app"}}</script></head><body class=""><nav class="nav" aria-label="Main"><div class="wrap">
+
+/* ---- About "Story of Anvaya" on phones and portrait tablets: each chapter under its own photo ---- */
+@media (max-width:860px){
+  /* the frame and chapter list dissolve into one column, so photo 1, chapter 1, photo 2, chapter 2 ... interleave (all four photos are seen, not just the first) */
+  .story{display:flex;flex-direction:column;gap:0}
+  .story .frame,.story .chapters{display:contents}
+  .story .frame .slot{position:relative;inset:auto;opacity:1;aspect-ratio:4/3;width:100%;margin-top:3.2rem}
+  .story .frame .slot:first-child{margin-top:0}
+  .story .chapter{opacity:1;gap:.7rem;margin-top:1.5rem}
+  .story .chapter .script{color:var(--accent)}
+  .story .frame .slot:nth-child(1){order:1}.story .chapters .chapter:nth-child(1){order:2}
+  .story .frame .slot:nth-child(2){order:3}.story .chapters .chapter:nth-child(2){order:4}
+  .story .frame .slot:nth-child(3){order:5}.story .chapters .chapter:nth-child(3){order:6}
+  .story .frame .slot:nth-child(4){order:7}.story .chapters .chapter:nth-child(4){order:8}
+  .story .frame .slot:nth-child(5){order:9}.story .chapters .chapter:nth-child(5){order:10}
+  .story .frame .slot:nth-child(6){order:11}.story .chapters .chapter:nth-child(6){order:12}
+}
+@keyframes storyIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@media (max-width:860px) and (prefers-reduced-motion:no-preference){
+  @supports (animation-timeline:view()){
+    /* each photo and chapter rises in once as it enters the screen (browsers without scroll timelines simply show it) */
+    .story .frame .slot,.story .chapter{animation:storyIn linear both;animation-timeline:view();animation-range:entry 0% entry 55%}
+  }
+}
+
+/* ---- vendor / coordination lists on phones and portrait tablets: a swipeable card carousel ---- */
+@media (max-width:860px){
+  /* the photo panel and the list dissolve into one horizontal grid: photo k sits above item k, so each column reads as one card */
+  .ledger{display:grid;grid-template-columns:none;grid-template-rows:auto 1fr;grid-auto-flow:column;grid-auto-columns:min(320px,82%);column-gap:12px;row-gap:0;align-items:stretch;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none;margin-inline:calc(-1*var(--gl)) calc(-1*var(--gr));padding:0 var(--gr) .4rem var(--gl);scroll-padding-inline:var(--gl)}
+  .ledger::-webkit-scrollbar{display:none}
+  .ledger ol,.ledger .view{display:contents}
+  .ledger .view .cap,.ledger li .arrow{display:none}
+  .ledger .view .slot{position:relative;inset:auto;opacity:1;transform:none;aspect-ratio:4/3;scroll-snap-align:start}
+  .ledger ol li,.ledger ol li.on{display:grid;grid-template-columns:auto 1fr;column-gap:.7rem;align-content:start;padding:1.1rem 1.15rem 1.35rem;border:1px solid var(--line);border-top:none;background:var(--white);cursor:auto}
+  .ivory .ledger ol li{background:var(--ivory)}
+  .ledger ol li h3,.ledger ol li.on h3{color:var(--ink)}
+  .ledger ol li p{grid-column:1/-1;margin-top:.55rem}
+  .ledger .view .slot:nth-child(1){grid-area:1/1}.ledger ol li:nth-child(1){grid-area:2/1}
+  .ledger .view .slot:nth-child(2){grid-area:1/2}.ledger ol li:nth-child(2){grid-area:2/2}
+  .ledger .view .slot:nth-child(3){grid-area:1/3}.ledger ol li:nth-child(3){grid-area:2/3}
+  .ledger .view .slot:nth-child(4){grid-area:1/4}.ledger ol li:nth-child(4){grid-area:2/4}
+  .ledger .view .slot:nth-child(5){grid-area:1/5}.ledger ol li:nth-child(5){grid-area:2/5}
+  .ledger .view .slot:nth-child(6){grid-area:1/6}.ledger ol li:nth-child(6){grid-area:2/6}
+  .ledger .view .slot:nth-child(7){grid-area:1/7}.ledger ol li:nth-child(7){grid-area:2/7}
+  .ledger .view .slot:nth-child(8){grid-area:1/8}.ledger ol li:nth-child(8){grid-area:2/8}
+  .ledger .view .slot:nth-child(9){grid-area:1/9}.ledger ol li:nth-child(9){grid-area:2/9}
+  .ledger .view .slot:nth-child(10){grid-area:1/10}.ledger ol li:nth-child(10){grid-area:2/10}
+  .ledger .view .slot:nth-child(11){grid-area:1/11}.ledger ol li:nth-child(11){grid-area:2/11}
+  .ledger .view .slot:nth-child(12){grid-area:1/12}.ledger ol li:nth-child(12){grid-area:2/12}
+}</style><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "A Practical Guest Experience Checklist for South Asian Wedding Weekends", "description": "Make a multi-day South Asian wedding weekend easier for guests with smart travel information, shuttles, ceremony guidance, meals and timeline planning.", "url": "https://anvaya-events.vercel.app/blog/south-asian-wedding-guest-experience-checklist", "mainEntityOfPage": "https://anvaya-events.vercel.app/blog/south-asian-wedding-guest-experience-checklist", "author": {"@type": "Organization", "name": "Anvaya", "url": "https://anvaya-events.vercel.app"}, "publisher": {"@type": "Organization", "name": "Anvaya", "url": "https://anvaya-events.vercel.app"}}</script></head><body class=""><nav class="nav" aria-label="Main"><div class="wrap">
 <a class="brand" href="index.html" aria-label="Anvaya home"><img src="img/logo-dark.webp" alt="Anvaya" onerror="this.closest('.brand').classList.add('nologo')"><span class="wordmark">Anvaya</span></a>
 <button class="menu-btn" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
 <ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="weddings.html">Weddings</a></li><li><a href="milestones.html">Milestones</a></li><li><a href="traditions.html">Traditions</a></li><li><a href="corporate.html">Corporate</a></li><li><a href="contact.html">Contact</a></li></ul></div></nav><main><section><div class="wrap article reveal">

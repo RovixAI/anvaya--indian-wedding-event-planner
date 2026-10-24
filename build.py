@@ -2,6 +2,10 @@
 """Builds the Anvaya site into dist/ with shared CSS/JS inlined into every page."""
 import pathlib, json, html, re
 
+def keep_whole(s):
+    """Keep hyphenated words (Multi-Day, First-Rice) on one line in headings."""
+    return re.sub(r"(\S+-\S+)", r'<span style="white-space:nowrap">\1</span>', s)
+
 ROOT = pathlib.Path(__file__).parent
 DIST = ROOT / "dist"
 SRC = ROOT / "src" if (ROOT / "src").exists() else DIST / "src"  # src/ currently ships inside dist/
@@ -136,7 +140,7 @@ def mapsection(h, lede, texts, band="ivory"):
 
 def ledger(items):
     """items: (title, text, (img, brief))"""
-    li = "".join(f'<li><span class="n">{"abcdefghijkl"[k]}.</span><h3>{t}</h3><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 12h16M14 6l6 6-6 6"/></svg><p>{x}</p></li>' for k,(t,x,pic) in enumerate(items))
+    li = "".join(f'<li><span class="n">{"abcdefghijkl"[k]}.</span><h3>{keep_whole(t)}</h3><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 12h16M14 6l6 6-6 6"/></svg><p>{x}</p></li>' for k,(t,x,pic) in enumerate(items))
     views = "".join(f'<figure class="slot{" on" if k==0 else ""}"><img src="{IMG}/{pic[0]}" alt="{pic[1]}" loading="lazy"><figcaption>{pic[1]}</figcaption></figure>' for k,(t,x,pic) in enumerate(items))
     return f'<div class="ledger reveal"><ol>{li}</ol><div class="view">{views}<span class="cap"></span></div></div>'
 
@@ -344,7 +348,7 @@ for chunk in ("\n" + (ROOT / "blog.md").read_text(encoding="utf-8")).split("\n##
     p["path"] = p["Suggested slug"].strip("/")
     POSTS.append(p)
 RESOURCES = [("blog/indian-wedding-planning-timeline", "Indian Wedding Planning Timeline: 14 Months, 9 Months or 6 Months", "What happens fourteen, nine or six months before an Indian or South Asian wedding weekend, from venues and vendors to the weekend itself.")]
-POST_CARDS = '<div class="cols posts stagger">' + "".join(f'<div><h3><a href="{path}/index.html">{re.sub(r"(\S+-\S+)", r'<span style="white-space:nowrap">\1</span>', html.escape(h))}</a></h3><p>{html.escape(d)}</p></div>' for path,h,d in [(p["path"], p["h"], p["Meta description"]) for p in POSTS] + RESOURCES) + '</div>'
+POST_CARDS = '<div class="cols posts stagger">' + "".join(f'<div><h3><a href="{path}/index.html">{keep_whole(html.escape(h))}</a></h3><p>{html.escape(d)}</p></div>' for path,h,d in [(p["path"], p["h"], p["Meta description"]) for p in POSTS] + RESOURCES) + '</div>'
 
 # ------------------------------------------------------------------ WEDDINGS
 WED_FAQ = [  # rendered on the page and in the FAQPage schema
@@ -580,7 +584,7 @@ contact = f'''
 def post_main(p):
     rel = " · ".join(f'<a class="textlink" href="{RELATED[n]}">{n}</a>' for n in p["Related pages"].split(" · "))
     return f'''<section><div class="wrap article reveal">
-<h1 class="h-display">{re.sub(r"(\S+-\S+)", r'<span style="white-space:nowrap">\1</span>', html.escape(p["h"]))}</h1><div class="rule left"></div>
+<h1 class="h-display">{keep_whole(html.escape(p["h"]))}</h1><div class="rule left"></div>
 {p["body"]}
 <p class="related">Related pages: {rel}</p>
 </div></section>''' + (TR_CTA if "Traditions" in p["Related pages"] else WED_CTA)  # close on the celebration the article is about
